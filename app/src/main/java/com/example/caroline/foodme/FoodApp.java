@@ -15,5 +15,7 @@ public class FoodApp extends AppCompatActivity {
         //todo create botton nav bar
         //todo create nav menu
         //todo create fragments and make calls
+        Intent i = new Intent(this, SettingsActivity.class);
+        startActivity(i);
     }
 }
