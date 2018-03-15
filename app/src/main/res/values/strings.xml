@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Food Me</string>
+    <string name="title_activity_home_page">homepage</string>
+    <string name="title_search">Search</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="title_create">Create</string>
 </resources>
