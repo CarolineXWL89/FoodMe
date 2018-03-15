@@ -1,0 +1,56 @@
+package com.example.caroline.foodme;
+
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.List;
+
+/**
+ * Created by michaelxiong on 3/13/18.
+ */
+
+public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> {
+
+    private List<Food> foods;
+    private Context context;
+
+    @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_item, parent, false);
+        return new MyViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        Food food = foods.get(position);
+        holder.foodNameView.setText(food.getFoodName());
+        //TODO: put something here having to do with the Food API to get the image for the food
+    }
+
+    @Override
+    public int getItemCount() {
+        return foods.size();
+    }
+
+    class MyViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView foodNameView;
+        private ImageView foodImageView;
+        private CheckBox foodSelectBox;
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            foodNameView = itemView.findViewById(R.id.food_name_view);
+            foodImageView = itemView.findViewById(R.id.food_image_view);
+            foodSelectBox = itemView.findViewById(R.id.food_select_box);
+
+        }
+    }
+
+}
