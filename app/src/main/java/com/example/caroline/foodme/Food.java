@@ -3,6 +3,7 @@ package com.example.caroline.foodme;
 /**
  * Created by michaelxiong on 3/13/18.
  * Placeholder class for objects from backendless
+ * TODO update to reflect what we want to pull
  */
 
 public class Food {
@@ -30,4 +31,3 @@ public class Food {
         this.foodImage = foodImage;
     }
 }
-//todo update to reflect what we want to pull

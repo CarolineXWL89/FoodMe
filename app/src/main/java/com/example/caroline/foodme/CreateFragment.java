@@ -17,6 +17,9 @@ import android.view.ViewGroup;
  * Use the {@link CreateFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+/*
+What does this do? To set-up fragments?
+ */
 public class CreateFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

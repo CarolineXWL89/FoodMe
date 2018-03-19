@@ -14,12 +14,15 @@
             android:label="@string/title_activity_home_page">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".SettingsPageActivity"
-            android:label="@string/title_activity_settings_page"/>
+            android:label="@string/title_activity_settings_page" />
+        <activity android:name=".LoginScreen" />
+        <activity android:name=".CreateAccount"></activity>
     </application>
 
 </manifest>

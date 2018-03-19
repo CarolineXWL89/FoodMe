@@ -17,6 +17,11 @@ import android.view.ViewGroup;
  * Use the {@link SearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+/*
+Implements: SEARCH function from Food API
+Contains: recent search (recipe) history, recent keywords
+Can: re-click on keywords, click on recipes, swipe left to delete, swipe right to save, mass clear-all button
+ */
 public class SearchFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
