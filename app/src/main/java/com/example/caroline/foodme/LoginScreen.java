@@ -1,5 +1,7 @@
 package com.example.caroline.foodme;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -16,11 +18,28 @@ public class LoginScreen extends AppCompatActivity {
     private EditText usernameInput, passwordInput;
     private CheckBox rememberMe;
     private TextView foodMe, username, password;
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
+
+        /* FIX ME THROUGH APP
+        //todo save when logged in, delete when logged out, remember if logged it
+        sharedPref = getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
+        editor.putString(getString(R.string.user_name), "");
+        editor.putString(getString(R.string.pass_word), "");
+        editor.commit();
+
+        SharedPreferences sharedPref = getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String username = sharedPref.getString(getString(R.string.user_name), "");
+        String password = sharedPref.getString(getString(R.string.pass_word), "");*/
+
 
         wireWidgets();
         //TODO wire login button to HomePageActivity, newAccount to CreateAccount, set onClickListeners for all
