@@ -13,21 +13,27 @@ import java.util.List;
 
 /**
  * Created by michaelxiong on 3/13/18.
+ * RecyclerView adapter
  */
 
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> {
 
-    private List<Food> foods;
+    private List<Food> foods; //items in recycler view
     private Context context;
 
+    /**
+     *
+     * @ param parent ViewGroup where view holder will be created ()
+     * */
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_item, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_item, parent, false); //sets view to be a food item view
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        //fills in view w/ info
         Food food = foods.get(position);
         holder.foodNameView.setText(food.getFoodName());
         //TODO: put something here having to do with the Food API to get the image for the food
@@ -46,6 +52,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
 
         public MyViewHolder(View itemView) {
             super(itemView);
+            //wire widgets
             foodNameView = itemView.findViewById(R.id.food_name_view);
             foodImageView = itemView.findViewById(R.id.food_image_view);
             foodSelectBox = itemView.findViewById(R.id.food_select_box);
