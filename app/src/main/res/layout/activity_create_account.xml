@@ -141,4 +141,12 @@
         tools:layout_editor_absoluteX="120dp"
         tools:layout_editor_absoluteY="447dp" />
 
+    <CheckBox
+        android:id="@+id/terms_checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Terms Agreement"
+        tools:layout_editor_absoluteX="244dp"
+        tools:layout_editor_absoluteY="410dp" />
+
 </android.support.constraint.ConstraintLayout>
