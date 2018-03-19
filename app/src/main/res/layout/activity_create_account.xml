@@ -139,7 +139,7 @@
         android:layout_height="wrap_content"
         android:text="Create Account"
         tools:layout_editor_absoluteX="120dp"
-        tools:layout_editor_absoluteY="447dp" />
+        tools:layout_editor_absoluteY="451dp" />
 
     <CheckBox
         android:id="@+id/terms_checkBox"
