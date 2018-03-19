@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 /*
@@ -21,12 +21,28 @@ Can: be accessed by clicking on logo/home, NOT launching activity!!! (Need to ch
 public class HomePageActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
+    View decorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
         wireWidgets();
+
+        hideNavBar();
+    }
+
+    @Override
+    protected void onResume() {
+        hideNavBar();
+        super.onResume();
+    }
+
+    public void hideNavBar(){
+        decorView=getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        decorView.setSystemUiVisibility(uiOptions);
+
     }
 
     @Override

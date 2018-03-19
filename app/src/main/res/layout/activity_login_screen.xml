@@ -6,14 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.example.caroline.foodme.LoginScreen">
 
-    <TextView
-        android:id="@+id/food_me_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:text="Food Me!"
-        tools:layout_editor_absoluteX="163dp"
-        tools:layout_editor_absoluteY="50dp"
-        tools:text="Food Me!" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_login"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimaryDark">
+        </android.support.v7.widget.Toolbar>
 
     <TextView
         android:id="@+id/username_textView"
@@ -21,15 +19,15 @@
         android:layout_height="wrap_content"
         android:text="Username"
         tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="102dp" />
+        tools:layout_editor_absoluteY="173dp" />
 
     <TextView
         android:id="@+id/password_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Password"
-        tools:layout_editor_absoluteX="163dp"
-        tools:layout_editor_absoluteY="202dp" />
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="274dp" />
 
     <EditText
         android:id="@+id/username_editText"
@@ -38,7 +36,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         tools:layout_editor_absoluteX="85dp"
-        tools:layout_editor_absoluteY="136dp" />
+        tools:layout_editor_absoluteY="211dp" />
 
     <EditText
         android:id="@+id/password_editText"
@@ -47,7 +45,7 @@
         android:ems="10"
         android:inputType="textPassword"
         tools:layout_editor_absoluteX="85dp"
-        tools:layout_editor_absoluteY="245dp" />
+        tools:layout_editor_absoluteY="306dp" />
 
     <TextView
         android:id="@+id/forgot_password_textView"
@@ -55,7 +53,7 @@
         android:layout_height="wrap_content"
         android:text="Forgot Password?"
         tools:layout_editor_absoluteX="136dp"
-        tools:layout_editor_absoluteY="306dp" />
+        tools:layout_editor_absoluteY="365dp" />
 
     <Button
         android:id="@+id/login_button"
@@ -63,7 +61,7 @@
         android:layout_height="wrap_content"
         android:text="Login"
         tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="373dp" />
+        tools:layout_editor_absoluteY="463dp" />
 
     <Button
         android:id="@+id/new_account_button"
@@ -71,7 +69,7 @@
         android:layout_height="wrap_content"
         android:text="New Account"
         tools:layout_editor_absoluteX="244dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteY="104dp" />
 
     <Button
         android:id="@+id/help_button"
@@ -79,7 +77,7 @@
         android:layout_height="wrap_content"
         android:text="Need Help?"
         tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteY="104dp" />
 
     <CheckBox
         android:id="@+id/remember_me_checkBox"
@@ -87,5 +85,6 @@
         android:layout_height="wrap_content"
         android:text="Remember Me"
         tools:layout_editor_absoluteX="131dp"
-        tools:layout_editor_absoluteY="334dp" />
+        tools:layout_editor_absoluteY="408dp" />
+
 </android.support.constraint.ConstraintLayout>
