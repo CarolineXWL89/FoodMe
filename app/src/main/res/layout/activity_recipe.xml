@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/image_image"
+        android:layout_width="75dp"
+        android:layout_height="79dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/background_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.02"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/background_image"
+        app:srcCompat="@mipmap/ic_launcher_round" />
+
+    <ImageView
+        android:id="@+id/background_image"
+        android:layout_width="384dp"
+        android:layout_height="204dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <Button
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/btns"
+        android:text="A"
+        android:textColor="@android:color/black"
+
+        tools:layout_editor_absoluteX="308dp"
+        tools:layout_editor_absoluteY="214dp" />
+    <View
+        android:layout_width="1dp"
+        android:layout_height="2dp"
+        android:background="#f0f0f0"
+        />
+
+    <Button
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bbb"
+
+        android:text="B"
+        android:textColor="@android:color/black"
+        tools:layout_editor_absoluteX="338dp"
+        tools:layout_editor_absoluteY="214dp" />
+
+    <TextView
+        android:id="@+id/name_textview"
+        android:layout_width="209dp"
+        android:layout_height="34dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="3dp"
+        android:text="Name"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/background_image"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="91dp" />
+
+    <TextView
+        android:id="@+id/creator__textView"
+        android:layout_width="119dp"
+        android:layout_height="23dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="3dp"
+        android:text="Creator"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name_textview"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="138dp" />
+
+    <TextView
+        android:id="@+id/time_textView"
+        android:layout_width="102dp"
+        android:layout_height="24dp"
+        android:text="Time"
+        tools:layout_editor_absoluteX="49dp"
+        tools:layout_editor_absoluteY="272dp" />
+
+    <TextView
+        android:id="@+id/servings_textView"
+        android:layout_width="112dp"
+        android:layout_height="23dp"
+        android:text="Servings"
+        tools:layout_editor_absoluteX="245dp"
+        tools:layout_editor_absoluteY="274dp" />
+
+    <TextView
+        android:id="@+id/recipe_textView"
+        android:layout_width="308dp"
+        android:layout_height="268dp"
+        android:text="Recipe"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="297dp" />
+
+    <ImageButton
+        android:id="@+id/speaker_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_lock_silent_mode_off"
+        tools:layout_editor_absoluteX="82dp"
+        tools:layout_editor_absoluteY="296dp" />
+
+</android.support.constraint.ConstraintLayout>
