@@ -32,6 +32,11 @@ import java.util.List;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
+/*
+Implements: fragment within fragments, RecyclerView for main page
+Contains: account settings, notifications, help, terms of use, about, language (STRETCH), social media (STRETCH)
+Can: launch into basically a text page for each part EXCEPTING --> account settings, notifications
+ */
 public class SettingsPageActivity extends AppCompatPreferenceActivity {
     //todo add header with back button
     /**

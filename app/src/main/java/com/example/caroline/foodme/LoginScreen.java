@@ -7,6 +7,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/*
+Initial screen seen when opening app
+ */
 public class LoginScreen extends AppCompatActivity {
 
     private Button login, newAccount, help;
@@ -20,6 +23,8 @@ public class LoginScreen extends AppCompatActivity {
         setContentView(R.layout.activity_login_screen);
 
         wireWidgets();
+        //TODO wire login button to HomePageActivity, newAccount to CreateAccount, set onClickListeners for all
+        //TODO link to Backendless
     }
 
     public void wireWidgets(){

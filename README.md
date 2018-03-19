@@ -1,19 +1,25 @@
 # FoodMe
 ###Classes
-- Login
-- Create Account
+- Login (Caroline)
+- Create Account (Caroline)
 - EVERY OTHER THING
     - Settings (Recycler View)
-        - account settings
-        - language
-        - notifications
+        - account settings (Jaemyung)
+        - language (STRETCH)
+        - notifications (STRETCH: ???Jaemyung + Ben)
+        - help (Jaemyung)
+        - terms of use (Jaemyung)
+        - about (Jaemyung)
         - social media (STRETCH)
-    - Tools (botton nav)
+    - Tools (button nav) (LATER)
         - Your tools
         - Add tools
-        - Recomended (nah)
+        - Recommended (nah) --> we should have this
     - Home (bottom nav)
-        - Search
-        - Create
-        - favorites
-    
+        - Search (Caroline)
+        - Create (Caroline)
+        - favorites (Caroline)
+        - Should have a home for recently added?
+    - Set-up/Other 
+        - Recycler/Check-box (Michael)
+        - Actual recipe page (Jaemyung)

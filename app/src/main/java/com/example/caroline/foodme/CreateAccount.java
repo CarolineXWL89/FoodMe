@@ -7,6 +7,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/*
+Has user make new account; linked from New Account button in LoginScreen
+ */
 public class CreateAccount extends AppCompatActivity {
 
     private TextView createAccountScreen, firstName, mi, lastName, username, email, password, confirmPass;
@@ -20,6 +23,8 @@ public class CreateAccount extends AppCompatActivity {
         setContentView(R.layout.activity_create_account);
 
         wireWidgets();
+
+        //TODO Backendless connection, createAccount sends out confirmation email OR FOR NOW brings to Login, adds user
     }
 
     public void wireWidgets(){
