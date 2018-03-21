@@ -9,7 +9,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
 
 /*
 Has user make new account; linked from New Account button in LoginScreen
@@ -61,6 +64,22 @@ public class CreateAccount extends AppCompatActivity {
                     //process for creating a new user:
                     BackendlessUser user = new BackendlessUser();
                     user.setProperty("name", firstNameInput.getText().toString() + " " + miInput.getText().toString()+". "+lastNameInput.getText().toString());
+                    user.setProperty("email", emailInput.getText().toString());
+                    user.setProperty("password", passInput.getText().toString());
+                    user.setProperty("username", usernameInput.getText().toString());
+                    Backendless.UserService.register(user, new AsyncCallback<BackendlessUser>() {
+                        @Override
+                        public void handleResponse(BackendlessUser response) {
+                            String username = (String) response.getProperty("username");
+                            Toast.makeText(CreateAccount.this, "Welcome " +username, Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        @Override
+                        public void handleFault(BackendlessFault fault) {
+                            Toast.makeText(CreateAccount.this, fault.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         });
