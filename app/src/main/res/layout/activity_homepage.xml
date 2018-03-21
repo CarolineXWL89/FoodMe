@@ -19,6 +19,10 @@
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/navigation_homepage" />
 
+    <TextView
+        android:id="@+id/carouselViewHolder_textView"
+        android:layout_width="355dp"
+        android:layout_height="183dp"></TextView>
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="0dp"
@@ -27,13 +31,18 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        android:text="CarouselView"
         app:layout_constraintBottom_toTopOf="@+id/navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.184" />
         app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settings_toolbar">
 
-    </FrameLayout>
+
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/settings_toolbar"
@@ -41,5 +50,16 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recipe_cards_split_recyclerView"
+        android:layout_width="368dp"
+        android:layout_height="246dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="257dp" />
 
 </android.support.constraint.ConstraintLayout>
