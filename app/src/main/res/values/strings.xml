@@ -80,7 +80,7 @@
     <string name="action_settings">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-string name="hello_blank_fragment_favorite">Hello blank fragment, favorite</string>
+    <string name="hello_blank_fragment_favorite">Hello blank fragment, favorite</string>
 
     <string name="hello_blank_fragment_create">Hello blank fragment, create</string>
 
@@ -88,4 +88,5 @@ string name="hello_blank_fragment_favorite">Hello blank fragment, favorite</stri
     <string name="user_name">username</string>
     <string name="pass_word">password</string>
     <string name="preference_file_key">prefrences</string>
+    <string name="action_help"> help </string>
 </resources>

@@ -16,7 +16,7 @@ Initial screen seen when opening app
  */
 public class LoginScreen extends AppCompatActivity {
 
-    private Button login, newAccount, help;
+    private Button login, newAccount;
     private EditText usernameInput, passwordInput;
     private CheckBox rememberMe;
     private TextView username, password;
@@ -56,12 +56,10 @@ public class LoginScreen extends AppCompatActivity {
     public void wireWidgets(){
         login = (Button) findViewById(R.id.login_button);
         newAccount = (Button) findViewById(R.id.new_account_button);
-        help = (Button) findViewById(R.id.help_button);
+
         usernameInput = (EditText) findViewById(R.id.username_editText);
         passwordInput = (EditText) findViewById(R.id.password_editText);
         rememberMe = (CheckBox) findViewById(R.id.remember_me_checkBox);
-        username = (TextView) findViewById(R.id.username_textView);
-        password = (TextView) findViewById(R.id.password_textView);
         toolbar= (Toolbar)findViewById(R.id.toolbar_login);
         setSupportActionBar(toolbar);
 

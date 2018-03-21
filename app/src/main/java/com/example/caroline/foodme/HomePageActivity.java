@@ -1,21 +1,18 @@
 package com.example.caroline.foodme;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 /*
@@ -28,14 +25,18 @@ public class HomePageActivity extends AppCompatActivity {
 
     public static final String TAG = "YADA";
     private TextView mTextMessage;
+    private View decorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
-        wireWidgets();
+        Intent i= new Intent(this, LoginScreen.class);
+        startActivity(i);
 
-        hideNavBar();
+
+        //wireWidgets();
+        //hideNavBar();
     }
 
     @Override
