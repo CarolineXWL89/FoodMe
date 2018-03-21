@@ -57,7 +57,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
             foodImageView = itemView.findViewById(R.id.food_image_view);
             foodSelectBox = itemView.findViewById(R.id.food_select_box);
 
-        }
+        }//
     }
 
 }
