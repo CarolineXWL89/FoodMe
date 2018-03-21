@@ -45,7 +45,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-
+//
         private TextView foodNameView;
         private ImageView foodImageView;
         private CheckBox foodSelectBox;
