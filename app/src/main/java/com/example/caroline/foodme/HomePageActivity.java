@@ -1,11 +1,14 @@
 package com.example.caroline.foodme;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -23,20 +26,28 @@ Can: be accessed by clicking on logo/home, NOT launching activity!!! (Need to ch
  */
 public class HomePageActivity extends AppCompatActivity {
 
+    /*
+    GET USERID //todo delete user exists when you log out
+    SharedPreferences sharedPref = getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String userID = sharedPref.getString(getString(R.string.user_ID), "");*/
     public static final String TAG = "YADA";
     private TextView mTextMessage;
     private View decorView;
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
-        Intent i= new Intent(this, LoginScreen.class);
-        startActivity(i);
+        logIn(); //checks if user ahs already logged in, if not swtiches to log in screen
+        wireWidgets();
 
 
-        //wireWidgets();
-        //hideNavBar();
+
+
+        hideNavBar();
     }
 
     @Override
@@ -50,6 +61,17 @@ public class HomePageActivity extends AppCompatActivity {
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         decorView.setSystemUiVisibility(uiOptions);
 
+
+    }
+
+    private void logIn() {
+        sharedPref = getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        Boolean userExists = sharedPref.getBoolean(getString(R.string.user), false); //checks if previous user exists
+        if(!userExists){ //if no user sends you to login
+            Intent i = new Intent(this, LoginScreen.class);
+            startActivity(i);
+        }
     }
 
     @Override
@@ -121,5 +143,5 @@ public class HomePageActivity extends AppCompatActivity {
         }
     }
 
-
+//
 }

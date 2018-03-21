@@ -26,21 +26,14 @@ public class LoginScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
-
-        /* FIX ME THROUGH APP
-        //todo save when logged in, delete when logged out, remember if logged it
         sharedPref = getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        editor = sharedPref.edit();
-        editor.putString(getString(R.string.user_name), "");
-        editor.putString(getString(R.string.pass_word), "");
-        editor.commit();
 
-        SharedPreferences sharedPref = getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        String username = sharedPref.getString(getString(R.string.user_name), "");
-        String password = sharedPref.getString(getString(R.string.pass_word), "");*/
-
+        //todo save UserID from bsckendless
+        /* editor = sharedPref.edit();
+        editor.putString(getString(R.string.user_ID), "");
+        editor.putBoolean(getString(R.string.user), true); //means there is a saved user
+        editor.commit(); */
 
         wireWidgets();
         //TODO wire login button to HomePageActivity, newAccount to CreateAccount, set onClickListeners for all
