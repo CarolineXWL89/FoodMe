@@ -15,6 +15,7 @@ public class LoginScreen extends AppCompatActivity {
     private EditText usernameInput, passwordInput;
     private CheckBox rememberMe;
     private TextView foodMe, username, password;
+    //treeeeellow
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +28,14 @@ public class LoginScreen extends AppCompatActivity {
     }
 
     public void wireWidgets(){
-        login = (Button) findViewById(R.id.login_button);
-        newAccount = (Button) findViewById(R.id.new_account_button);
-        help = (Button) findViewById(R.id.help_button);
-        usernameInput = (EditText) findViewById(R.id.username_editText);
-        passwordInput = (EditText) findViewById(R.id.password_editText);
-        rememberMe = (CheckBox) findViewById(R.id.remember_me_checkBox);
-        foodMe = (TextView) findViewById(R.id.food_me_textView);
-        username = (TextView) findViewById(R.id.username_textView);
-        password = (TextView) findViewById(R.id.password_textView);
+        login = findViewById(R.id.login_button);
+        newAccount = findViewById(R.id.new_account_button);
+        help = findViewById(R.id.help_button);
+        usernameInput = findViewById(R.id.username_editText);
+        passwordInput = findViewById(R.id.password_editText);
+        rememberMe = findViewById(R.id.remember_me_checkBox);
+        foodMe = findViewById(R.id.food_me_textView);
+        username = findViewById(R.id.username_textView);
+        password = findViewById(R.id.password_textView);
     }
 }
