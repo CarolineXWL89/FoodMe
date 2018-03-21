@@ -20,7 +20,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
 
     private List<Food> foods; //items in recycler view
     private Context context;
-
+//
     /**
      *
      * @ param parent ViewGroup where view holder will be created ()
