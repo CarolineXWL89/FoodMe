@@ -28,8 +28,9 @@ public class LoginScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
-        SharedPreferences sharedPref = getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+
 
         //todo save UserID from bsckendless
         /* editor = sharedPref.edit();
@@ -67,7 +68,7 @@ public class LoginScreen extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_help:
                 //enters settings activity
-                //todo  intetn for help
+                //todo  intent for help
                 return true;
             default:
                 // If we got here, the user's action was not recognized.
