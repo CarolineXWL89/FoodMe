@@ -85,8 +85,10 @@
     <string name="hello_blank_fragment_create">Hello blank fragment, create</string>
 
     <string name="hello_blank_fragment_search">Hello blank fragment, search</string>
-    <string name="user_name">username</string>
-    <string name="pass_word">password</string>
-    <string name="preference_file_key">prefrences</string>
+
+    <!--other strings-->
+    <string name="user_ID">userID</string>
+    <string name="preference_file_key">preferences</string>
+    <string name="user">user</string>
     <string name="action_help"> help </string>
 </resources>
