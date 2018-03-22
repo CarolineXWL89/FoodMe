@@ -39,8 +39,8 @@ public class HomePageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homepage);
-        logIn(); //checks if user ahs already logged in, if not swtiches to log in screen
+        setContentView(R.layout.activity_home_page);
+        logIn(); //checks if user ahs already logged in, if not switches to log in screen
         wireWidgets();
 
 
@@ -67,6 +67,7 @@ public class HomePageActivity extends AppCompatActivity {
         sharedPref = getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         Boolean userExists = sharedPref.getBoolean(getString(R.string.user), false); //checks if previous user exists
+        userExists = true; //todo delete me later
         if(!userExists){ //if no user sends you to login
             //Intent i = new Intent(this, LoginScreen.class);
             //startActivity(i);
@@ -81,6 +82,7 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     private void wireWidgets() {
+        Log.d(TAG, "wireWidgets: ");
         //creates toolbar at top for settings icon
         Toolbar myToolbar = (Toolbar) findViewById(R.id.settings_toolbar);
         setSupportActionBar(myToolbar);
@@ -101,15 +103,16 @@ public class HomePageActivity extends AppCompatActivity {
             Fragment currentFragment = null;
             switch (item.getItemId()) {
                 case R.id.navigation_search:
-                    Log.d(TAG, "onNavigationItemSelected: search");
                     currentFragment = new SearchFragment();
+                    //needs serach by (name or ingrediates)
+                    //needs sort by (sorts results)
+                    //needs recent seraches
+                    //needs recent views
                     break;
                 case R.id.navigation_favorites:
-                    Log.d(TAG, "onNavigationItemSelected: favorites");
                     currentFragment = new FavoritesFragment();
                     break;
                 case R.id.navigation_create:
-                    Log.d(TAG, "onNavigationItemSelected: create");
                     currentFragment = new CreateFragment();
                     break;
             }

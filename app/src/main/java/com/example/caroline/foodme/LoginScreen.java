@@ -32,7 +32,7 @@ public class LoginScreen extends AppCompatActivity {
 
 
 
-        //todo save UserID from bsckendless
+        //todo save UserID from bsckendless todo if not remember me turn it off
         /* editor = sharedPref.edit();
         editor.putString(getString(R.string.user_ID), "");
         editor.putBoolean(getString(R.string.user), true); //means there is a saved user
