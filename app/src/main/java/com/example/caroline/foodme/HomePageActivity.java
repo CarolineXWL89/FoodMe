@@ -3,21 +3,18 @@ package com.example.caroline.foodme;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 /*
@@ -34,24 +31,46 @@ public class HomePageActivity extends AppCompatActivity {
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         String userID = sharedPref.getString(getString(R.string.user_ID), "");*/
     public static final String TAG = "YADA";
+    private TextView mTextMessage;
+    private View decorView;
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homepage);
-        logIn(); //checks if user ahs already logged in, if not swtiches to log in screen
+        setContentView(R.layout.activity_home_page);
+        logIn(); //checks if user ahs already logged in, if not switches to log in screen
         wireWidgets();
+
+
+
+
+        hideNavBar();
+    }
+
+    @Override
+    protected void onResume() {
+        hideNavBar();
+        super.onResume();
+    }
+
+    public void hideNavBar(){
+        decorView=getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        decorView.setSystemUiVisibility(uiOptions);
+
+
     }
 
     private void logIn() {
         sharedPref = getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         Boolean userExists = sharedPref.getBoolean(getString(R.string.user), false); //checks if previous user exists
+        userExists = true; //todo delete me later
         if(!userExists){ //if no user sends you to login
-            Intent i = new Intent(this, LoginScreen.class);
-            startActivity(i);
+            //Intent i = new Intent(this, LoginScreen.class);
+            //startActivity(i);
         }
     }
 
@@ -63,6 +82,7 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     private void wireWidgets() {
+        Log.d(TAG, "wireWidgets: ");
         //creates toolbar at top for settings icon
         Toolbar myToolbar = (Toolbar) findViewById(R.id.settings_toolbar);
         setSupportActionBar(myToolbar);
@@ -83,15 +103,16 @@ public class HomePageActivity extends AppCompatActivity {
             Fragment currentFragment = null;
             switch (item.getItemId()) {
                 case R.id.navigation_search:
-                    Log.d(TAG, "onNavigationItemSelected: search");
                     currentFragment = new SearchFragment();
+                    //needs serach by (name or ingrediates)
+                    //needs sort by (sorts results)
+                    //needs recent seraches
+                    //needs recent views
                     break;
                 case R.id.navigation_favorites:
-                    Log.d(TAG, "onNavigationItemSelected: favorites");
                     currentFragment = new FavoritesFragment();
                     break;
                 case R.id.navigation_create:
-                    Log.d(TAG, "onNavigationItemSelected: create");
                     currentFragment = new CreateFragment();
                     break;
             }
