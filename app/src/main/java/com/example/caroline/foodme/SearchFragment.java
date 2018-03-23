@@ -9,6 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.backendless.Backendless;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
+import com.backendless.persistence.DataQueryBuilder;
+
+import java.util.List;
+
 public class SearchFragment extends Fragment {
 
     public static final String TAG = "fragments";
@@ -19,6 +26,7 @@ public class SearchFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        doMySearch("Bread");
     }
 
     @Override
@@ -35,6 +43,29 @@ public class SearchFragment extends Fragment {
 
     private void doMySearch(String query) {
         //todo make call to backendless and display as recycler view
+//        //todo get user id
+        String whereClause="recipeName = '"+query+"'";
+        DataQueryBuilder queryBuilder=DataQueryBuilder.create();
+        queryBuilder.setWhereClause(whereClause);
+        Backendless.Data.of(Recipe.class).find(queryBuilder, new AsyncCallback<List<Recipe>>() {
+            @Override
+            public void handleResponse(List<Recipe> response) {
+                Log.d(TAG, "handleResponse: "+response.size());
+
+
+            }
+
+            @Override
+            public void handleFault(BackendlessFault fault) {
+                Log.d(TAG, "handleFault: "+fault.getMessage());
+
+            }
+        });
+
+
+
+
+
     }
 
 }
