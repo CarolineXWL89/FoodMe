@@ -69,6 +69,7 @@ public class LoginScreen extends AppCompatActivity {
                     public void handleResponse(BackendlessUser response) {
                         String username = (String) response.getProperty("username");
                         Toast.makeText(LoginScreen.this, "Hello " +username, Toast.LENGTH_SHORT).show();
+                        
                     }
 
                     @Override
