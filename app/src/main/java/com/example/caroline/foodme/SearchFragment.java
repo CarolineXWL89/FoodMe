@@ -1,8 +1,6 @@
 package com.example.caroline.foodme;
 
-import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -27,7 +25,7 @@ import java.util.List;
 public class SearchFragment extends Fragment {
 
     public static final String TAG = "fragments";
-    private ArrayList<Result> results;
+    private ArrayList<Recipe> recipies;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private SearchResultsAdapter searchResultsAdapter;
@@ -41,7 +39,7 @@ public class SearchFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        doMySearch("Bread");
+
     }
 
     @Override
@@ -57,13 +55,20 @@ public class SearchFragment extends Fragment {
     private void doMySearch(String query) {
         //todo make call to backendless and display as recycler view
 //        //todo get user id
-        String whereClause="recipeName = '"+query+"'";
+        StringBuilder whereClause = new StringBuilder();
+        //whereClause.append( "recipeName like '%Bread%'" );
+        whereClause.append( "recipeName like '%"+query+"%'" );
+
+       // String whereClause="recipeName = '"+query+"'";
         DataQueryBuilder queryBuilder=DataQueryBuilder.create();
-        queryBuilder.setWhereClause(whereClause);
+        queryBuilder.setWhereClause(whereClause.toString());
         Backendless.Data.of(Recipe.class).find(queryBuilder, new AsyncCallback<List<Recipe>>() {
             @Override
             public void handleResponse(List<Recipe> response) {
                 Log.d(TAG, "handleResponse: "+response.size());
+                recipies.clear();
+                recipies.addAll(response);
+                searchResultsAdapter.notifyDataSetChanged();
 
 
             }
@@ -77,9 +82,9 @@ public class SearchFragment extends Fragment {
 
 
 
-//
 
-        Toast.makeText(context, query, Toast.LENGTH_SHORT).show();
+
+
     }
 
     private void wireDaStuff() {
@@ -90,12 +95,12 @@ public class SearchFragment extends Fragment {
                 Toast.makeText(context, "RecyclerViewOnClick", Toast.LENGTH_SHORT).show();
             }
         };
-        results = new ArrayList<>();
-        recyclerView = rootView.findViewById(R.id.search_results_recycler_view);
+        recipies = new ArrayList<>();
+        recyclerView = rootView.findViewById(R.id.search_recipe_recycler_view);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        searchResultsAdapter = new SearchResultsAdapter(results, context, listener);
+        searchResultsAdapter = new SearchResultsAdapter(recipies, context, listener);
         recyclerView.setAdapter(searchResultsAdapter);
         registerForContextMenu(recyclerView);
         simpleSearchView = (SearchView) rootView.findViewById(R.id.simpleSearchView); // inititate a search view

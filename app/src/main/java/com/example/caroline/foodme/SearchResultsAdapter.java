@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.List;
 
 /**
@@ -18,10 +16,10 @@ import java.util.List;
 
 public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdapter.MyViewHolder> {
         private RecyclerViewOnClick click;
-        private List<Result> results;
+        private List<Recipe> recipes;
         private Context context;
-    public SearchResultsAdapter(List<Result> results, Context context, RecyclerViewOnClick click) {
-            this.results = results;
+    public SearchResultsAdapter(List<Recipe> recipes, Context context, RecyclerViewOnClick click) {
+            this.recipes = recipes;
             this.context = context;
             this.click = click;
         }
@@ -35,14 +33,14 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
-            Result result = results.get(position);
-            holder.description.setText(result.getDescription());
-            Picasso.with(context).load(result.getLink()).into(holder.image);
+            Recipe result = recipes.get(position);
+            holder.description.setText(result.getRecipeName());
+  //          Picasso.with(context).load(result.getLink()).into(holder.image);
         }
 
         @Override
         public int getItemCount() {
-            return results.size();
+            return recipes.size();
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
