@@ -74,7 +74,7 @@ public class SearchFragment extends Fragment {
                 return false;
             }
 
-            @Override
+            @Override//
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
