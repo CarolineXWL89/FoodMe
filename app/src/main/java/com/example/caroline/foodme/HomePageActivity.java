@@ -44,7 +44,7 @@ public class HomePageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
         logIn(); //checks if user ahs already logged in, if not switches to log in screen
         wireWidgets();
-        Backendless.initApp( this, BackendSettings.APP_ID, BackendSettings.API_KEY );
+        Backendless.initApp( this, BackendlessSettings.APP_ID, BackendlessSettings.API_KEY );
         hideNavBar();
     }
 

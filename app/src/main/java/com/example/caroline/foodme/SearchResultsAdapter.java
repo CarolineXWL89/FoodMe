@@ -1,12 +1,18 @@
 package com.example.caroline.foodme;
 
 import android.content.Context;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -35,7 +41,13 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
         public void onBindViewHolder(MyViewHolder holder, int position) {
             Recipe result = recipes.get(position);
             holder.description.setText(result.getRecipeName());
-  //          Picasso.with(context).load(result.getLink()).into(holder.image);
+            holder.timeToPrepare.setText(result.getTimeNeeded());
+           if(result.getImageURL() != null) {
+                Picasso.with(context).load(result.getImageURL()).into(holder.image);
+            } else {
+
+               Picasso.with(context).load(R.drawable.ic_error_outline_black_24dp).into(holder.image);
+           }
         }
 
         @Override
@@ -46,20 +58,20 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
         {
             private RecyclerViewOnClick recyclerViewClick;
-            private TextView description;
+            private TextView description, timeToPrepare;
             private ImageView image;
 
             public MyViewHolder(View itemView, RecyclerViewOnClick click) {
                 super(itemView);
-                image = itemView.findViewById(R.id.food_image_view);
+                image = itemView.findViewById(R.id.food_picture);
                 description = itemView.findViewById(R.id.recipe_description);
+                timeToPrepare = itemView.findViewById(R.id.time_to_prepare);
                 recyclerViewClick = click;
                 itemView.setOnClickListener(this);
             }
 
             @Override
             public void onClick(View v) {
-                //todo do something
                 recyclerViewClick.onClick(v, getAdapterPosition());
             }
         }

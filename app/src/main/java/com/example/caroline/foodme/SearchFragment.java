@@ -58,9 +58,8 @@ public class SearchFragment extends Fragment {
         StringBuilder whereClause = new StringBuilder();
         //whereClause.append( "recipeName like '%Bread%'" );
         whereClause.append( "recipeName like '%"+query+"%'" );
-
        // String whereClause="recipeName = '"+query+"'";
-        DataQueryBuilder queryBuilder=DataQueryBuilder.create();
+        DataQueryBuilder queryBuilder = DataQueryBuilder.create();
         queryBuilder.setWhereClause(whereClause.toString());
         Backendless.Data.of(Recipe.class).find(queryBuilder, new AsyncCallback<List<Recipe>>() {
             @Override
@@ -69,37 +68,31 @@ public class SearchFragment extends Fragment {
                 recipies.clear();
                 recipies.addAll(response);
                 searchResultsAdapter.notifyDataSetChanged();
-
-
             }
 
             @Override
             public void handleFault(BackendlessFault fault) {
                 Log.d(TAG, "handleFault: "+fault.getMessage());
-
             }
         });
-
-
-
-
 
 
     }
 
     private void wireDaStuff() {
-        RecyclerViewOnClick listener = new RecyclerViewOnClick() {
-            @Override
-            public void onClick(View v, int pos) {
-                //todo make onclick
-                Toast.makeText(context, "RecyclerViewOnClick", Toast.LENGTH_SHORT).show();
-            }
-        };
         recipies = new ArrayList<>();
         recyclerView = rootView.findViewById(R.id.search_recipe_recycler_view);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        RecyclerViewOnClick listener = new RecyclerViewOnClick() {
+            @Override
+            public void onClick(View v, int pos) {
+                //todo make onclick
+                //todo load recipe
+                Toast.makeText(context, "We are making "+ recipies.get(pos).getRecipeName(), Toast.LENGTH_LONG).show();
+            }
+        };
         searchResultsAdapter = new SearchResultsAdapter(recipies, context, listener);
         recyclerView.setAdapter(searchResultsAdapter);
         registerForContextMenu(recyclerView);
