@@ -113,6 +113,7 @@ public class SearchFragment extends Fragment {
 
             @Override//
             public boolean onQueryTextChange(String newText) {
+                doMySearch(newText);
                 return false;
             }
         });
