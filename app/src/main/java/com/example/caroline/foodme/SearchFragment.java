@@ -13,25 +13,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchFragment extends Fragment {
 
     public static final String TAG = "fragments";
     private ArrayList<Recipe> recipies;
+    private ArrayList<String> ingredients;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private SearchResultsAdapter searchResultsAdapter;
     private Context context;
     private View rootView;
     private SearchView simpleSearchView;
+    private IngredientSearchAdapter ingredientSearchAdapter;
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -93,8 +94,9 @@ public class SearchFragment extends Fragment {
                 Toast.makeText(context, "We are making "+ recipies.get(pos).getRecipeName(), Toast.LENGTH_LONG).show();
             }
         };
+        ingredientSearchAdapter= new IngredientSearchAdapter(ingredients, listener,context);
         searchResultsAdapter = new SearchResultsAdapter(recipies, context, listener);
-        recyclerView.setAdapter(searchResultsAdapter);
+        recyclerView.setAdapter(ingredientSearchAdapter);
         registerForContextMenu(recyclerView);
         simpleSearchView = (SearchView) rootView.findViewById(R.id.simpleSearchView); // inititate a search view
         simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
