@@ -29,7 +29,6 @@ public class LoginScreen extends AppCompatActivity {
 
     public void wireWidgets(){
         login = findViewById(R.id.login_button);
-        newAccount = findViewById(R.id.new_account_button);
         help = findViewById(R.id.help_button);
         usernameInput = findViewById(R.id.username_editText);
         passwordInput = findViewById(R.id.password_editText);

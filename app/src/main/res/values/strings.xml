@@ -81,4 +81,12 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+
+    <string name="FAQs">How do I add a recipe? -There is a + symbol in the bottom right corner of the Home Page. Click it to add. What kind of filters are available in the app? -Cuisine, Ovo-Lacto Vegetarian Pesceterian, Vegan, Cannablism Where can I change my dietary preferences? Go to Settings then Preferences.</string>
+
+    <string name="terms_and_conditions">Don\'t upload swear words on recipes. dont be dumb or anoying. We may terminate or suspend our service if any of the terms and conditions are violated. </string>
+    <string name="About">Hallo. dis app is to meke some sort of recipe that u want but u have to do the work and then we jsut use teh internet and take credit. tyty pls like and subscribe.</string>
+
 </resources>
