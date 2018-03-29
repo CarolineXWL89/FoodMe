@@ -37,7 +37,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="casual"
                 android:text="Text"
-                android:textSize="30sp"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/prepare"
                 app:layout_constraintHorizontal_bias="0.5"

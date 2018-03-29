@@ -2,9 +2,18 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+
+    <item
+        android:id="@+id/search_recipe_general"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="search title here"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="collapseActionView|ifRoom" />
 <item
     android:id="@+id/action_settings"
     android:icon="@android:drawable/ic_menu_preferences"
     android:title="@string/action_settings"
     app:showAsAction="always"/>
+
+
 </menu>
