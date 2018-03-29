@@ -97,7 +97,7 @@ public class HomePageActivity extends AppCompatActivity {
         searchView=findViewById(R.id.search_recipe_general);
         searchView.setOnQueryTextListener(new android.widget.SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public boolean onQueryTextSubmit(String query) {//
                 List<Recipe> recipes= new ArrayList<>();
                 recipes.addAll(doMySearch(query));
                 Intent i=new Intent(HomePageActivity.this, SearchResultsDisplayer.class);
