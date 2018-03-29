@@ -40,6 +40,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
             Recipe result = recipes.get(position);
+
             holder.description.setText(result.getRecipeName());
             holder.timeToPrepare.setText(result.getTimeNeeded());
            if(result.getImageURL() != null) {

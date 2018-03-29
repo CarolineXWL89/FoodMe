@@ -2,11 +2,14 @@ package com.example.caroline.foodme;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -15,6 +18,8 @@ import java.util.ArrayList;
  */
 
 public class IngredientSearchAdapter extends RecyclerView.Adapter<IngredientSearchAdapter.MyViewHolder> {
+
+
     private ArrayList<String> ingredients;
     private RecyclerViewOnClick click;
     private Context context;
@@ -33,10 +38,27 @@ public class IngredientSearchAdapter extends RecyclerView.Adapter<IngredientSear
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
+        holder.ingredientNumberTextView.setText("Ingredient #"+(position+1));
+        holder.ingredientEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                ingredients.set(position,editable.toString());
+
+            }
+        });
     }
 
+
+    public ArrayList<String> getIngredients() {
+        return ingredients;
+    }
 
     @Override
     public int getItemCount() {

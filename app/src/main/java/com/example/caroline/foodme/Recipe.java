@@ -1,12 +1,20 @@
 package com.example.caroline.foodme;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+
 /**
  * Created by per6 on 3/23/18.
  */
 
-public class Recipe {
+public class Recipe implements Parcelable {
 
-    private String recipeName, directions, servings, timeNeeded, ImageURL;
+    private String recipeName;
+    private String directions;
+    private String servings;
+    private String timeNeeded;
+    private String ImageURL;
     private String objectId;
     private String ownerId;
 
@@ -75,4 +83,43 @@ public class Recipe {
     public void setImageURL(String url) {
         this.ImageURL = url;
     }
+
+    protected Recipe(Parcel in) {
+        recipeName = in.readString();
+        directions = in.readString();
+        servings = in.readString();
+        timeNeeded = in.readString();
+        ImageURL = in.readString();
+        objectId = in.readString();
+        ownerId = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(recipeName);
+        dest.writeString(directions);
+        dest.writeString(servings);
+        dest.writeString(timeNeeded);
+        dest.writeString(ImageURL);
+        dest.writeString(objectId);
+        dest.writeString(ownerId);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {
+        @Override
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+
+        @Override
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
 }
