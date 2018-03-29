@@ -22,7 +22,7 @@
             android:name=".SettingsPageActivity"
             android:label="@string/title_activity_settings_page" />
         <activity android:name=".LoginScreen" />
-        <activity android:name=".CreateAccount"></activity>
+        <activity android:name=".CreateAccount" />
     </application>
 
 </manifest>
