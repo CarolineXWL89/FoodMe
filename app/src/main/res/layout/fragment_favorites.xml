@@ -2,9 +2,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.caroline.foodme.FavoritesFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    <!--
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recipe_cards_split_recyclerView"
+        android:layout_width="368dp"
+        android:layout_height="246dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="257dp" />
+    <TextView
+        android:id="@+id/carouselViewHolder_textView"
+        android:layout_width="355dp"
+        android:layout_height="183dp"/>
+       -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
