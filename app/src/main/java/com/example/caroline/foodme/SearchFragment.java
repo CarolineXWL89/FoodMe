@@ -55,9 +55,9 @@ public class SearchFragment extends Fragment {
     private void doMySearch(String query) {
         //todo make call to backendless and display as recycler view
 //        //todo get user id
-        StringBuilder whereClause = new StringBuilder();
+        String whereClause = "";
         //whereClause.append( "recipeName like '%Bread%'" );
-        whereClause.append( "recipeName like '%"+query+"%'" );
+        whereClause = "recipeName like '%"+query+"%'";
        // String whereClause="recipeName = '"+query+"'";
         DataQueryBuilder queryBuilder = DataQueryBuilder.create();
         queryBuilder.setWhereClause(whereClause.toString());
@@ -110,5 +110,7 @@ public class SearchFragment extends Fragment {
                 return false;
             }
         });
+
+
     }
 }
