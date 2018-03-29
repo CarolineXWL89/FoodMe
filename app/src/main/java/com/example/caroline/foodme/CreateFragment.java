@@ -35,7 +35,7 @@ public class CreateFragment extends Fragment {
         rootview = inflater.inflate(R.layout.fragment_create, container, false);
         wireWidgets();
         return rootview;
-    }
+    }//
 
     private void wireWidgets() {
         //todo wire widgets
