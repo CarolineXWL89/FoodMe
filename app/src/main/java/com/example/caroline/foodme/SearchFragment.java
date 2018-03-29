@@ -154,14 +154,19 @@ public class SearchFragment extends Fragment {
             @Override
             public void handleResponse(List<Recipe> response) {
                 Log.d(TAG, "handleResponse: "+response.size());
-                Log.d(TAG, "handleResponse: "+response.get(0).getRecipeName());
+//                Log.d(TAG, "handleResponse: "+response.get(0).getRecipeName());
                 recipies.clear();
                 recipies.addAll(response);
                 ArrayList<Recipe> r=recipies;
                 //searchResultsAdapter.notifyDataSetChanged();
-                Intent i=new Intent(getActivity(),SearchResultsDisplayer.class);
-                i.putExtra("the_stuff", r);
-                //startActivity(i);
+                if(r.size()!=0) {
+                    Intent i = new Intent(getActivity(), SearchResultsDisplayer.class);
+                    i.putExtra("the_stuff", r);
+                    startActivity(i);
+                }
+                else {
+                    Toast.makeText(context, "No Results Found", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

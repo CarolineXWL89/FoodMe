@@ -47,7 +47,13 @@ public class SearchResultsDisplayer extends AppCompatActivity {
     private void wireWidgets() {
 
         recyclerView=findViewById(R.id.search_results_recycler_view);
-        searchResultsAdapter=new SearchResultsAdapter(recipes,this,click);
+        click=new RecyclerViewOnClick() {
+            @Override
+            public void onClick(View v, int pos) {
+                Toast.makeText(SearchResultsDisplayer.this, "We are making "+ recipes.get(pos).getRecipeName(), Toast.LENGTH_LONG).show();
+            }
+        };
+        searchResultsAdapter= new SearchResultsAdapter(recipes,this,click);
         layoutManager= new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
