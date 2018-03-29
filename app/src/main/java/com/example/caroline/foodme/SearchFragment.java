@@ -52,7 +52,7 @@ public class SearchFragment extends Fragment {
         wireDaStuff();
         return rootView;
     }
-
+//
     private void doMySearch(String query) {
         //todo make call to backendless and display as recycler view
 //        //todo get user id
