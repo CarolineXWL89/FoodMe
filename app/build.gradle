@@ -33,6 +33,10 @@ dependencies {
 
     implementation 'com.backendless:backendless:4.4.0'
 
+    compile 'com.synnapps:carouselview:0.1.4'
+    compile group: 'com.github.moondroid.coverflow', name: 'library', version: '1.0'
+
+
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }

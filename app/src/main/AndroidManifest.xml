@@ -14,6 +14,7 @@
             android:label="@string/title_activity_home_page">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -21,7 +22,8 @@
             android:name=".SettingsPageActivity"
             android:label="@string/title_activity_settings_page" />
         <activity android:name=".LoginScreen" />
-        <activity android:name=".CreateAccount"></activity>
+        <activity android:name=".CreateAccount" />
+        <activity android:name=".CarouselViewActivity"></activity>
     </application>
 
 </manifest>
