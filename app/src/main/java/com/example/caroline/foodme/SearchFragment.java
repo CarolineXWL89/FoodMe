@@ -104,7 +104,7 @@ public class SearchFragment extends Fragment {
 
         recyclerView.setAdapter(ingredientSearchAdapter);
         registerForContextMenu(recyclerView);
-        submit=rootView.findViewById(R.id.button_submit_search);
+        submit = rootView.findViewById(R.id.button_submit_search);
         addRecipe=rootView.findViewById(R.id.button_new_ingredient);
         addRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +116,7 @@ public class SearchFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<String > theStuff=ingredientSearchAdapter.getIngredients();
+                ArrayList<String > theStuff = ingredientSearchAdapter.getIngredients();
                 Log.d(TAG, "onClick: clicked");
                 backendlessSearchByIngredient(theStuff);
 //                Intent i=new Intent(getActivity(),SearchResultsDisplayer.class);
@@ -161,7 +161,7 @@ public class SearchFragment extends Fragment {
                 recipies.addAll(response);
                 ArrayList<Recipe> r=recipies;
                 //searchResultsAdapter.notifyDataSetChanged();
-                if(r.size()!=0) {
+                if(r.size()!= 0) {
                     Intent i = new Intent(getActivity(), SearchResultsDisplayer.class);
                     i.putExtra("the_stuff", r);
                     startActivity(i);
