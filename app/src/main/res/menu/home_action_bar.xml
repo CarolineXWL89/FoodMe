@@ -9,11 +9,11 @@
         android:title="search title here"
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="collapseActionView|ifRoom" />
-<item
-    android:id="@+id/action_settings"
-    android:icon="@android:drawable/ic_menu_preferences"
-    android:title="@string/action_settings"
-    app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/action_settings"
+        app:showAsAction="always"/>
 
 
 </menu>

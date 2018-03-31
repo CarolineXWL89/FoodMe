@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
@@ -94,14 +95,15 @@ public class HomePageActivity extends AppCompatActivity {
         //creates toolbar at top for settings icon
         Toolbar myToolbar = (Toolbar) findViewById(R.id.settings_toolbar);
         setSupportActionBar(myToolbar);
-        searchView=findViewById(R.id.search_recipe_general);
+        /*searchView = findViewById(R.id.search_recipe_general);
         searchView.setOnQueryTextListener(new android.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {//
                 List<Recipe> recipes= new ArrayList<>();
                 recipes.addAll(doMySearch(query));
-                Intent i=new Intent(HomePageActivity.this, SearchResultsDisplayer.class);
-                i.putParcelableArrayListExtra("the_stuff", recipes);
+                Intent i = new Intent(HomePageActivity.this, SearchResultsDisplayer.class);
+                //array list does not extend parcelables, fix me
+                //i.putParcelableArrayListExtra("the_stuff", recipes);
                 return false;
             }
 
@@ -109,7 +111,7 @@ public class HomePageActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
-        });
+        });*/
         //todo delete once fragments are completely done
         //wires bottom navigation
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);

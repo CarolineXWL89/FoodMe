@@ -33,7 +33,7 @@ public class NewIngredientsDisplayAdapter extends RecyclerView.Adapter<NewIngred
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.ingredient_search_item, parent,false);
+                .inflate(R.layout.create_recipe_ingredient_add_display, parent,false);
         return new MyViewHolder(view, click);
     }
 
@@ -66,5 +66,6 @@ public class NewIngredientsDisplayAdapter extends RecyclerView.Adapter<NewIngred
         public void onClick(View v) {
             recyclerViewClick.onClick(v, getAdapterPosition());
         }
+
     }
 }

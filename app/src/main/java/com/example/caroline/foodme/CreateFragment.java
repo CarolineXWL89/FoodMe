@@ -51,30 +51,31 @@ public class CreateFragment extends Fragment {
 
     private void wireWidgets() {
         ingredients = new ArrayList<>();
+        ingredients.add(" ");
         context = getActivity();
         imageUpload = rootview.findViewById(R.id.uploadImage);
         imageUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo lauch image upload
+                Toast.makeText(context, "Upload Pic", Toast.LENGTH_SHORT).show();
             }
         });
 
         createNewIngredient = rootview.findViewById(R.id.addIngredient);
-        newIngredient = rootview.findViewById(R.id.newIngredient);
         createNewIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo create new ingredient
-                //on enter adds to recylerview
                 String result = newIngredient.getText().toString();
                 if(!(result.equals(" ") || result.equals(""))) {
                     ingredients.add(result);
+                    newIngredientsDisplayAdapter.notifyDataSetChanged();
+                    newIngredient.setText("");
                 } else {
                     Toast.makeText(context, "Please type ingredient", Toast.LENGTH_LONG).show();
                 }
             }
         });
+        newIngredient = rootview.findViewById(R.id.newIngredient);
 
         title = rootview.findViewById(R.id.recipeTitleEditText);
         yield = rootview.findViewById(R.id.yieldEditText);
@@ -89,7 +90,7 @@ public class CreateFragment extends Fragment {
             public void onClick(View v, int pos) {
                 //todo make onclick
                 //todo edit ingredient --> create alert dialogue OK updates text
-                Toast.makeText(context, "UPDAT W/ alert dialogue here", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "UPDATE W/ alert dialogue here", Toast.LENGTH_LONG).show();
             }
         };
         newIngredientsDisplayAdapter = new NewIngredientsDisplayAdapter(ingredients, listener, context);
@@ -104,5 +105,4 @@ public class CreateFragment extends Fragment {
         });
 
     }
-
 }
