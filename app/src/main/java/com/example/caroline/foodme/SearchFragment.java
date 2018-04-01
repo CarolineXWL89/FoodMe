@@ -34,7 +34,7 @@ public class SearchFragment extends Fragment {
     //private SearchResultsAdapter searchResultsAdapter;
     private Context context;
     private View rootView;
-    private SearchView simpleSearchView;
+
     private IngredientSearchAdapter ingredientSearchAdapter;
     public SearchFragment() {
         // Required empty public constructor
@@ -56,32 +56,6 @@ public class SearchFragment extends Fragment {
         return rootView;
     }
 //
-    private void doMySearch(String query) {
-        //todo make call to backendless and display as recycler view
-        //todo get user id
-        String whereClause = "";
-        //whereClause.append( "recipeName like '%Bread%'" );
-        whereClause = "recipeName like '%"+query+"%'";
-       // String whereClause="recipeName = '"+query+"'";
-        DataQueryBuilder queryBuilder = DataQueryBuilder.create();
-        queryBuilder.setWhereClause(whereClause.toString());
-        Backendless.Data.of(Recipe.class).find(queryBuilder, new AsyncCallback<List<Recipe>>() {
-            @Override
-            public void handleResponse(List<Recipe> response) {
-                Log.d(TAG, "handleResponse: "+response.size());
-                recipies.clear();
-                recipies.addAll(response);
-                //searchResultsAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void handleFault(BackendlessFault fault) {
-                Log.d(TAG, "handleFault: "+fault.getMessage());
-            }
-        });
-
-
-    }
 
     private void wireDaStuff() {
         recipies = new ArrayList<>();
@@ -125,21 +99,6 @@ public class SearchFragment extends Fragment {
                 //todo create a display activity
             }
         });
-        simpleSearchView = (SearchView) rootView.findViewById(R.id.simpleSearchView); // inititate a search view
-        simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                doMySearch(query);
-                return false;
-            }
-
-            @Override//
-            public boolean onQueryTextChange(String newText) {
-                doMySearch(newText);
-                return false;
-            }
-        });
-
 
     }
 
@@ -161,7 +120,7 @@ public class SearchFragment extends Fragment {
                 recipies.addAll(response);
                 ArrayList<Recipe> r=recipies;
                 //searchResultsAdapter.notifyDataSetChanged();
-                if(r.size()!= 0) {
+                if(r.size()!=0) {
                     Intent i = new Intent(getActivity(), SearchResultsDisplayer.class);
                     i.putExtra("the_stuff", r);
                     startActivity(i);

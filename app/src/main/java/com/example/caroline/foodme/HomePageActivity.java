@@ -1,9 +1,11 @@
 package com.example.caroline.foodme;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Context;
 
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
@@ -87,6 +90,22 @@ public class HomePageActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.home_action_bar, menu);
+        SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.search_recipe_general).getActionView();
+        searchView.setOnQueryTextListener(new android.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {//
+                    doMySearch(query);
+                    return false;
+            }
+
+            @Override//
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+
         return true;
     }
 
@@ -95,23 +114,6 @@ public class HomePageActivity extends AppCompatActivity {
         //creates toolbar at top for settings icon
         Toolbar myToolbar = (Toolbar) findViewById(R.id.settings_toolbar);
         setSupportActionBar(myToolbar);
-        /*searchView = findViewById(R.id.search_recipe_general);
-        searchView.setOnQueryTextListener(new android.widget.SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {//
-                List<Recipe> recipes= new ArrayList<>();
-                recipes.addAll(doMySearch(query));
-                Intent i = new Intent(HomePageActivity.this, SearchResultsDisplayer.class);
-                //array list does not extend parcelables, fix me
-                //i.putParcelableArrayListExtra("the_stuff", recipes);
-                return false;
-            }
-
-            @Override//
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });*/
         //todo delete once fragments are completely done
         //wires bottom navigation
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -173,10 +175,9 @@ public class HomePageActivity extends AppCompatActivity {
 
 
     //
-    private List<Recipe> doMySearch(String query) {
+    private void doMySearch(String query) {
         //todo make call to backendless and display as recycler view
         //todo get user id
-        final List<Recipe> recipies = new ArrayList<>();
         StringBuilder whereClause = new StringBuilder();
         //whereClause.append( "recipeName like '%Bread%'" );
         whereClause.append("recipeName like '%" + query + "%'");
@@ -187,7 +188,11 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void handleResponse(List<Recipe> response) {
                 Log.d(TAG, "handleResponse: " + response.size());
+                ArrayList<Recipe> recipies = new ArrayList<>();
                 recipies.addAll(response);
+                Intent i = new Intent(HomePageActivity.this, SearchResultsDisplayer.class);
+                i.putExtra("the_stuff", recipies);
+                startActivity(i);
                 //searchResultsAdapter.notifyDataSetChanged();
             }
 
@@ -196,6 +201,5 @@ public class HomePageActivity extends AppCompatActivity {
                 Log.d(TAG, "handleFault: " + fault.getMessage());
             }
         });
-        return recipies;
     }
 }

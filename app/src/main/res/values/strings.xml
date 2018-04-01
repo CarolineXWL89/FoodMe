@@ -94,4 +94,5 @@
     <!-- TODO: Change search hint -->
     <string name="search_hint">Search</string>
     <string name="app_label">Food Me</string>
+    <string name="action_search">Search</string>
 </resources>
