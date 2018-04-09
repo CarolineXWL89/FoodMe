@@ -44,7 +44,7 @@ public class FavoritesFragment extends Fragment {
 
         return view;
     }
-
+//
 
     public void setImages(){
         images = new ArrayList<Integer>();
