@@ -38,12 +38,12 @@ public class HomePageActivity extends AppCompatActivity {
 
     private void wireWidgets() {
         //creates toolbar at top for settings icon
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.settings_toolbar);
+        Toolbar myToolbar = findViewById(R.id.settings_toolbar);
         setSupportActionBar(myToolbar);
         //todo delete once fragments are completely done
-        mTextMessage = (TextView) findViewById(R.id.message);
+        mTextMessage = findViewById(R.id.message);
         //wires bottom navigation
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 

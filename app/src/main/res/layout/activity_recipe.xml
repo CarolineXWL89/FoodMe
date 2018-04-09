@@ -26,13 +26,12 @@
         tools:layout_editor_absoluteY="8dp" />
 
     <Button
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/btns"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:text="A"
         android:textColor="@android:color/black"
 
-        tools:layout_editor_absoluteX="317dp"
+        tools:layout_editor_absoluteX="308dp"
         tools:layout_editor_absoluteY="186dp" />
 
     <View
@@ -41,10 +40,8 @@
         android:background="#f0f0f0" />
 
     <Button
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/bbb"
-
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:text="B"
         android:textColor="@android:color/black"
         tools:layout_editor_absoluteX="347dp"
