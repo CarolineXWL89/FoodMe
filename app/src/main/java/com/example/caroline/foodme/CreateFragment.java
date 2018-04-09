@@ -1,8 +1,10 @@
 package com.example.caroline.foodme;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -87,9 +89,29 @@ public class CreateFragment extends Fragment {
         ingredientsRecylerView.setItemAnimator(new DefaultItemAnimator());
         RecyclerViewOnClick listener = new RecyclerViewOnClick() {
             @Override
-            public void onClick(View v, int pos) {
+            public void onClick(View v, final int pos) {
                 //todo make onclick
                 //todo edit ingredient --> create alert dialogue OK updates text
+
+                Toast.makeText(context, "UPDATE W/ alert dialogue here", Toast.LENGTH_LONG).show();
+
+                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                final EditText input = new EditText(context);
+                input.setText(ingredients.get(pos));
+                // set title
+                alertDialogBuilder.setTitle("Edit Ingredient");
+                alertDialogBuilder.setView(input);
+                // set dialog message
+
+                alertDialogBuilder.setCancelable(true).setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        ingredients.add(pos, input.getText().toString());
+                    }
+                });
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                // show it
+                alertDialog.show();
                 Toast.makeText(context, "UPDATE W/ alert dialogue here", Toast.LENGTH_LONG).show();
             }
         };
