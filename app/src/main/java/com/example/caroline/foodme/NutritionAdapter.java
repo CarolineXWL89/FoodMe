@@ -9,4 +9,7 @@ import android.content.Context;
 public class NutritionAdapter {
 
     private Context context;
+
+
+
 }
