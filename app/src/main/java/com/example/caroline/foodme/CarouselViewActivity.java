@@ -17,6 +17,7 @@ public class CarouselViewActivity extends AppCompatActivity {
 
     CarouselView carouselView;
     private ArrayList<Integer> images;
+    private ArrayList<String> titles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class CarouselViewActivity extends AppCompatActivity {
     //Add images to the arraylist here, these images will scroll
     public void setImages(){
         images = new ArrayList<Integer>();
+        titles = new ArrayList<String>();
     }
 
     ViewListener viewListener = new ViewListener() {
@@ -43,7 +45,7 @@ public class CarouselViewActivity extends AppCompatActivity {
             ImageView imageView = customView.findViewById(R.id.carousel_image_view);
             TextView textView = customView.findViewById(R.id.carousel_text_view);
             imageView.setImageResource(images.get(position));
-            textView.setText("Title");
+            textView.setText(titles.get(position));
             return customView;
         }
     };
