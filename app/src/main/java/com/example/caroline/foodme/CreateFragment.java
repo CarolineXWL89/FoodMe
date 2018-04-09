@@ -113,7 +113,7 @@ public class CreateFragment extends Fragment {
                 // show it
                 alertDialog.show();
                 Toast.makeText(context, "UPDATE W/ alert dialogue here", Toast.LENGTH_LONG).show();
-            }
+            }//
         };
         newIngredientsDisplayAdapter = new NewIngredientsDisplayAdapter(ingredients, listener, context);
         ingredientsRecylerView.setAdapter(newIngredientsDisplayAdapter);
