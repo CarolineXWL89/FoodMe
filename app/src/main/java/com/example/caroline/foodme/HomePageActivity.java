@@ -64,13 +64,13 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     private void logIn() {
-        sharedPref = getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        Boolean userExists = sharedPref.getBoolean(getString(R.string.user), false); //checks if previous user exists
-        if(!userExists){ //if no user sends you to login
-            Intent i = new Intent(this, LoginScreen.class);
-            startActivity(i);
-        }
+//        sharedPref = getSharedPreferences(
+//                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+//        Boolean userExists = sharedPref.getBoolean(getString(R.string.user), false); //checks if previous user exists
+//        if(!userExists){ //if no user sends you to login
+//            Intent i = new Intent(this, LoginScreen.class);
+//            startActivity(i);
+//        }
     }
 
     @Override
