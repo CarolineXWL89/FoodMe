@@ -23,3 +23,9 @@
     - Set-up/Other 
         - Recycler/Check-box (Michael)
         - Actual recipe page (Jaemyung)
+        
+###TODOs
+- Link APIs w/ multiple Interfaces (Caroline)
+    - Get the recipes and fit it to the Recipe class (Carolien)
+- Setting Preferences (Ben)
+- Randomisation recipe (Jaemyung + Michael)
