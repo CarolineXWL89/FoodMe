@@ -44,6 +44,7 @@ public class FavoritesFragment extends Fragment {
 
         return view;
     }
+
 //
 
     public void setImages(){
