@@ -2,13 +2,16 @@ package com.example.caroline.foodme;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +22,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class CreateFragment extends Fragment {
+public class CreateFragment extends Fragment implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 
     private View rootview;
     private ImageButton imageUpload;
@@ -49,7 +52,11 @@ public class CreateFragment extends Fragment {
         rootview = inflater.inflate(R.layout.fragment_create, container, false);
         wireWidgets();
         return rootview;
-    }//
+    }//todo two tables for recycler view
+    //todo delte swipping
+    //todo fix problem
+    //todo automatic delete intail ingrediatn
+    //todo delte button in card view
 
     private void wireWidgets() {
         ingredients = new ArrayList<>();
@@ -60,6 +67,7 @@ public class CreateFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "Upload Pic", Toast.LENGTH_SHORT).show();
+                //todo UPLOAD
             }
         });
 
@@ -78,7 +86,6 @@ public class CreateFragment extends Fragment {
             }
         });
         newIngredient = rootview.findViewById(R.id.newIngredient);
-
         title = rootview.findViewById(R.id.recipeTitleEditText);
         yield = rootview.findViewById(R.id.yieldEditText);
         timeNeeded = rootview.findViewById(R.id.timeEditText);
@@ -87,35 +94,7 @@ public class CreateFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         ingredientsRecylerView.setLayoutManager(layoutManager);
         ingredientsRecylerView.setItemAnimator(new DefaultItemAnimator());
-        RecyclerViewOnClick listener = new RecyclerViewOnClick() {
-            @Override
-            public void onClick(View v, final int pos) {
-                //todo make onclick
-                //todo edit ingredient --> create alert dialogue OK updates text
-
-                Toast.makeText(context, "UPDATE W/ alert dialogue here", Toast.LENGTH_LONG).show();
-
-                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                final EditText input = new EditText(context);
-                input.setText(ingredients.get(pos));
-                // set title
-                alertDialogBuilder.setTitle("Edit Ingredient");
-                alertDialogBuilder.setView(input);
-                // set dialog message
-
-                alertDialogBuilder.setCancelable(true).setPositiveButton("Update", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        ingredients.add(pos, input.getText().toString());
-                    }
-                });
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                // show it
-                alertDialog.show();
-                Toast.makeText(context, "UPDATE W/ alert dialogue here", Toast.LENGTH_LONG).show();
-            }//
-        };
-        newIngredientsDisplayAdapter = new NewIngredientsDisplayAdapter(ingredients, listener, context);
+        newIngredientsDisplayAdapter = new NewIngredientsDisplayAdapter(ingredients, context);
         ingredientsRecylerView.setAdapter(newIngredientsDisplayAdapter);
         registerForContextMenu(ingredientsRecylerView);
         submit = rootview.findViewById(R.id.submit);
@@ -126,5 +105,33 @@ public class CreateFragment extends Fragment {
             }
         });
 
+        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(ingredientsRecylerView);
+        //todo tell user that swipping from left will delete item
+    }
+
+    @Override
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
+        if (viewHolder instanceof NewIngredientsDisplayAdapter.MyViewHolder) {
+            // get the removed item name to display it in snack bar
+            String name = ingredients.get(viewHolder.getAdapterPosition());
+
+            // backup of removed item for undo purpose
+            final String deletedItem = ingredients.get(viewHolder.getAdapterPosition());
+            final int deletedIndex = viewHolder.getAdapterPosition();
+
+            // remove the item from recycler view
+            newIngredientsDisplayAdapter.removeItem(viewHolder.getAdapterPosition());
+
+            // showing snack bar with Undo option
+            Snackbar snackbar = Snackbar.make(rootview, name + " removed!", Snackbar.LENGTH_LONG);
+            snackbar.setAction("UNDO", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    newIngredientsDisplayAdapter.restoreItem(deletedItem, deletedIndex);
+                }
+            });
+            snackbar.show();
+        }
     }
 }

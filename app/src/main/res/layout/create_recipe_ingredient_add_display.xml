@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginBottom="6dp"
+        android:layout_marginBottom="0dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toTopOf="@+id/directionsTitleBox"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,16 +24,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
+            <EditText
                 android:id="@+id/newIngredientDisplay"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/quicksand_medium"
                 android:hint="New Ingredient"
+                android:inputType="text"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"

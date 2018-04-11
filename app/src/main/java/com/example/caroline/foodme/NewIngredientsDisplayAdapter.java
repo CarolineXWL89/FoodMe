@@ -21,12 +21,10 @@ public class NewIngredientsDisplayAdapter extends RecyclerView.Adapter<NewIngred
 
 
     private ArrayList<String> ingredients;
-    private RecyclerViewOnClick click;
     private Context context;
 
-    public NewIngredientsDisplayAdapter(ArrayList<String> ingredients, RecyclerViewOnClick click, Context context) {
+    public NewIngredientsDisplayAdapter(ArrayList<String> ingredients, Context context) {
         this.ingredients = ingredients;
-        this.click = click;
         this.context = context;
     }
 
@@ -34,14 +32,41 @@ public class NewIngredientsDisplayAdapter extends RecyclerView.Adapter<NewIngred
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.create_recipe_ingredient_add_display, parent,false);
-        return new MyViewHolder(view, click);
+        return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.newIngredientsDisplay.setText(ingredients.get(position));
+        holder.newIngredientsDisplay.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //yada
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                ingredients.remove(position);
+                ingredients.add(position, holder.newIngredientsDisplay.getText().toString());
+                //notifyDataSetChanged();
+            }
+        });
     }
 
+    public void removeItem(int position) {
+        ingredients.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(String item, int position) {
+        ingredients.add(position, item);
+        notifyItemInserted(position);
+    }
 
     public ArrayList<String> getLisOfIngredients() {
         return ingredients;
@@ -52,19 +77,12 @@ public class NewIngredientsDisplayAdapter extends RecyclerView.Adapter<NewIngred
         return ingredients.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView newIngredientsDisplay;
-        private RecyclerViewOnClick recyclerViewClick;
+    public class MyViewHolder extends RecyclerView.ViewHolder{
+        private EditText newIngredientsDisplay;
 
-        public MyViewHolder(View itemView, RecyclerViewOnClick click) {
+        public MyViewHolder(View itemView) {
             super(itemView);
             newIngredientsDisplay = itemView.findViewById(R.id.newIngredientDisplay);
-            recyclerViewClick = click;
-        }
-
-        @Override
-        public void onClick(View v) {
-            recyclerViewClick.onClick(v, getAdapterPosition());
         }
 
     }
