@@ -9,9 +9,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +24,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class CreateFragment extends Fragment implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
+public class CreateFragment extends Fragment  {
 
     private View rootview;
     private ImageButton imageUpload;
@@ -52,16 +54,14 @@ public class CreateFragment extends Fragment implements RecyclerItemTouchHelper.
         rootview = inflater.inflate(R.layout.fragment_create, container, false);
         wireWidgets();
         return rootview;
-    }//todo two tables for recycler view
-    //todo delte swipping
-    //todo fix problem
-    //todo automatic delete intail ingrediatn
-    //todo delte button in card view
+    }
 
     private void wireWidgets() {
         ingredients = new ArrayList<>();
         ingredients.add(" ");
         context = getActivity();
+
+        //wires image uploader
         imageUpload = rootview.findViewById(R.id.uploadImage);
         imageUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,12 +71,13 @@ public class CreateFragment extends Fragment implements RecyclerItemTouchHelper.
             }
         });
 
+        //wires text box for new ingredient
         createNewIngredient = rootview.findViewById(R.id.addIngredient);
         createNewIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String result = newIngredient.getText().toString();
-                if(!(result.equals(" ") || result.equals(""))) {
+                if (!(result.equals(" ") || result.equals(""))) {
                     ingredients.add(result);
                     newIngredientsDisplayAdapter.notifyDataSetChanged();
                     newIngredient.setText("");
@@ -85,18 +86,24 @@ public class CreateFragment extends Fragment implements RecyclerItemTouchHelper.
                 }
             }
         });
+
+        //Wires edit texts
         newIngredient = rootview.findViewById(R.id.newIngredient);
         title = rootview.findViewById(R.id.recipeTitleEditText);
         yield = rootview.findViewById(R.id.yieldEditText);
         timeNeeded = rootview.findViewById(R.id.timeEditText);
         directions = rootview.findViewById(R.id.directions);
+
+        //wires recyvler view and adds adapters
         ingredientsRecylerView = rootview.findViewById(R.id.ingrediantsRecylerView);
-        layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager = new GridLayoutManager(getActivity(), 2);
         ingredientsRecylerView.setLayoutManager(layoutManager);
         ingredientsRecylerView.setItemAnimator(new DefaultItemAnimator());
         newIngredientsDisplayAdapter = new NewIngredientsDisplayAdapter(ingredients, context);
         ingredientsRecylerView.setAdapter(newIngredientsDisplayAdapter);
         registerForContextMenu(ingredientsRecylerView);
+
+        //wires submit button
         submit = rootview.findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,33 +112,59 @@ public class CreateFragment extends Fragment implements RecyclerItemTouchHelper.
             }
         });
 
-        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
-        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(ingredientsRecylerView);
-        //todo tell user that swipping from left will delete item
+        //deletes placeholder ingredient
+        newIngredientsDisplayAdapter.removeItem(0);
     }
+
+    //todo overide on save instance state so that device can turn
+}
+
+
+/*
+HOW TO IMPLEMENT SWIPE TO DELETE
+
+MAIN CLASS:  (implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener)
+    ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
+    new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(/*Recycler view*//*);
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
-        if (viewHolder instanceof NewIngredientsDisplayAdapter.MyViewHolder) {
+        if (viewHolder instanceof /*Adapter type*//*.MyViewHolder) {
             // get the removed item name to display it in snack bar
-            String name = ingredients.get(viewHolder.getAdapterPosition());
+            String name = /*Array List*//*.get(viewHolder.getAdapterPosition());
 
             // backup of removed item for undo purpose
-            final String deletedItem = ingredients.get(viewHolder.getAdapterPosition());
+            final String deletedItem = /*Array List*//*.get(viewHolder.getAdapterPosition());
             final int deletedIndex = viewHolder.getAdapterPosition();
 
             // remove the item from recycler view
-            newIngredientsDisplayAdapter.removeItem(viewHolder.getAdapterPosition());
+            /*Adapter*//*.removeItem(viewHolder.getAdapterPosition());
 
             // showing snack bar with Undo option
-            Snackbar snackbar = Snackbar.make(rootview, name + " removed!", Snackbar.LENGTH_LONG);
+            Snackbar snackbar = Snackbar.make(/*view*//*, name + " removed!", Snackbar.LENGTH_LONG);
             snackbar.setAction("UNDO", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    newIngredientsDisplayAdapter.restoreItem(deletedItem, deletedIndex);
+                    /*Adapter*//*.restoreItem(deletedItem, deletedIndex);
                 }
             });
             snackbar.show();
         }
     }
-}
+ADAPTER CLASS:
+
+    public void removeItem(int position) {
+        ingredients.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(String item, int position) {
+        ingredients.add(position, item);
+        notifyItemInserted(position);
+    }
+
+    public ArrayList<String> getListOfIngredients() {
+        return ingredients;
+    }
+
+* */

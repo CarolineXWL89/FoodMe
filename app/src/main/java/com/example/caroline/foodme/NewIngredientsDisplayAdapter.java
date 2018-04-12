@@ -1,17 +1,21 @@
 package com.example.caroline.foodme;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by per6 on 3/27/18.
@@ -19,7 +23,7 @@ import java.util.ArrayList;
 
 public class NewIngredientsDisplayAdapter extends RecyclerView.Adapter<NewIngredientsDisplayAdapter.MyViewHolder> {
 
-
+    private final String TAG = "TAG, you're it";
     private ArrayList<String> ingredients;
     private Context context;
 
@@ -38,6 +42,7 @@ public class NewIngredientsDisplayAdapter extends RecyclerView.Adapter<NewIngred
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.newIngredientsDisplay.setText(ingredients.get(position));
+        Log.d(TAG, "onBindViewHolder: "+position);
         holder.newIngredientsDisplay.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -58,6 +63,11 @@ public class NewIngredientsDisplayAdapter extends RecyclerView.Adapter<NewIngred
         });
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
     public void removeItem(int position) {
         ingredients.remove(position);
         notifyItemRemoved(position);
@@ -68,7 +78,7 @@ public class NewIngredientsDisplayAdapter extends RecyclerView.Adapter<NewIngred
         notifyItemInserted(position);
     }
 
-    public ArrayList<String> getLisOfIngredients() {
+    public ArrayList<String> getListOfIngredients() {
         return ingredients;
     }
 
@@ -79,10 +89,36 @@ public class NewIngredientsDisplayAdapter extends RecyclerView.Adapter<NewIngred
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         private EditText newIngredientsDisplay;
+        private ImageButton delete;
 
-        public MyViewHolder(View itemView) {
+        public MyViewHolder(final View itemView) {
             super(itemView);
             newIngredientsDisplay = itemView.findViewById(R.id.newIngredientDisplay);
+            delete = itemView.findViewById(R.id.deleteButton);
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String name = ingredients.get(getAdapterPosition());
+
+                    // backup of removed item for undo purpose
+                    final String deletedItem = ingredients.get(getAdapterPosition());
+                    final int deletedIndex = getAdapterPosition();
+
+                    // remove the item from recycler view
+                    removeItem(getAdapterPosition());
+
+                    // showing snack bar with Undo option
+                    Snackbar snackbar = Snackbar.make(itemView, name + " removed!", Snackbar.LENGTH_LONG);
+                    snackbar.setAction("UNDO", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            restoreItem(deletedItem, deletedIndex);
+                        }
+                    });
+                    snackbar.show();
+                }
+            });
         }
 
     }
