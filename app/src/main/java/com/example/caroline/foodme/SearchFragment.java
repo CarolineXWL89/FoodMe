@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,7 +73,6 @@ public class SearchFragment extends Fragment {
             }
         };
         ingredientSearchAdapter= new IngredientSearchAdapter(ingredients, listener,context);
-        //searchResultsAdapter = new SearchResultsAdapter(recipies, context, listener);
 
         recyclerView.setAdapter(ingredientSearchAdapter);
         registerForContextMenu(recyclerView);
@@ -83,8 +81,11 @@ public class SearchFragment extends Fragment {
         addRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ingredients.add("");
+                ingredients.add(ingredients.size(), "");
+                Log.d(TAG, "onClick: ingredients"+ingredients.toString());
+                recyclerView.smoothScrollToPosition(ingredients.size()-1);
                 ingredientSearchAdapter.notifyDataSetChanged();
+
             }
         });
         submit.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +101,8 @@ public class SearchFragment extends Fragment {
             }
         });
 
+
+
     }
 
     private void backendlessSearchByIngredient(final ArrayList<String> theStuff) {
@@ -108,7 +111,7 @@ public class SearchFragment extends Fragment {
         for(String ingredient:theStuff) {
             whereClause.append("and ingredients like '%" + ingredient + "%'");
         }
-        Log.d(TAG, "backendlessSearchByIngredient: "+whereClause.toString());
+        Log.d(TAG, "backendlessSearchByIngredient: " +whereClause.toString());
         DataQueryBuilder queryBuilder = DataQueryBuilder.create();
         queryBuilder.setWhereClause(whereClause.toString());
         Backendless.Data.of(Recipe.class).find(queryBuilder, new AsyncCallback<List<Recipe>>() {

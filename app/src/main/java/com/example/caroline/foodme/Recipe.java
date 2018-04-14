@@ -21,11 +21,14 @@ public class Recipe implements Parcelable {
     public Recipe(){
     }
 
-    public Recipe(String recipeName, String recipe, String objectId, String ownerId, String url) {
+    public Recipe(String recipeName, String directions, String servings, String timeNeeded, String imageURL, String objectId, String ownerId) {
         this.recipeName = recipeName;
+        this.directions = directions;
+        this.servings = servings;
+        this.timeNeeded = timeNeeded;
+        ImageURL = imageURL;
         this.objectId = objectId;
         this.ownerId = ownerId;
-        this.ImageURL = url;
     }
 
     public String getRecipeName() {

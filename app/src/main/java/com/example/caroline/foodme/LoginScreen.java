@@ -31,24 +31,14 @@ public class LoginScreen extends AppCompatActivity {
     private CheckBox rememberMe;
     private TextView username, password;
     private Toolbar toolbar;
+    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-
-
-
-        //todo save UserID from bsckendless todo if not remember me turn it off
-        /* editor = sharedPref.edit();
-        editor.putString(getString(R.string.user_ID), "");
-        editor.putBoolean(getString(R.string.user), true); //means there is a saved user
-        editor.commit(); */
-
         wireWidgets();
-        //TODO wire login button to HomePageActivity, newAccount to CreateAccount, set onClickListeners for all
-        //TODO link to Backendless
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,14 +50,12 @@ public class LoginScreen extends AppCompatActivity {
     public void wireWidgets(){
         login = (Button) findViewById(R.id.login_button);
         newAccount = (Button) findViewById(R.id.new_account_button);
-
         usernameInput = (EditText) findViewById(R.id.username_editText);
         passwordInput = (EditText) findViewById(R.id.password_editText);
         rememberMe = (CheckBox) findViewById(R.id.remember_me_checkBox);
         toolbar= (Toolbar)findViewById(R.id.toolbar_login);
         setSupportActionBar(toolbar);
-
-
+        setOnClickListeners();
     }
 
 
@@ -95,7 +83,12 @@ public class LoginScreen extends AppCompatActivity {
                     public void handleResponse(BackendlessUser response) {
                         String username = (String) response.getProperty("username");
                         Toast.makeText(LoginScreen.this, "Hello " +username, Toast.LENGTH_SHORT).show();
-                        
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString(getString(R.string.user_ID), response.getUserId());
+                        editor.putBoolean(getString(R.string.user), true); //means there is a saved user
+                        editor.commit();
+                        Intent i = new Intent(LoginScreen.this, HomePageActivity.class);
+                        startActivity(i);
                     }
 
                     @Override
