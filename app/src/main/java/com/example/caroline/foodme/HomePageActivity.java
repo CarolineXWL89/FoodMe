@@ -76,10 +76,11 @@ public class HomePageActivity extends AppCompatActivity {
         sharedPref = getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         Boolean userExists = sharedPref.getBoolean(getString(R.string.user), false); //checks if previous user exists
-        userExists = true; //todo delete me later
+
+        //userExists = true; //todo delete me later
         if(!userExists){ //if no user sends you to login
-            //Intent i = new Intent(this, LoginScreen.class);
-            //startActivity(i);
+            Intent i = new Intent(this, LoginScreen.class);
+            startActivity(i);
         }
     }
 
@@ -198,4 +199,25 @@ public class HomePageActivity extends AppCompatActivity {
         });
         return recipies;
     }
+
+    //todo ALL
+         //todo adapteive font size!
+        //todo make all layouts adaptive
+        //todo Searchable
+            //todo recents
+            // todo recents swipe to delete
+            //todo auto complete
+            //
+        //todo ingredients search
+            // todo clear all
+            // todo on saved instance state
+            //todo move to newly created card
+            //todo swipe to delte
+        //todo create
+            //todo upload pic
+            //todo upload recipe
+            //todo adpt for  different screen sizes
+        //todo add image resizing
+
+
 }

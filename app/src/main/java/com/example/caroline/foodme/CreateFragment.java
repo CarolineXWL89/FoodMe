@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -35,7 +36,8 @@ public class CreateFragment extends Fragment  {
     private Context context;
     private LinearLayoutManager layoutManager;
     private NewIngredientsDisplayAdapter newIngredientsDisplayAdapter;
-    private Button submit;
+    private Button submit, clear;
+    private String picUrl;
 
     public static final String TAG = "fragments";
     public CreateFragment() {
@@ -68,6 +70,8 @@ public class CreateFragment extends Fragment  {
             public void onClick(View v) {
                 Toast.makeText(context, "Upload Pic", Toast.LENGTH_SHORT).show();
                 //todo UPLOAD
+                //todo if uploaded show image
+                //todo set url to be uploaded
             }
         });
 
@@ -108,7 +112,21 @@ public class CreateFragment extends Fragment  {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Recipe recipe = new Recipe();
                 //todo upload to backendless
+            }
+        });
+
+        clear = rootview.findViewById(R.id.clear);
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                title.setText("");
+                yield.setText("");
+                timeNeeded.setText("");
+                directions.setText("");
+                ingredients.clear();
+                picUrl = "";
             }
         });
 
@@ -116,7 +134,30 @@ public class CreateFragment extends Fragment  {
         newIngredientsDisplayAdapter.removeItem(0);
     }
 
-    //todo overide on save instance state so that device can turn
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(getString(R.string.pictureUrl), picUrl);
+        outState.putString(getString(R.string.recipeTitle), title.getText().toString());
+        outState.putString(getString(R.string.servingSize), yield.getText().toString());
+        outState.putString(getString(R.string.timeNeeded), timeNeeded.getText().toString());
+        outState.putStringArrayList(getString(R.string.ingredients), ingredients);
+        outState.putString(getString(R.string.directions), directions.getText().toString());
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            picUrl = savedInstanceState.getString(getString(R.string.pictureUrl), "");
+            title.setText(savedInstanceState.getString(getString(R.string.recipeTitle), ""));
+            yield.setText(savedInstanceState.getString(getString(R.string.servingSize), ""));
+            timeNeeded.setText(savedInstanceState.getString(getString(R.string.timeNeeded), ""));
+            ingredients = savedInstanceState.getStringArrayList(getString(R.string.ingredients));
+            directions.setText(savedInstanceState.getString(getString(R.string.directions)));
+        }
+
+    }
 }
 
 
