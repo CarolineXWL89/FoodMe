@@ -7,5 +7,4 @@ package com.example.caroline.foodme;
 public class fuuuuuuuud {
     private String uri, label;
 
-
 }
