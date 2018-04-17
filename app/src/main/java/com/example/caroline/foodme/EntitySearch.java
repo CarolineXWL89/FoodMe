@@ -5,5 +5,7 @@ package com.example.caroline.foodme;
  * To get the information to plug into nutrition search
  */
 
-public class EntitySearch {
+public class EntitySearch{
+    private String text,
+
 }
