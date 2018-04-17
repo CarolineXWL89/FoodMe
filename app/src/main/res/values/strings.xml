@@ -94,4 +94,11 @@
     <!-- TODO: Change search hint -->
     <string name="search_hint">Search</string>
     <string name="app_label">Food Me</string>
+    <string name="pictureUrl">PicUrl</string>
+    <string name="recipeTitle">RecipeTitle</string>
+    <string name="servingSize">ServingSize</string>
+    <string name="timeNeeded">TimeNeeded</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="directions">Directions</string>
+
 </resources>

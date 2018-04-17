@@ -7,146 +7,212 @@
     tools:context="com.example.caroline.foodme.CreateAccount">
 
     <TextView
-        android:id="@+id/create_account_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create An Account"
-        tools:layout_editor_absoluteX="134dp"
-        tools:layout_editor_absoluteY="16dp" />
-
-    <TextView
         android:id="@+id/first_name_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="First Name"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="65dp" />
+        app:layout_constraintBottom_toTopOf="@id/first_name_editText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/middle_initial_textView"
+        android:id="@+id/last_name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MI"
-        tools:layout_editor_absoluteX="211dp"
-        tools:layout_editor_absoluteY="65dp" />
-
-    <TextView
-        android:id="@+id/last_name_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Last Name"
-        tools:layout_editor_absoluteX="310dp"
-        tools:layout_editor_absoluteY="65dp" />
+        app:layout_constraintBottom_toTopOf="@+id/last_name_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/first_name_editText"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
         android:id="@+id/email_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Email"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="151dp" />
+        app:layout_constraintBottom_toTopOf="@+id/email_editText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/last_name_edit_text"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
         android:id="@+id/username_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Username"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="235dp" />
+        app:layout_constraintBottom_toTopOf="@+id/username_editText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_editText" />
 
     <TextView
         android:id="@+id/password_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Password"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="306dp" />
+        app:layout_constraintBottom_toTopOf="@+id/password_editText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username_editText" />
 
     <TextView
         android:id="@+id/password_confirm_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Confirm Password"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="377dp" />
+        app:layout_constraintBottom_toTopOf="@+id/password_confirm_editText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password_editText" />
 
     <EditText
         android:id="@+id/first_name_editText"
-        android:layout_width="182dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="94dp" />
+        app:layout_constraintBottom_toTopOf="@id/last_name_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/first_name_textView"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/mi_editText"
-        android:layout_width="90dp"
+        android:id="@+id/last_name_edit_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="197dp"
-        tools:layout_editor_absoluteY="94dp" />
-
-    <EditText
-        android:id="@+id/last_name_editText"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="258dp"
-        tools:layout_editor_absoluteY="94dp" />
+        app:layout_constraintBottom_toTopOf="@+id/email_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/last_name_text_view"
+        app:layout_constraintVertical_bias="0.718" />
 
     <EditText
         android:id="@+id/email_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textEmailAddress"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="180dp" />
+        app:layout_constraintBottom_toTopOf="@+id/username_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_textView" />
 
     <EditText
         android:id="@+id/username_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="254dp" />
+        app:layout_constraintBottom_toTopOf="@+id/password_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username_textView" />
 
     <EditText
         android:id="@+id/password_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPassword"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="325dp" />
+        app:layout_constraintBottom_toTopOf="@+id/password_confirm_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password_textView" />
 
     <EditText
         android:id="@+id/password_confirm_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPassword"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="396dp" />
+        app:layout_constraintBottom_toTopOf="@id/terms_checkBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password_confirm_textView" />
 
     <Button
         android:id="@+id/create_account_button"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Create Account"
-        tools:layout_editor_absoluteX="120dp"
-        tools:layout_editor_absoluteY="451dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/terms_checkBox" />
 
     <CheckBox
         android:id="@+id/terms_checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Terms Agreement"
-        tools:layout_editor_absoluteX="244dp"
-        tools:layout_editor_absoluteY="410dp" />
+        app:layout_constraintBottom_toTopOf="@+id/create_account_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password_confirm_editText" />
 
 </android.support.constraint.ConstraintLayout>

@@ -14,6 +14,7 @@ public class Recipe implements Parcelable {
     private String directions;
     private String servings;
     private String timeNeeded;
+    private String ingredients;
     private String ImageURL;
     private String objectId;
     private String ownerId;
@@ -21,11 +22,14 @@ public class Recipe implements Parcelable {
     public Recipe(){
     }
 
-    public Recipe(String recipeName, String recipe, String objectId, String ownerId, String url) {
+    public Recipe(String recipeName, String ingredients, String directions, String servings, String timeNeeded, String imageURL, String ownerId) {
         this.recipeName = recipeName;
-        this.objectId = objectId;
+        this.directions = directions;
+        this.servings = servings;
+        this.timeNeeded = timeNeeded;
+        this.ingredients = ingredients;
+        ImageURL = imageURL;
         this.ownerId = ownerId;
-        this.ImageURL = url;
     }
 
     public String getRecipeName() {
@@ -76,6 +80,14 @@ public class Recipe implements Parcelable {
         this.timeNeeded = timeNeeded;
     }
 
+    public String getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(String ingredients) {
+        this.ingredients = ingredients;
+    }
+
     public String getImageURL() {
         return ImageURL;
     }
@@ -102,6 +114,7 @@ public class Recipe implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(recipeName);
+        dest.writeString(ingredients);
         dest.writeString(directions);
         dest.writeString(servings);
         dest.writeString(timeNeeded);
