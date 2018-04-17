@@ -2,13 +2,10 @@ package com.example.caroline.foodme;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -48,24 +45,9 @@ public class IngredientSearchAdapter extends RecyclerView.Adapter<IngredientSear
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.ingredientNumberTextView.setText("Ingredient #"+(position+1));
+        holder.ingredientText.setText(ingredients.get(position));
 
-        holder.ingredientEdit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                ingredients.remove(position);
-                Log.d(TAG, "afterTextChanged: position+ "+position);
-                ingredients.add(position, editable.toString());
-
-                Log.d(TAG, "afterTextChanged: ingredinets in"+ ingredients.toString());
-
-            }
-        });
 
 
     }
@@ -82,17 +64,25 @@ public class IngredientSearchAdapter extends RecyclerView.Adapter<IngredientSear
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private EditText ingredientEdit;
+        private TextView ingredientText;
         private TextView ingredientNumberTextView;
-        private RecyclerViewOnClick recyclerViewClick;
+        private ImageButton deleteButton;
 
 
 
         public MyViewHolder(View itemView, RecyclerViewOnClick click) {
             super(itemView);
-            ingredientEdit= itemView.findViewById(R.id.ingredient_edittext);
-            ingredientNumberTextView=itemView.findViewById(R.id.ingredient_textview);
-            recyclerViewClick=click;
+            ingredientText= itemView.findViewById(R.id.ingredient_content_textview);
+            ingredientNumberTextView=itemView.findViewById(R.id.ingredient_name_textview);
+            deleteButton=itemView.findViewById(R.id.deleteButtonSearchFragment);
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ingredients.remove(getAdapterPosition());
+                    notifyDataSetChanged();
+                }
+            });
+
 
 
 

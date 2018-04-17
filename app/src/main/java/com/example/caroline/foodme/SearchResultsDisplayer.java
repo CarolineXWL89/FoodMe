@@ -2,11 +2,12 @@ package com.example.caroline.foodme;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ public class SearchResultsDisplayer extends AppCompatActivity {
     private SearchResultsAdapter searchResultsAdapter;
     private Context context;
     private RecyclerViewOnClick click;
+    private Toolbar toolbar;
 
 
     @Override
@@ -47,6 +49,16 @@ public class SearchResultsDisplayer extends AppCompatActivity {
     private void wireWidgets() {
 
         recyclerView=findViewById(R.id.search_results_recycler_view);
+        toolbar=findViewById(R.id.toolbar_search_results_displayer);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //What to do on back clicked
+            }
+        });
         click=new RecyclerViewOnClick() {
             @Override
             public void onClick(View v, int pos) {
