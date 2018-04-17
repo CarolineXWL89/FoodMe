@@ -7,4 +7,6 @@ package com.example.caroline.foodme;
 public interface DataMuseRecipe {
 
     String baseURL = "https://api.edamam.com";
+
+    //Caroline working on it right now
 }

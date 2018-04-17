@@ -16,4 +16,27 @@ public interface DataMuseNutritionSearch {
     @GET("parser")
     Call<ParserResponse> getIngredientSearch(@Query("ingr") String ingredient, @Query("app_id") String appId, @Query("app_key") String appKey, @Query("page") String page);
 
+    //treeeeeeeeeeeeeeeeeello
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
