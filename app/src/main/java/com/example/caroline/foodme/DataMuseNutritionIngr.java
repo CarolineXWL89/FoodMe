@@ -18,7 +18,7 @@ public interface DataMuseNutritionIngr {
     String APP_KEY = "b6cdc3e30b89f8409d65e44eb788752f";
 
     @GET("ingrs") //trying to push
-    Call<ArrayList<NutritionRequest>> getIngrNutrient(@Query("ingr=") String foodIngr, @Query("app_id=") String appId, @Query("app_key") String appKey);
+    Call<ArrayList<EntitySearch>> getIngrNutrient(@Query("ingr=") String foodIngr, @Query("app_id=") String appId, @Query("app_key") String appKey);
 
 
 
