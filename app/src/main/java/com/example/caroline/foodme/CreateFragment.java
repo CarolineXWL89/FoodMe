@@ -23,6 +23,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.backendless.Backendless;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
+
 import java.util.ArrayList;
 
 public class CreateFragment extends Fragment  {
@@ -72,6 +76,8 @@ public class CreateFragment extends Fragment  {
                 //todo UPLOAD
                 //todo if uploaded show image
                 //todo set url to be uploaded
+
+
             }
         });
 
@@ -112,8 +118,26 @@ public class CreateFragment extends Fragment  {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Recipe recipe = new Recipe();
-                //todo upload to backendless
+                final Recipe recipe = checkText();
+                if(recipe != null){
+                    Backendless.Data.of(Recipe.class).save(recipe, new AsyncCallback<Recipe>() {
+                        @Override
+                        public void handleResponse(Recipe response) {
+                            Toast.makeText(context, "Success, "+ recipe.getRecipeName()+ " has been uploaded", Toast.LENGTH_SHORT).show();
+                            title.setText("");
+                            yield.setText("");
+                            timeNeeded.setText("");
+                            directions.setText("");
+                            ingredients.clear();
+                            picUrl = "";
+                        }
+
+                        @Override
+                        public void handleFault(BackendlessFault fault) {
+                            Toast.makeText(context, "Recipe cannot be uploaded right now, please try again later", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
 
@@ -132,6 +156,82 @@ public class CreateFragment extends Fragment  {
 
         //deletes placeholder ingredient
         newIngredientsDisplayAdapter.removeItem(0);
+    }
+
+    private Recipe checkText() {
+        Recipe recipe = new Recipe();
+        String titleText = title.getText().toString();
+        String directionsText = directions.getText().toString();
+        String yieldText = yield.getText().toString();
+        String timeText = timeNeeded.getText().toString();
+        String[] message = new String[5];
+        if(isOk(titleText)){
+            recipe.setRecipeName(titleText);
+        } else {
+            message[0] = "Please add a recipe name";
+        }
+
+        if(isOk(directionsText)){
+            recipe.setDirections(directionsText);
+        } else {
+            message[1] = "Please add directions";
+        }
+
+        if(isOk(yieldText)){
+            recipe.setServings(yieldText);
+        } else {
+            message[2] = "Please add serving size";
+        }
+
+        if(isOk(timeText)){
+            recipe.setTimeNeeded(timeText);
+        } else {
+            message[3] = "Please add a time";
+        }
+
+        if(ingredients.size() > 0){
+            recipe.setIngredients(ingredients.toString());
+        } else {
+            message[4] = "Please add ingredients";
+        }
+
+
+        if(notEmpty(message)){
+            return null;
+        } else {
+            return recipe;
+        }
+    }
+
+    private boolean notEmpty(String[] message) {
+        boolean value = true;
+        String toast = "";
+        for(int i = 0; i < message.length; i++){
+            if(!isOk(message[i])){
+                value = false;
+                toast = toast + message[i] + ", ";
+            }
+        }
+
+        if(isOk(toast) && !value){
+            toast.substring(0, toast.length() - 2);
+            Toast.makeText(context, toast, Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            return value;
+        }
+    }
+
+    private boolean isOk(String titleText) {
+        if(titleText.equals("")){
+            return false;
+        } else if(titleText.equals(" ")){
+            return false;
+        } else if(titleText.equals("  ")){
+            return false;
+        } else{
+            return true;
+        }
     }
 
     @Override

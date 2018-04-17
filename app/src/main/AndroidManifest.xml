@@ -13,7 +13,9 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".HomePageActivity"
-            android:label="@string/title_activity_home_page">
+            android:banner="@string/title_activity_home_page"
+            android:label="@string/app_name">
+            <!-- todo change back -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -77,7 +77,7 @@ public class HomePageActivity extends AppCompatActivity {
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         Boolean userExists = sharedPref.getBoolean(getString(R.string.user), false); //checks if previous user exists
 
-        //userExists = true; //todo delete me later
+        userExists = true; //todo delete me later
         if(!userExists){ //if no user sends you to login
             Intent i = new Intent(this, LoginScreen.class);
             startActivity(i);
@@ -113,7 +113,7 @@ public class HomePageActivity extends AppCompatActivity {
                 return false;
             }
         });*/
-        //todo delete once fragments are completely done
+
         //wires bottom navigation
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -207,7 +207,6 @@ public class HomePageActivity extends AppCompatActivity {
             //todo recents
             // todo recents swipe to delete
             //todo auto complete
-            //
         //todo ingredients search
             // todo clear all
             // todo on saved instance state
@@ -215,7 +214,6 @@ public class HomePageActivity extends AppCompatActivity {
             //todo swipe to delte
         //todo create
             //todo upload pic
-            //todo upload recipe
             //todo adpt for  different screen sizes
         //todo add image resizing
 
