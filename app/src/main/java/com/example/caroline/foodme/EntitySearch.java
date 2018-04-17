@@ -6,4 +6,5 @@ package com.example.caroline.foodme;
  */
 
 public class EntitySearch {
+    //Jaemyung JSON
 }
