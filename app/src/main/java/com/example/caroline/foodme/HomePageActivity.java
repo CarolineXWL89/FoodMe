@@ -29,7 +29,6 @@ import com.backendless.persistence.DataQueryBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-
 /*
 Contains stuff like recently added seen after logging in (NOT 1st time)
 Implements: accessing ALL users' entries
@@ -211,7 +210,6 @@ public class HomePageActivity extends AppCompatActivity {
             //todo recents
             // todo recents swipe to delete
             //todo auto complete
-            //
         //todo ingredients search
             // todo clear all
             // todo on saved instance state
@@ -219,7 +217,6 @@ public class HomePageActivity extends AppCompatActivity {
             //todo swipe to delte
         //todo create
             //todo upload pic
-            //todo upload recipe
             //todo adpt for  different screen sizes
         //todo add image resizing
 

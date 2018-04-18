@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
@@ -33,6 +34,7 @@ public class SearchFragment extends Fragment {
     //private SearchResultsAdapter searchResultsAdapter;
     private Context context;
     private View rootView;
+    private EditText newRecipeEditText;
 
     private IngredientSearchAdapter ingredientSearchAdapter;
     public SearchFragment() {
@@ -61,6 +63,7 @@ public class SearchFragment extends Fragment {
         ingredients=new ArrayList<>();
         ingredients.add(" ");
         recyclerView = rootView.findViewById(R.id.search_recipe_recycler_view);
+        newRecipeEditText=rootView.findViewById(R.id.newIngredientSearchEdit);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -73,7 +76,7 @@ public class SearchFragment extends Fragment {
             }
         };
         ingredientSearchAdapter= new IngredientSearchAdapter(ingredients, listener,context);
-
+        ingredients.remove(0);
         recyclerView.setAdapter(ingredientSearchAdapter);
         registerForContextMenu(recyclerView);
         submit = rootView.findViewById(R.id.button_submit_search);
@@ -81,10 +84,11 @@ public class SearchFragment extends Fragment {
         addRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ingredients.add(ingredients.size(), "");
+                ingredients.add( newRecipeEditText.getText().toString());
                 Log.d(TAG, "onClick: ingredients"+ingredients.toString());
                 recyclerView.smoothScrollToPosition(ingredients.size()-1);
                 ingredientSearchAdapter.notifyDataSetChanged();
+                newRecipeEditText.setText("");
 
             }
         });
