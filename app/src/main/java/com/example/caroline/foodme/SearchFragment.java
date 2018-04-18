@@ -95,13 +95,15 @@ public class SearchFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<String > theStuff = ingredientSearchAdapter.getIngredients();
-                Log.d(TAG, "onClick: clicked");
-                backendlessSearchByIngredient(theStuff);
-//                Intent i=new Intent(getActivity(),SearchResultsDisplayer.class);
-//                i.putExtra("the_stuff",theStuff);
-//                startActivity(i);
-                //todo create a display activity
+                if(ingredients.size()>0){
+                    ArrayList<String> theStuff = ingredients;
+                    Log.d(TAG, "onClick: " + theStuff.get(0));
+                    Log.d(TAG, "onClick: clicked");
+                    backendlessSearchByIngredient(theStuff);
+                }else{
+                    Toast.makeText(context, "Please Enter Ingredients", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -125,11 +127,20 @@ public class SearchFragment extends Fragment {
 //                Log.d(TAG, "handleResponse: "+response.get(0).getRecipeName());
                 recipies.clear();
                 recipies.addAll(response);
-                ArrayList<Recipe> r=recipies;
+                for (Recipe p : recipies) {
+                    if (p != null){
+                        Log.d(TAG, "handleResponse: " + p.getRecipeName());
+                    }else{
+                        Log.d(TAG, "handleResponse: null");
+                    }
+                }
+
+
+
                 //searchResultsAdapter.notifyDataSetChanged();
-                if(r.size()!=0) {
+                if(recipies.size()!=0) {
                     Intent i = new Intent(getActivity(), SearchResultsDisplayer.class);
-                    i.putExtra("the_stuff", r);
+                    i.putExtra("the_stuff", recipies);
                     startActivity(i);
                 }
                 else {

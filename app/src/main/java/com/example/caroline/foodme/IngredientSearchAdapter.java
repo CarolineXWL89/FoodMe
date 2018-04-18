@@ -1,6 +1,7 @@
 package com.example.caroline.foodme;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,9 +69,17 @@ public class IngredientSearchAdapter extends RecyclerView.Adapter<IngredientSear
         private TextView ingredientNumberTextView;
         private ImageButton deleteButton;
 
+        public void removeItem(int position) {
+            ingredients.remove(position);
+            notifyItemRemoved(position);
+        }
 
+        public void restoreItem(String item, int position) {
+            ingredients.add(position, item);
+            notifyItemInserted(position);
+        }
 
-        public MyViewHolder(View itemView, RecyclerViewOnClick click) {
+        public MyViewHolder( final View itemView, RecyclerViewOnClick click) {
             super(itemView);
             ingredientText= itemView.findViewById(R.id.ingredient_content_textview);
             ingredientNumberTextView=itemView.findViewById(R.id.ingredient_name_textview);
@@ -78,8 +87,25 @@ public class IngredientSearchAdapter extends RecyclerView.Adapter<IngredientSear
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ingredients.remove(getAdapterPosition());
-                    notifyDataSetChanged();
+                    String name = ingredients.get(getAdapterPosition());
+
+                    // backup of removed item for undo purpose
+                    final String deletedItem = ingredients.get(getAdapterPosition());
+                    final int deletedIndex = getAdapterPosition();
+
+                    // remove the item from recycler view
+                    removeItem(getAdapterPosition());
+
+                    // showing snack bar with Undo option
+                    Snackbar snackbar = Snackbar.make(itemView, name + " removed!", Snackbar.LENGTH_LONG);
+                    snackbar.setAction("UNDO", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            restoreItem(deletedItem, deletedIndex);
+                        }
+                    });
+                    snackbar.show();
                 }
             });
 

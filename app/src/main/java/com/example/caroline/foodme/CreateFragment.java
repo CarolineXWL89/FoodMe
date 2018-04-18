@@ -115,7 +115,8 @@ public class CreateFragment extends Fragment  {
 
         //wires submit button
         submit = rootview.findViewById(R.id.submit);
-        submit.setOnClickListener(new View.OnClickListener() {
+        submit.setOnClickListener(
+                new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Recipe recipe = checkText();

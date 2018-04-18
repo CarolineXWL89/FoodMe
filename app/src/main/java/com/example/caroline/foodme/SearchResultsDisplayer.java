@@ -33,12 +33,20 @@ public class SearchResultsDisplayer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results_displayer);
         Log.d(TAG, "onCreate: hi");
-        recipes=new ArrayList<>();
-        Intent i= getIntent();
-        ArrayList<Recipe> r= i.getParcelableArrayListExtra("the_stuff");
+        recipes = new ArrayList<>();
+        Intent i = getIntent();
+        ArrayList<Recipe> r = i.getParcelableArrayListExtra("the_stuff");
 
         recipes.addAll(r);
-        Log.d(TAG, "onCreate: "+recipes.get(0).getRecipeName());
+        for (int j=0; j<recipes.size(); j++) {
+            if (recipes.get(j) != null){
+                Log.d(TAG, "onCreate: " + recipes.get(0).getRecipeName());
+            }else{
+                Log.d(TAG, "onCreate: null");
+                recipes.remove(j);
+
+            }
+        }
         wireWidgets();
 
 
@@ -56,6 +64,7 @@ public class SearchResultsDisplayer extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
                 //What to do on back clicked
             }
         });
