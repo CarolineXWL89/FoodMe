@@ -6,6 +6,8 @@ package com.example.caroline.foodme;
  */
 
 public class EntitySearch{
-    private String text,
+    private String text;
+
+    //TODO @Jaemyung you need to finish this soon deadline tomorrow evening
 
 }

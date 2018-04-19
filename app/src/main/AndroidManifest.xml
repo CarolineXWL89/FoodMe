@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.caroline.foodme">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -25,6 +25,7 @@
             android:label="@string/title_activity_settings_page" />
         <activity android:name=".LoginScreen" />
         <activity android:name=".CreateAccount" />
+        <activity android:name=".EntitySearchExtraction"></activity>
     </application>
 
 </manifest>
