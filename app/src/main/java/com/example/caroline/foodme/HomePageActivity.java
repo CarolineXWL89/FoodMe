@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -19,8 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.content.Context;
 
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
@@ -35,14 +32,14 @@ Implements: accessing ALL users' entries
 Contains: scrolling image gallery; access toolbar for fav, add, search; settings icon
 Can: be accessed by clicking on logo/home, NOT launching activity!!! (Need to change)
  */
-public class HomePageActivity extends AppCompatActivity {
+public class HomePageActivity extends AppCompatActivity{
 
     /*
     GET USERID //todo delete user exists when you log out
     SharedPreferences sharedPref = getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         String userID = sharedPref.getString(getString(R.string.user_ID), "");*/
-    public static final String TAG = "YADA";
+    public static final String TAG = "HomePageActivity";
     private TextView mTextMessage;
     private View decorView;
     private SharedPreferences sharedPref;
@@ -73,6 +70,7 @@ public class HomePageActivity extends AppCompatActivity {
 
 
     }
+
 
     private void logIn() {
         sharedPref = getSharedPreferences(

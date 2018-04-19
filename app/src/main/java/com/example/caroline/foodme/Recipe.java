@@ -101,6 +101,7 @@ public class Recipe implements Parcelable {
         directions = in.readString();
         servings = in.readString();
         timeNeeded = in.readString();
+        ingredients = in.readString();
         ImageURL = in.readString();
         objectId = in.readString();
         ownerId = in.readString();
@@ -114,10 +115,10 @@ public class Recipe implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(recipeName);
-        dest.writeString(ingredients);
         dest.writeString(directions);
         dest.writeString(servings);
         dest.writeString(timeNeeded);
+        dest.writeString(ingredients);
         dest.writeString(ImageURL);
         dest.writeString(objectId);
         dest.writeString(ownerId);

@@ -1,16 +1,13 @@
 package com.example.caroline.foodme;
 
 import android.content.Context;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.media.Image;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -24,7 +21,8 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
         private RecyclerViewOnClick click;
         private List<Recipe> recipes;
         private Context context;
-    public SearchResultsAdapter(List<Recipe> recipes, Context context, RecyclerViewOnClick click) {
+        public static final String TAG = "SearchResultsAdapter";
+    public SearchResultsAdapter( List<Recipe> recipes, Context context, RecyclerViewOnClick click) {
             this.recipes = recipes;
             this.context = context;
             this.click = click;
@@ -45,7 +43,10 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
             holder.timeToPrepare.setText(result.getTimeNeeded());
            if(result.getImageURL() != null) {
                 Picasso.with(context).load(result.getImageURL()).into(holder.image);
+               Log.d(TAG, "onBindViewHolder: should have added pic:"+ result.getImageURL());
             } else {
+
+
 
                Picasso.with(context).load(R.drawable.ic_error_outline_black_24dp).into(holder.image);
            }
