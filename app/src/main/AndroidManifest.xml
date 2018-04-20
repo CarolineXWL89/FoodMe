@@ -42,10 +42,6 @@
                 android:resource="@xml/searchable" />
         </activity>
 
-        <provider
-            android:name=".MySuggestionProvider"
-            android:authorities="com.example.MySuggestionProvider" />
-
         <activity android:name=".SearchResultsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -55,6 +51,8 @@
                 android:resource="@xml/searchable" />
 
         </activity>
+        <provider android:name=".MyRecentSuggestionProvider"
+            android:authorities="com.example.caroline.foodme.MyRecentSuggestionProvider"/>
     </application>
 
 </manifest>
