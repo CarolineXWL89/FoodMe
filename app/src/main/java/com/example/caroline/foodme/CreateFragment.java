@@ -2,6 +2,7 @@ package com.example.caroline.foodme;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,6 +43,8 @@ public class CreateFragment extends Fragment  {
     private NewIngredientsDisplayAdapter newIngredientsDisplayAdapter;
     private Button submit, clear;
     private String picUrl;
+    private ImageUploadClicker imageUploadClicker;
+    private static final int MY_PERMISSIONS_REQUEST_CAMERA = 123;
 
     public static final String TAG = "fragments";
     public CreateFragment() {
@@ -69,17 +72,8 @@ public class CreateFragment extends Fragment  {
 
         //wires image uploader
         imageUpload = rootview.findViewById(R.id.uploadImage);
-        imageUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "Upload Pic", Toast.LENGTH_SHORT).show();
-                //todo UPLOAD
-                //todo if uploaded show image
-                //todo set url to be uploaded
-
-
-            }
-        });
+        imageUploadClicker = new ImageUploadClicker(getContext(), getActivity(), this);
+        imageUpload.setOnClickListener(imageUploadClicker);
 
         //wires text box for new ingredient
         createNewIngredient = rootview.findViewById(R.id.addIngredient);
@@ -258,6 +252,22 @@ public class CreateFragment extends Fragment  {
             directions.setText(savedInstanceState.getString(getString(R.string.directions)));
         }
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        Log.d(TAG, "onRequestPermissionsResult: IM CALLED");
+        Toast.makeText(context,"IM CALLED",Toast.LENGTH_SHORT).show();
+        if(requestCode ==  MY_PERMISSIONS_REQUEST_CAMERA) {
+            // If request is cancelled, the result arrays are empty.
+            //if results array is not empty then we can use the camera
+
+            Log.d(TAG, "onRequestPermissionsResult: IM CALLED2");
+            Toast.makeText(context,"IM CALLED2",Toast.LENGTH_SHORT).show();
+            imageUploadClicker.setCanUseCamera(grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED);
+        }
+        //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
 

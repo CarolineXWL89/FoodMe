@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -16,8 +17,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
@@ -90,14 +93,16 @@ public class HomePageActivity extends AppCompatActivity{
         inflater.inflate(R.menu.home_action_bar, menu);
         SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.search_recipe_general).getActionView();
+        searchView.setMaxWidth(Integer.MAX_VALUE);
         searchView.setOnQueryTextListener(new android.widget.SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {//
+            public boolean onQueryTextSubmit(String query) {
                     doMySearch(query);
+                    hideNavBar();
                     return false;
             }
 
-            @Override//
+            @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
@@ -200,23 +205,5 @@ public class HomePageActivity extends AppCompatActivity{
             }
         });
     }
-
-    //todo ALL
-         //todo adapteive font size!
-        //todo make all layouts adaptive
-        //todo Searchable
-            //todo recents
-            // todo recents swipe to delete
-            //todo auto complete
-        //todo ingredients search
-            // todo clear all
-            // todo on saved instance state
-            //todo move to newly created card
-            //todo swipe to delte
-        //todo create
-            //todo upload pic
-            //todo adpt for  different screen sizes
-        //todo add image resizing
-
 
 }
