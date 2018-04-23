@@ -85,18 +85,8 @@ public class HomePageActivity extends AppCompatActivity{
         SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.search_recipe_general).getActionView();
         searchView.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
-//        searchView.setOnQueryTextListener(new android.widget.SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {//
-//                    doMySearch(query);
-//                    return false;
-//            }
+        searchView.setMaxWidth(Integer.MAX_VALUE);
 //
-//            @Override//
-//            public boolean onQueryTextChange(String newText) {
-//                return false;
-//            }
-//        });
 
 
         return true;
@@ -199,23 +189,5 @@ public class HomePageActivity extends AppCompatActivity{
 //            }
 //        });
     }
-
-    //todo ALL
-         //todo adapteive font size!
-        //todo make all layouts adaptive
-        //todo Searchable
-            //todo recents
-            // todo recents swipe to delete
-            //todo auto complete
-        //todo ingredients search
-            // todo clear all
-            // todo on saved instance state
-            //todo move to newly created card
-            //todo swipe to delte
-        //todo create
-            //todo upload pic
-            //todo adpt for  different screen sizes
-        //todo add image resizing
-
 
 }
