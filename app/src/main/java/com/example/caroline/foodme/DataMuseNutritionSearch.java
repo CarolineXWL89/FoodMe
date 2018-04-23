@@ -17,7 +17,7 @@ public interface DataMuseNutritionSearch {
     //curl -d @food.json -H "Content-Type: application/json" "https://api.edamam.com/api/food-database/nutrients?app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}"
 
 
-    @POST("cURL stuff")
+    @POST("cURL stuff") //stuff
     Call<> //TODO figure out what cURL is
     /*@GET("parser")
     Call<ParserResponse> getIngredientSearch(@Query("ingr") String ingredient, @Query("app_id") String appId, @Query("app_key") String appKey, @Query("page") String page);*/
