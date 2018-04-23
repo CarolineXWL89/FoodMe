@@ -118,7 +118,12 @@ public class SearchFragment extends Fragment {
             whereClause.append("and ingredients like '%" + ingredient + "%'");
         }
         Log.d(TAG, "backendlessSearchByIngredient: " +whereClause.toString());
+
+
+
         DataQueryBuilder queryBuilder = DataQueryBuilder.create();
+
+
         queryBuilder.setWhereClause(whereClause.toString());
         Backendless.Data.of(Recipe.class).find(queryBuilder, new AsyncCallback<List<Recipe>>() {
             @Override
@@ -135,9 +140,6 @@ public class SearchFragment extends Fragment {
                     }
                 }
 
-
-
-                //searchResultsAdapter.notifyDataSetChanged();
                 if(recipies.size()!=0) {
                     Intent i = new Intent(getActivity(), SearchResultsDisplayer.class);
                     i.putExtra("the_stuff", recipies);

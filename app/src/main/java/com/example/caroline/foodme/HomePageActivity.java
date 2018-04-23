@@ -20,12 +20,6 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.backendless.Backendless;
-import com.backendless.async.callback.AsyncCallback;
-import com.backendless.exceptions.BackendlessFault;
-import com.backendless.persistence.DataQueryBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
 /*
 Contains stuff like recently added seen after logging in (NOT 1st time)
 Implements: accessing ALL users' entries
@@ -90,18 +84,19 @@ public class HomePageActivity extends AppCompatActivity{
         inflater.inflate(R.menu.home_action_bar, menu);
         SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.search_recipe_general).getActionView();
-        searchView.setOnQueryTextListener(new android.widget.SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {//
-                    doMySearch(query);
-                    return false;
-            }
-
-            @Override//
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
+        searchView.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
+//        searchView.setOnQueryTextListener(new android.widget.SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {//
+//                    doMySearch(query);
+//                    return false;
+//            }
+//
+//            @Override//
+//            public boolean onQueryTextChange(String newText) {
+//                return false;
+//            }
+//        });
 
 
         return true;
@@ -180,25 +175,29 @@ public class HomePageActivity extends AppCompatActivity{
         //whereClause.append( "recipeName like '%Bread%'" );
         whereClause.append("recipeName like '%" + query + "%'");
         // String whereClause="recipeName = '"+query+"'";
-        DataQueryBuilder queryBuilder = DataQueryBuilder.create();
-        queryBuilder.setWhereClause(whereClause.toString());
-        Backendless.Data.of(Recipe.class).find(queryBuilder, new AsyncCallback<List<Recipe>>() {
-            @Override
-            public void handleResponse(List<Recipe> response) {
-                Log.d(TAG, "handleResponse: " + response.size());
-                ArrayList<Recipe> recipies = new ArrayList<>();
-                recipies.addAll(response);
-                Intent i = new Intent(HomePageActivity.this, SearchResultsDisplayer.class);
-                i.putExtra("the_stuff", recipies);
-                startActivity(i);
-                //searchResultsAdapter.notifyDataSetChanged();
-            }
 
-            @Override
-            public void handleFault(BackendlessFault fault) {
-                Log.d(TAG, "handleFault: " + fault.getMessage());
-            }
-        });
+        Intent i= new Intent(HomePageActivity.this, SearchResultsActivity.class);
+        i.putExtra("query",whereClause.toString());
+        startActivity(i);
+//        DataQueryBuilder queryBuilder = DataQueryBuilder.create();
+//        queryBuilder.setWhereClause(whereClause.toString());
+//        Backendless.Data.of(Recipe.class).find(queryBuilder, new AsyncCallback<List<Recipe>>() {
+//            @Override
+//            public void handleResponse(List<Recipe> response) {
+//                Log.d(TAG, "handleResponse: " + response.size());
+//                ArrayList<Recipe> recipies = new ArrayList<>();
+//                recipies.addAll(response);
+//                Intent i = new Intent(HomePageActivity.this, SearchResultsDisplayer.class);
+//                i.putExtra("the_stuff", recipies);
+//                startActivity(i);
+//                //searchResultsAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void handleFault(BackendlessFault fault) {
+//                Log.d(TAG, "handleFault: " + fault.getMessage());
+//            }
+//        });
     }
 
     //todo ALL
