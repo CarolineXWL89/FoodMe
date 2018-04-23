@@ -5,6 +5,6 @@ package com.example.caroline.foodme;
  */
 
 public class Parsed {
-        private
+//        private
 
 }

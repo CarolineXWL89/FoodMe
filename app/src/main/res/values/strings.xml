@@ -64,6 +64,18 @@
         <item>3</item>
     </string-array>
 
+    <string name="pref_header_user_preferences">User Preferences</string>
+
+    <string name="pref_header_color_theme">Color Theme</string>
+    <string-array name="list_preference_colors">
+        <item>Blue</item>
+        <item>Red</item>
+        <item>Green</item>
+        <item>Purple</item>
+        <item>Turquoise</item>
+    </string-array>
+
+
     <string-array name="multi_select_list_preference_default_value" />
 
     <string name="pref_title_system_sync_settings">System sync settings</string>
