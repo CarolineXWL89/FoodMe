@@ -56,6 +56,7 @@ public class CreateFragment extends Fragment  {
         // Required empty public constructor
     }
 
+    //todo CLEAN UP CODE
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
