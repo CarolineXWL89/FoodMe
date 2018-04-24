@@ -2,7 +2,9 @@ package com.example.caroline.foodme;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -30,6 +32,8 @@ import com.backendless.exceptions.BackendlessFault;
 
 import java.util.ArrayList;
 
+import static android.app.Activity.RESULT_OK;
+
 public class CreateFragment extends Fragment  {
 
     private View rootview;
@@ -44,6 +48,7 @@ public class CreateFragment extends Fragment  {
     private Button submit, clear;
     private String picUrl;
     private ImageUploadClicker imageUploadClicker;
+    private static final int CAMERA_REQUEST = 1888;
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 123;
 
     public static final String TAG = "fragments";
@@ -268,6 +273,16 @@ public class CreateFragment extends Fragment  {
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED);
         }
         //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageUpload.setImageBitmap(imageBitmap);
+            //todo upload to imagur and save to image url here
+        }
     }
 }
 

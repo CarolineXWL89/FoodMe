@@ -47,8 +47,8 @@ public class ImageUploadClicker implements View.OnClickListener {
             Toast.makeText(context, "Camera Permissions are not enabled \n Please enable in order to upload ", Toast.LENGTH_SHORT).show();
         } else {
             Intent cameraIntent = new Intent(ACTION_IMAGE_CAPTURE);
-            activity.startActivityForResult(cameraIntent, CAMERA_REQUEST);
-            //todo save image and upload and create optin for both
+            createFragment.startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            //todo option to upload or capture
         }
 
     }

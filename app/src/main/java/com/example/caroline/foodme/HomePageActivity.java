@@ -156,6 +156,10 @@ public class HomePageActivity extends AppCompatActivity{
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     //
     private void doMySearch(String query) {
