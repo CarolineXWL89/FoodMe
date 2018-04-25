@@ -7,7 +7,7 @@ package com.example.caroline.foodme;
 public class FoodEdamame {
     private String uri, label;
 
-    private FoodEdamame(String uri, String label, ){
+    public FoodEdamame(String uri, String label, ){
         this.uri = uri;
         this.label = label;
     }
