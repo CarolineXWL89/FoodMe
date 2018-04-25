@@ -5,6 +5,14 @@ package com.example.caroline.foodme;
  */
 
 public class Parsed {
-        private
+        private FoodEdamame food = new FoodEdamame();
+        private int quantity;
+        private Measure measure = new Measure();
+
+        private Parsed(FoodEdamame food, int quantity, Measure measure){
+                this.food = food;
+                this.quantity = quantity;
+                this.measure = measure;
+        }
 
 }

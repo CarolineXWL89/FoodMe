@@ -1,15 +1,14 @@
 package com.example.caroline.foodme;
 
 /**
- * Created by per6 on 4/17/18.
+ * Created by princ on 23/04/2018.
  */
 
-public class FoodEdamame {
+public class Measure {
     private String uri, label;
 
-    private FoodEdamame(String uri, String label, ){
+    public Measure(String label, String uri){
         this.uri = uri;
         this.label = label;
     }
-
 }

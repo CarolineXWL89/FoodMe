@@ -7,7 +7,17 @@ package com.example.caroline.foodme;
 
 public class EntitySearch{
     private String text;
+    private Parsed parsed = new Parsed();
+    private Hints hints = new Hints();
+    private int page, numPages;
 
-    //TODO @Jaemyung you need to finish this soon deadline tomorrow evening
+    private EntitySearch(String name, int page, int numPages ){
+        text = name;
+        this.page = page;
+        this.numPages = numPages;
+
+    }
+
+
 
 }
