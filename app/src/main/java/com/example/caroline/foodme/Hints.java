@@ -5,5 +5,5 @@ package com.example.caroline.foodme;
  */
 
 public class Hints {
-    private Food
+    //TODO hello?
 }
