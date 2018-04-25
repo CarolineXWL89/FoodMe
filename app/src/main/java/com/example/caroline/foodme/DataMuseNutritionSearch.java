@@ -14,7 +14,9 @@ public interface DataMuseNutritionSearch {
 
     String baseURL = "https://api.edamam.com/api/food-database/";
 
-    @POST("cURL stuff") //stuff
+    @GET("apiKey")
+    Call<ParserResponse> getNutritionSearch(@Query("") String aaa);
+    //TODO Work on new Retrofit stuff
     //curl -d @food.json -H "Content-Type: application/json" "https://api.edamam.com/api/food-database/nutrients?app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}"
 
     //Call<> //TODO figure out what cURL is
