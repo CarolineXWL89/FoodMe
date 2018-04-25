@@ -17,4 +17,10 @@
         android:icon="@drawable/ic_sync_black_24dp"
         android:title="@string/pref_header_data_sync" />
 
+    <header
+        android:fragment="com.example.caroline.foodme.SettingsPageActivity$UserPreferencesPreferenceFragment"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="@string/pref_header_user_preferences"
+        android:key="color_theme" />
+
 </preference-headers>
