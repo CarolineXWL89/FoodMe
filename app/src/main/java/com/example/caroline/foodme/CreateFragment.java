@@ -5,7 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -30,6 +32,7 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
@@ -49,7 +52,9 @@ public class CreateFragment extends Fragment  {
     private String picUrl;
     private ImageUploadClicker imageUploadClicker;
     private static final int CAMERA_REQUEST = 1888;
+    private static final int STORAGE_REQUEST = 1999;
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 123;
+    private static final int MY_PERMISSIONS_REQUEST_EXTERNAL_STORAGE = 456;
 
     public static final String TAG = "fragments";
     public CreateFragment() {
@@ -262,18 +267,16 @@ public class CreateFragment extends Fragment  {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        Log.d(TAG, "onRequestPermissionsResult: IM CALLED");
-        Toast.makeText(context,"IM CALLED",Toast.LENGTH_SHORT).show();
         if(requestCode ==  MY_PERMISSIONS_REQUEST_CAMERA) {
             // If request is cancelled, the result arrays are empty.
             //if results array is not empty then we can use the camera
-
-            Log.d(TAG, "onRequestPermissionsResult: IM CALLED2");
-            Toast.makeText(context,"IM CALLED2",Toast.LENGTH_SHORT).show();
             imageUploadClicker.setCanUseCamera(grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED);
+        } else if(requestCode ==  MY_PERMISSIONS_REQUEST_EXTERNAL_STORAGE) {
+
+            imageUploadClicker.setCanUseStorage(grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED);
         }
-        //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -282,6 +285,16 @@ public class CreateFragment extends Fragment  {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             imageUpload.setImageBitmap(imageBitmap);
+            //todo upload to imagur and save to image url here
+        } else if (requestCode == STORAGE_REQUEST && resultCode == RESULT_OK) {
+            Uri targetUri = data.getData();
+            Bitmap bitmap;
+            try {
+                bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(targetUri));
+                imageUpload.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             //todo upload to imagur and save to image url here
         }
     }

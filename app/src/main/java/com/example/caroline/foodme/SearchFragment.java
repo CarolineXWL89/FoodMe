@@ -70,7 +70,6 @@ public class SearchFragment extends Fragment {
         RecyclerViewOnClick listener = new RecyclerViewOnClick() {
             @Override
             public void onClick(View v, int pos) {
-                //todo make onclick
                 //todo load recipe
                 Toast.makeText(context, "We are making "+ recipies.get(pos).getRecipeName(), Toast.LENGTH_LONG).show();
             }
