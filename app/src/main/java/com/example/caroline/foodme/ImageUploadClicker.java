@@ -77,7 +77,7 @@ public class ImageUploadClicker implements View.OnClickListener {
                         public void onClick(View view) {
                             checkStoragePermissions();
                         }
-                    });
+                    });yada
                     snackbar.show();
                 } else {
                     Intent intent = new Intent(Intent.ACTION_PICK,
