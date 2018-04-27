@@ -36,7 +36,7 @@ public class FavoritesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favorites, container, false);
-
+        setImages();
         carouselView = (CarouselView) view.findViewById(R.id.carouselView);
         carouselView.setPageCount(images.size());
         carouselView.setViewListener(viewListener);
@@ -50,6 +50,8 @@ public class FavoritesFragment extends Fragment {
     public void setImages(){
         images = new ArrayList<Integer>();
         titles = new ArrayList<String>();
+        images.add(R.drawable.ic_settings_black_24dp);
+        titles.add("Settings");
     }
 
     ViewListener viewListener = new ViewListener() {
