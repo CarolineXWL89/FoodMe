@@ -34,6 +34,7 @@ public class RecipeGenerator extends AppCompatActivity {
 
         getLists();
         sortIngredients();
+        generateRecipe();
     }
 
     public void getLists(){
@@ -95,6 +96,10 @@ public class RecipeGenerator extends AppCompatActivity {
 
         }
         return outputStream.toString();
+    }
+
+    public void generateRecipe(){
+
     }
 
 }

@@ -6,11 +6,11 @@ package com.example.caroline.foodme;
  * TODO update to reflect what we want to pull
  */
 
-public class Food {
+public class SetupItem {
 
     private String foodName, foodImage;
 
-    public Food(String foodName, String foodImage){
+    public SetupItem(String foodName, String foodImage){
         this.foodName = foodName;
         this.foodImage = foodImage;
     }

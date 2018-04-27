@@ -1,5 +1,6 @@
 package com.example.caroline.foodme;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -80,6 +81,12 @@ public class CreateAccount extends AppCompatActivity {
                             Toast.makeText(CreateAccount.this, fault.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
+                    Intent i = new Intent(CreateAccount.this, AccountSetUpActivity.class);
+                    startActivity(i);
+                }
+                else{
+                    Intent i = new Intent(CreateAccount.this, AccountSetUpActivity.class);
+                    startActivity(i);
                 }
             }
         });
