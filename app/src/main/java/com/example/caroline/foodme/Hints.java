@@ -5,5 +5,10 @@ package com.example.caroline.foodme;
  */
 
 public class Hints {
-    //TODO hello?
+    private FoodEdamame food = new FoodEdamame("", "");
+    private Measure measure = new Measure("", "");
+    public Hints(FoodEdamame food, Measure measure){
+        this.food = food;
+        this.measure = measure;
+    }
 }
