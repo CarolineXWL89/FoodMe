@@ -57,7 +57,7 @@ public class CreateFragment extends Fragment {
             }
         });
 
-        final food.json 
+        final food.json //TODO API stuff
 
         return inflater.inflate(R.layout.fragment_create, container, false);
     }
