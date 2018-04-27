@@ -51,11 +51,11 @@ public class LoginScreen extends AppCompatActivity {
     public void wireWidgets(){
         login = (Button) findViewById(R.id.login_button);
         newAccount = (Button) findViewById(R.id.new_account_button);
-//        help = (Button) findViewById(R.id.help_button);
+        //help = (Button) findViewById(R.id.help_button);
         usernameInput = (EditText) findViewById(R.id.username_editText);
         passwordInput = (EditText) findViewById(R.id.password_editText);
         rememberMe = (CheckBox) findViewById(R.id.remember_me_checkBox);
-//        foodMe = (TextView) findViewById(R.id.food_me_textView);
+        //foodMe = (TextView) findViewById(R.id.food_me_textView);
         username = (TextView) findViewById(R.id.username_textView);
         password = (TextView) findViewById(R.id.password_textView);
     }
@@ -86,11 +86,11 @@ public class LoginScreen extends AppCompatActivity {
                 startActivity(i);
             }
         });
-//        help.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 }
