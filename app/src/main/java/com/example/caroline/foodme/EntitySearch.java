@@ -21,7 +21,7 @@ public class EntitySearch{
     }
 
 
-
-
-
+    public Parsed getParsed() {
+        return parsed;
+    }
 }

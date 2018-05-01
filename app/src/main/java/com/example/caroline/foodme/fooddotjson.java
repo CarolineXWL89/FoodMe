@@ -9,16 +9,31 @@ import java.util.ArrayList;
 public class fooddotjson {
     private int yield;
     private Ingredient ingredient = new Ingredient(0, "", "");
+    private String[] uris = {"", ""};
 
-    public fooddotjson(int yield, Ingredient ingredient){
+    public fooddotjson(int yield){
         this.yield = yield;
-        this.ingredient = ingredient;//eeeeeeeeeeeeeeeheheheheheh
     }
 
-    public Ingredient findIngredient(ArrayList<EntitySearch> entitySearchs){
-        EntitySearch entitySearch = entitySearchs.get(0);
+    public String[] findIngredient(ArrayList<EntitySearch> entitySearches){
+        int random = (int) Math.random()* (entitySearches.size());
+        EntitySearch entitySearch = entitySearches.get(random);
+        Parsed parsed = entitySearch.getParsed();
+        FoodEdamame foodEdamame = parsed.getFood();
+        String foodURI = foodEdamame.getUri();
+        uris[0] = foodURI;
 
-        return
+        Measure measure = parsed.getMeasure();
+        String measureURI = measure.getUri();
+        uris[1] = measureURI;
+
+        return uris;
+    }
+
+    public void addIngredient(String[] twoURI){
+        ingredient.setFoodURI(twoURI[0]);
+        ingredient.setMeasureURI(twoURI[1]);
+        ingredient.setQuantity(1);
     }
 
 

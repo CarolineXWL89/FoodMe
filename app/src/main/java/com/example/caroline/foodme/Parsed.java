@@ -18,4 +18,12 @@ public class Parsed {
         public FoodEdamame getFood() {
                 return food;
         }
+
+        public Measure getMeasure() {
+                return measure;
+        }
+
+        public int getQuantity() {
+                return quantity;
+        }
 }

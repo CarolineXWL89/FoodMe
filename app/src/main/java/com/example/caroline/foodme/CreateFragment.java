@@ -57,7 +57,13 @@ public class CreateFragment extends Fragment {
             }
         });
 
-        final fooddotjson fooddotjson = new fooddotjson(); //TODO API stuff
+        final fooddotjson fooddotjson = new fooddotjson(1); //TODO decide how much they should have? Random?
+        String[] uriTwo = fooddotjson.findIngredient(entitySearches);
+        fooddotjson.addIngredient(uriTwo);
+
+        DataMuseNutritionSearch apiFoodPackage = retrofit.create(DataMuseNutritionSearch.class);
+        Call<fooddotjson> sendingCall = apiFoodPackage.sendFood("", ""); //TODO Probably should include sending JSON at a point
+
 
         return inflater.inflate(R.layout.fragment_create, container, false);
     }
