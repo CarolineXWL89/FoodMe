@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.backendless.Backendless;
 /*
@@ -45,9 +46,9 @@ public class HomePageActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+        Backendless.initApp( this, BackendlessSettings.APP_ID, BackendlessSettings.API_KEY );
         logIn(); //checks if user ahs already logged in, if not switches to log in screen
         wireWidgets();
-        Backendless.initApp( this, BackendlessSettings.APP_ID, BackendlessSettings.API_KEY );
         hideNavBar();
     }
 
@@ -69,12 +70,18 @@ public class HomePageActivity extends AppCompatActivity{
     private void logIn() {
         sharedPref = getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        Boolean userExists = sharedPref.getBoolean(getString(R.string.user), false); //checks if previous user exists
+        SharedPreferences.Editor editor = sharedPref.edit();
 
-        userExists = true; //todo delete me later
-        if(!userExists){ //if no user sends you to login
+        int userExists = sharedPref.getInt(getString(R.string.user), 0);
+//        userExists = 0; //todo delete me later
+        if(userExists == 0){//checks if previous user exists
             Intent i = new Intent(this, LoginScreen.class);
             startActivity(i);
+        }
+        if(userExists == 1){
+            editor.clear();
+            editor.putInt(getString(R.string.user), 0);
+            Toast.makeText(this, "Next time you'll need to login again", Toast.LENGTH_SHORT).show();
         }
     }
 
