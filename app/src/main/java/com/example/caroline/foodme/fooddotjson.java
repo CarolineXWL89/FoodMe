@@ -10,7 +10,7 @@ public class fooddotjson {
 
     public fooddotjson(int yienld, Ingrediaents ingrediaents){
         this.yienld = yienld;
-        this.ingrediaents = ingrediaents;
+        this.ingrediaents = ingrediaents;//eeeeeeeeeeeeeeeheheheheheh
     }
 
 
