@@ -165,7 +165,7 @@ public class SettingsPageActivity extends AppCompatPreferenceActivity {
                 || DataSyncPreferenceFragment.class.getName().equals(fragmentName)
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName)
                 || UserPreferenceFragment.class.getName().equals(fragmentName);
-    }
+    } //TODO Ben get on it please
 
     /**
      * This fragment shows general preferences only. It is used when the
