@@ -270,7 +270,7 @@ public class SettingsPageActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("list_preference_1"));
+            bindPreferenceSummaryToValue(findPreference("color_theme"));
         }
 
         @Override
