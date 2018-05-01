@@ -197,7 +197,7 @@ public class SettingsPageActivity extends AppCompatPreferenceActivity {
             return super.onOptionsItemSelected(item);
         }
     }
-
+//tester
     /**
      * This fragment shows notification preferences only. It is used when the
      * activity is showing a two-pane settings UI.

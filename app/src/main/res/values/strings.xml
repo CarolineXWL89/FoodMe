@@ -70,6 +70,8 @@
 
     <string name="pref_header_color_theme">Color Theme</string>
     <string-array name="list_preference_colors">
+        <item>White</item>
+        <item>Black</item>
         <item>Blue</item>
         <item>Red</item>
         <item>Green</item>
