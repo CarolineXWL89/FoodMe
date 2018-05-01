@@ -15,4 +15,7 @@ public class Parsed {
                 this.measure = measure;
         }
 
+        public FoodEdamame getFood() {
+                return food;
+        }
 }

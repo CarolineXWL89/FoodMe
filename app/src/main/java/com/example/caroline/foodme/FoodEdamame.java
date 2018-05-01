@@ -12,4 +12,11 @@ public class FoodEdamame {
         this.label = label;
     }
 
+    public String getUri() {
+        return uri;
+    }
+
+    public String getLabel() {
+        return label;
+    }
 }

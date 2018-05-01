@@ -11,4 +11,12 @@ public class Measure {
         this.uri = uri;
         this.label = label;
     }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public String getLabel() {
+        return label;
+    }
 }
