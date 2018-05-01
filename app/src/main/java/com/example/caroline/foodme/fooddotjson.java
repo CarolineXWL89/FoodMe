@@ -5,12 +5,12 @@ package com.example.caroline.foodme;
  */
 
 public class fooddotjson {
-    private int yienld;
-    private Ingrediaents ingrediaents = new Ingrediaents;
+    private int yield;
+    private Ingredients ingredients = new Ingredients();
 
-    public fooddotjson(int yienld, Ingrediaents ingrediaents){
-        this.yienld = yienld;
-        this.ingrediaents = ingrediaents;//eeeeeeeeeeeeeeeheheheheheh
+    public fooddotjson(int yield, Ingredients ingredients){
+        this.yield = yield;
+        this.ingredients = ingredients;//eeeeeeeeeeeeeeeheheheheheh
     }
 
 
