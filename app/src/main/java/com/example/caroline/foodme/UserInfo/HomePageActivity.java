@@ -25,6 +25,9 @@ import com.example.caroline.foodme.FavoritesFragment.FavoritesFragment;
 import com.example.caroline.foodme.R;
 import com.example.caroline.foodme.SearchFragment.SearchFragment;
 
+
+//todo search bar focus
+
 /*
 Contains stuff like recently added seen after logging in (NOT 1st time)
 Implements: accessing ALL users' entries
@@ -43,6 +46,7 @@ public class HomePageActivity extends AppCompatActivity {
     private View decorView;
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
+    private Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,13 @@ public class HomePageActivity extends AppCompatActivity {
         logIn(); //checks if user ahs already logged in, if not switches to log in screen
         wireWidgets();
         hideNavBar();
+        currentFragment = new FavoritesFragment();
+        FragmentManager fm = getSupportFragmentManager();
+        if(currentFragment != null) {
+            fm.beginTransaction()
+                    .replace(R.id.fragment_container, currentFragment)
+                    .commit();
+        }
     }
 
     @Override
@@ -61,11 +72,10 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     public void hideNavBar(){
-        decorView=getWindow().getDecorView();
+        decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         decorView.setSystemUiVisibility(uiOptions);
-
-
+        //todo call when keyboard goes down
     }
 
     private void logIn() {
@@ -101,7 +111,6 @@ public class HomePageActivity extends AppCompatActivity {
         //creates toolbar at top for settings icon
         Toolbar myToolbar = (Toolbar) findViewById(R.id.settings_toolbar);
         setSupportActionBar(myToolbar);
-        //todo delete once fragments are completely done
         //wires bottom navigation
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -112,17 +121,12 @@ public class HomePageActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            int id = item.getItemId();
-
             //Prepare a null fragment
-            Fragment currentFragment = null;
+            currentFragment = null;
             switch (item.getItemId()) {
                 case R.id.navigation_search:
                     currentFragment = new SearchFragment();
-                    //needs serach by (name or ingrediates)
                     //needs sort by (sorts results)
-                    //needs recent seraches
-                    //needs recent views
                     break;
                 case R.id.navigation_favorites:
                     currentFragment = new FavoritesFragment();
@@ -132,8 +136,7 @@ public class HomePageActivity extends AppCompatActivity {
                     break;
             }
             FragmentManager fm = getSupportFragmentManager();
-            if(currentFragment != null)
-            {
+            if(currentFragment != null) {
                 fm.beginTransaction()
                         .replace(R.id.fragment_container, currentFragment)
                         .commit();

@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 
-public class CreateFragment extends Fragment  {
+public class CreateFragment extends Fragment {
 
     private View rootview;
     private ImageButton imageUpload;
@@ -51,6 +51,7 @@ public class CreateFragment extends Fragment  {
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 123;
     private static final int MY_PERMISSIONS_REQUEST_EXTERNAL_STORAGE = 456;
 
+    //todo make edit text with UI of text view
     public CreateFragment() {
         // Required empty public constructor
     }
@@ -113,17 +114,18 @@ public class CreateFragment extends Fragment  {
 
         //wires submit button
         submit = rootview.findViewById(R.id.submit);
-        submit.setOnClickListener( new View.OnClickListener() {
+        submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Recipe recipe = checkText();
-                if(recipe != null){
+                if (recipe != null) {
                     Backendless.Data.of(Recipe.class).save(recipe, new AsyncCallback<Recipe>() {
                         @Override
                         public void handleResponse(Recipe response) {
-                            Toast.makeText(context, "Success, "+ recipe.getRecipeName()+ " has been uploaded", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Success, " + recipe.getRecipeName() + " has been uploaded", Toast.LENGTH_SHORT).show();
                             clear();
                         }
+
                         @Override
                         public void handleFault(BackendlessFault fault) {
                             Toast.makeText(context, "Recipe cannot be uploaded right now, please try again later", Toast.LENGTH_SHORT).show();
@@ -162,37 +164,37 @@ public class CreateFragment extends Fragment  {
         String yieldText = yield.getText().toString();
         String timeText = timeNeeded.getText().toString();
         String[] message = new String[5];
-        if(isOk(titleText)){
+        if (isOk(titleText)) {
             recipe.setRecipeName(titleText);
         } else {
             message[0] = "Please add a recipe name";
         }
 
-        if(isOk(directionsText)){
+        if (isOk(directionsText)) {
             recipe.setDirections(directionsText);
         } else {
             message[1] = "Please add directions";
         }
 
-        if(isOk(yieldText)){
+        if (isOk(yieldText)) {
             recipe.setServings(yieldText);
         } else {
             message[2] = "Please add serving size";
         }
 
-        if(isOk(timeText)){
+        if (isOk(timeText)) {
             recipe.setTimeNeeded(timeText);
         } else {
             message[3] = "Please add a time";
         }
 
-        if(ingredients.size() > 0){
+        if (ingredients.size() > 0) {
             recipe.setIngredients(ingredients.toString());
         } else {
             message[4] = "Please add ingredients";
         }
 
-        if(notEmpty(message)){
+        if (notEmpty(message)) {
             return null;
         } else {
             return recipe;
@@ -202,14 +204,14 @@ public class CreateFragment extends Fragment  {
     private boolean notEmpty(String[] message) {
         boolean value = true;
         String toast = "";
-        for(int i = 0; i < message.length; i++){
-            if(!isOk(message[i])){
+        for (int i = 0; i < message.length; i++) {
+            if (!isOk(message[i])) {
                 value = false;
                 toast = toast + message[i] + ", ";
             }
         }
 
-        if(isOk(toast) && !value){
+        if (isOk(toast) && !value) {
             toast.substring(0, toast.length() - 2);
             Toast.makeText(context, toast, Toast.LENGTH_SHORT).show();
             return false;
@@ -220,50 +222,15 @@ public class CreateFragment extends Fragment  {
 
     private boolean isOk(String titleText) {
         //checks to make sure its not empty
-        if(titleText.equals("")){
+        if (titleText.equals("")) {
             return false;
-        } else if(titleText.equals(" ")){
+        } else if (titleText.equals(" ")) {
             return false;
-        } else if(titleText.equals("  ")){
+        } else if (titleText.equals("  ")) {
             return false;
-        } else{
+        } else {
             return true;
         }
-        /*
-        final ArrayList<EntitySearch> entitySearches = new ArrayList<>();
-        String foodSearched = "";
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(DataMuseNutritionIngr.baseURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        DataMuseNutritionIngr api = retrofit.create(DataMuseNutritionIngr.class);
-
-
-        Call<ArrayList<EntitySearch>> call = api.getIngrNutrient(foodSearched, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
-
-        call.enqueue(new Callback<ArrayList<EntitySearch>>() {
-            @Override
-            public void onResponse(Call<ArrayList<EntitySearch>> call, Response<ArrayList<EntitySearch>> response) {
-                entitySearches.clear();
-                entitySearches.addAll(response.body());
-            }
-            @Override
-            public void onFailure(Call<ArrayList<EntitySearch>> call, Throwable t) {
-                //NOTHING YET
-            }
-        });
-
-        final fooddotjson fooddotjson = new fooddotjson(1); //TODO decide how much they should have? Random?
-        String[] uriTwo = fooddotjson.findIngredient(entitySearches);
-        fooddotjson.addIngredient(uriTwo);
-
-        DataMuseNutritionSearch apiFoodPackage = retrofit.create(DataMuseNutritionSearch.class);
-        Call<fooddotjson> sendingCall = apiFoodPackage.sendFood(EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION); //TODO Probably should include sending JSON at a point
-
-
-        return inflater.inflate(R.layout.fragment_create, container, false);*/
     }
 
     @Override
@@ -295,12 +262,12 @@ public class CreateFragment extends Fragment  {
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         //handles results for camera and storage permissions requests
-        if(requestCode ==  MY_PERMISSIONS_REQUEST_CAMERA) {
+        if (requestCode == MY_PERMISSIONS_REQUEST_CAMERA) {
             // If request is cancelled, the result arrays are empty.
             //if results array is not empty then we can use the camera
             imageUploadClicker.setCanUseCamera(grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED);
-        } else if(requestCode ==  MY_PERMISSIONS_REQUEST_EXTERNAL_STORAGE) {
+        } else if (requestCode == MY_PERMISSIONS_REQUEST_EXTERNAL_STORAGE) {
             imageUploadClicker.setCanUseStorage(grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED);
         }
