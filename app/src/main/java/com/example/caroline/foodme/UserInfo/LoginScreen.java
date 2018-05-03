@@ -1,13 +1,10 @@
-package com.example.caroline.foodme;
+package com.example.caroline.foodme.UserInfo;
 
 import android.content.Intent;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +18,7 @@ import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.example.caroline.foodme.R;
 
 /*
 Initial screen seen when opening app
@@ -68,7 +66,12 @@ public class LoginScreen extends AppCompatActivity {
                         
                     }
 
-    @Override
+                    @Override
+                    public void handleFault(BackendlessFault fault) {
+
+                    }
+
+                    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_help:

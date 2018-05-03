@@ -1,4 +1,4 @@
-package com.example.caroline.foodme;
+package com.example.caroline.foodme.SearchFragment;
 
 import android.content.Context;
 import android.support.design.widget.Snackbar;
@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.example.caroline.foodme.R;
+import com.example.caroline.foodme.RecyclerViewOnClick;
 
 import java.util.ArrayList;
 

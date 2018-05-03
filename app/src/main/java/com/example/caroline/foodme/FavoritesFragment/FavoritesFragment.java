@@ -1,14 +1,14 @@
-package com.example.caroline.foodme;
+package com.example.caroline.foodme.FavoritesFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.caroline.foodme.R;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ViewListener;
 
@@ -45,7 +45,6 @@ public class FavoritesFragment extends Fragment {
         return view;
     }
 
-//
 
     public void setImages(){
         images = new ArrayList<Integer>();

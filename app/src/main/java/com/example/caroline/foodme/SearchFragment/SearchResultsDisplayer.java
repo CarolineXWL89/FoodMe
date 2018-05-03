@@ -1,4 +1,4 @@
-package com.example.caroline.foodme;
+package com.example.caroline.foodme.SearchFragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import com.example.caroline.foodme.R;
+import com.example.caroline.foodme.Recipe;
+import com.example.caroline.foodme.RecyclerViewOnClick;
+import com.example.caroline.foodme.Search.SearchResultsAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
