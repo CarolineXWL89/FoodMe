@@ -56,7 +56,7 @@ public class HomePageActivity extends AppCompatActivity {
         wireWidgets();
         hideNavBar();
     }
-
+//
     @Override
     protected void onResume() {
         hideNavBar();
