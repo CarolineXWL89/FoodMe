@@ -1,4 +1,4 @@
-package com.example.caroline.foodme;
+package com.example.caroline.foodme.isThisUnused;
 
 import android.content.Context;
 

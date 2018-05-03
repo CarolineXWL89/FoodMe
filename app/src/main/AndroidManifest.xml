@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".HomePageActivity"
+            android:name=".UserInfo.HomePageActivity"
             android:banner="@string/title_activity_home_page"
             android:label="@string/app_name">
             <meta-data
@@ -28,11 +28,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsPageActivity"
+            android:name=".UserInfo.SettingsPageActivity"
             android:label="@string/title_activity_settings_page" />
-        <activity android:name=".LoginScreen" />
-        <activity android:name=".CreateAccount" />
-        <activity android:name=".SearchResultsDisplayer">
+        <activity android:name=".UserInfo.LoginScreen" />
+        <activity android:name=".UserInfo.CreateAccount" />
+        <activity android:name=".SearchFragment.SearchResultsDisplayer">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -42,7 +42,7 @@
                 android:resource="@xml/searchable" />
         </activity>
 
-        <activity android:name=".SearchResultsActivity">
+        <activity android:name=".Search.SearchResultsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -51,11 +51,11 @@
                 android:resource="@xml/searchable" />
 
         </activity>
-        <provider android:name=".MyRecentSuggestionProvider"
-            android:authorities="com.example.caroline.foodme.MyRecentSuggestionProvider"/>
+        <provider android:name=".Search.MyRecentSuggestionProvider"
+            android:authorities="com.example.caroline.foodme.Search.MyRecentSuggestionProvider"/>
 
         <activity android:name=".EntitySearchExtraction" />
-        <activity android:name=".AccountSetUpActivity">
+        <activity android:name=".isThisUnused.AccountSetUpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

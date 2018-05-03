@@ -1,4 +1,4 @@
-package com.example.caroline.foodme;
+package com.example.caroline.foodme.SearchFragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +19,9 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
+import com.example.caroline.foodme.R;
+import com.example.caroline.foodme.Recipe;
+import com.example.caroline.foodme.RecyclerViewOnClick;
 
 import java.util.ArrayList;
 import java.util.List;
