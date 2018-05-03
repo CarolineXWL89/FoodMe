@@ -35,7 +35,7 @@ public class ImageUploadClicker implements View.OnClickListener {
     public void onClick(View v) {
         boolean camera = false;
         //todo make two buttons
-        if(!camera){
+        if(camera){
             if(!canUseCamera){
                 Snackbar snackbar = Snackbar.make(v, "Camera Permissions are not enabled \n Please enable in order to take photos", Snackbar.LENGTH_LONG);
                 snackbar.setAction("ALLOW", new View.OnClickListener() {
