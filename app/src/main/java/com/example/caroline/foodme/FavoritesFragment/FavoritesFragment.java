@@ -23,7 +23,7 @@ public class FavoritesFragment extends Fragment {
 
     public static final String TAG = "fragments";
     public FavoritesFragment() {
-        // Required empty public constructor
+        // Required empty public constructorr
     }
 
     @Override
