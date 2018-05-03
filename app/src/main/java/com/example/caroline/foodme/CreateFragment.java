@@ -2,7 +2,6 @@ package com.example.caroline.foodme;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +42,7 @@ public class CreateFragment extends Fragment {
         DataMuseNutritionIngr api = retrofit.create(DataMuseNutritionIngr.class);
 
 
-        Call<ArrayList<EntitySearch>> call = api.getIngrNutrient(foodSearched, EdamamKeys.APP_ID, EdamamKeys.APP_KEY);
+        Call<ArrayList<EntitySearch>> call = api.getIngrNutrient(foodSearched, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
 
         call.enqueue(new Callback<ArrayList<EntitySearch>>() {
             @Override
@@ -62,7 +61,7 @@ public class CreateFragment extends Fragment {
         fooddotjson.addIngredient(uriTwo);
 
         DataMuseNutritionSearch apiFoodPackage = retrofit.create(DataMuseNutritionSearch.class);
-        Call<fooddotjson> sendingCall = apiFoodPackage.sendFood("", ""); //TODO Probably should include sending JSON at a point
+        Call<fooddotjson> sendingCall = apiFoodPackage.sendFood(EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION); //TODO Probably should include sending JSON at a point
 
 
         return inflater.inflate(R.layout.fragment_create, container, false);

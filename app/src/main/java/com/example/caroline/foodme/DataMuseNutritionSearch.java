@@ -8,6 +8,8 @@ import retrofit2.http.Query;
 
 /**
  * Created by michaelxiong on 4/11/18.
+ * Sending JSON packet of fooddotjson to be analysed
+ * //TODO how do you exactly set up an URL for that?
  */
 
 public interface DataMuseNutritionSearch {

@@ -35,8 +35,4 @@ public class fooddotjson {
         ingredient.setMeasureURI(twoURI[1]);
         ingredient.setQuantity(1);
     }
-
-
-
-
 }
