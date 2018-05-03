@@ -3,13 +3,13 @@ package com.example.caroline.foodme.UserInfo;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
@@ -28,13 +28,13 @@ public class CreateAccount extends AppCompatActivity {
     private CheckBox terms;
     private Toolbar toolbar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
         wireWidgets();
-        setOnCLickListeners();
 
         //TODO Backendless connection, createAccount sends out confirmation email OR FOR NOW brings to Login, adds user
     }
@@ -60,7 +60,7 @@ public class CreateAccount extends AppCompatActivity {
                 if(confirmPassword()){
                     //process for creating a new user:
                     BackendlessUser user = new BackendlessUser();
-                  //                    user.setProperty("name", firstNameInput.getText().toString() + " " + miInput.getText().toString()+". "+lastNameInput.getText().toString());
+                    //                    user.setProperty("name", firstNameInput.getText().toString() + " " + miInput.getText().toString()+". "+lastNameInput.getText().toString());
                     user.setProperty("name", firstNameInput.getText().toString() + " "+lastNameInput.getText().toString());
                     user.setProperty("email", emailInput.getText().toString());
                     user.setProperty("password", passInput.getText().toString());
@@ -87,8 +87,16 @@ public class CreateAccount extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
-    public boolean confirmPassword(){
-        return (passInput.getText().toString().equals(confirmPassInput.getText().toString())) && terms.isChecked();
 
+
+    //checks to make sure the password was imputed properly in the two EditTexts
+    public boolean confirmPassword(){
+        if(passInput.getText().toString().equals(confirmPassInput.getText().toString())){
+            return true;
+        }
+        else{
+            Toast.makeText(CreateAccount.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
 }

@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.os.Bundle;
 import android.view.View;
@@ -39,7 +42,6 @@ public class LoginScreen extends AppCompatActivity {
         setContentView(R.layout.activity_login_screen);
         sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         wireWidgets();
-
     }
 
     public void wireWidgets(){
@@ -54,20 +56,9 @@ public class LoginScreen extends AppCompatActivity {
         setOnClickListeners();
     }
 
-    public void setOnClickListeners(){
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Backendless.UserService.login(usernameInput.getText().toString(), passwordInput.getText().toString(), new AsyncCallback<BackendlessUser>() {
-                    @Override
-                    public void handleResponse(BackendlessUser response) {
-                        String username = (String) response.getProperty("username");
-                        Toast.makeText(LoginScreen.this, "Hello " +username, Toast.LENGTH_SHORT).show();
-                        
-                    }
 
-                    @Override
-                    public void handleFault(BackendlessFault fault) {
+
+    @Overridepublic void handleFault(BackendlessFault fault) {
 
                     }
 
@@ -102,6 +93,7 @@ public class LoginScreen extends AppCompatActivity {
 
             }
         });*/
+        }
     }
 
     public void setOnClickListeners(){
@@ -111,15 +103,18 @@ public class LoginScreen extends AppCompatActivity {
                 Backendless.UserService.login(usernameInput.getText().toString(), passwordInput.getText().toString(), new AsyncCallback<BackendlessUser>() {
                     @Override
                     public void handleResponse(BackendlessUser response) {
+                        Log.d("logged in", "working");
                         String username = (String) response.getProperty("username");
                         Toast.makeText(LoginScreen.this, "Hello " +username, Toast.LENGTH_SHORT).show();
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString(getString(R.string.user_ID), response.getUserId());
                         if(rememberMe.isChecked()){
                             editor.putInt(getString(R.string.user), 2); //means there is a saved user
+                            editor.commit();
                         }
                         else{
                             editor.putInt(getString(R.string.user), 1); //means there is a saved user, but user does not wish to be remembered.
+                            editor.commit();
                             Toast.makeText(LoginScreen.this, "Not remembering you", Toast.LENGTH_SHORT).show();
                         }
                         editor.commit();
@@ -139,6 +134,7 @@ public class LoginScreen extends AppCompatActivity {
 
                     @Override
                     public void handleFault(BackendlessFault fault) {
+                        Log.d("fault", fault.getMessage());
                         Toast.makeText(LoginScreen.this, fault.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
