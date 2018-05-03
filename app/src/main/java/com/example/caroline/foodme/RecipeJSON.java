@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by per6 on 3/23/18.
  */
 
-public class Recipe implements Parcelable {
+public class RecipeJSON implements Parcelable {
 
     private String recipeName;
     private String directions;
@@ -18,10 +18,10 @@ public class Recipe implements Parcelable {
     private String objectId;
     private String ownerId;
 
-    public Recipe(){
+    public RecipeJSON(){
     }
 
-    public Recipe(String recipeName, String ingredients, String directions, String servings, String timeNeeded, String imageURL, String ownerId) {
+    public RecipeJSON(String recipeName, String ingredients, String directions, String servings, String timeNeeded, String imageURL, String ownerId) {
         this.recipeName = recipeName;
         this.directions = directions;
         this.servings = servings;
@@ -95,7 +95,7 @@ public class Recipe implements Parcelable {
         this.ImageURL = url;
     }
 
-    protected Recipe(Parcel in) {
+    protected RecipeJSON(Parcel in) {
         recipeName = in.readString();
         directions = in.readString();
         servings = in.readString();
@@ -124,15 +124,15 @@ public class Recipe implements Parcelable {
     }
 
     @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {
+    public static final Parcelable.Creator<RecipeJSON> CREATOR = new Parcelable.Creator<RecipeJSON>() {
         @Override
-        public Recipe createFromParcel(Parcel in) {
-            return new Recipe(in);
+        public RecipeJSON createFromParcel(Parcel in) {
+            return new RecipeJSON(in);
         }
 
         @Override
-        public Recipe[] newArray(int size) {
-            return new Recipe[size];
+        public RecipeJSON[] newArray(int size) {
+            return new RecipeJSON[size];
         }
     };
 }
