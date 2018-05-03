@@ -25,7 +25,7 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.example.caroline.foodme.R;
-import com.example.caroline.foodme.Recipe;
+import com.example.caroline.foodme.RecipeJSON;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -116,17 +116,17 @@ public class CreateFragment extends Fragment  {
         submit.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Recipe recipe = checkText();
+                final RecipeJSON recipe = checkText();
                 if(recipe != null){
-                    Backendless.Data.of(Recipe.class).save(recipe, new AsyncCallback<Recipe>() {
+                    Backendless.Data.of(RecipeJSON.class).save(recipe, new AsyncCallback<RecipeJSON>() {
                         @Override
-                        public void handleResponse(Recipe response) {
+                        public void handleResponse(RecipeJSON response) {
                             Toast.makeText(context, "Success, "+ recipe.getRecipeName()+ " has been uploaded", Toast.LENGTH_SHORT).show();
                             clear();
                         }
                         @Override
                         public void handleFault(BackendlessFault fault) {
-                            Toast.makeText(context, "Recipe cannot be uploaded right now, please try again later", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "RecipeJSON cannot be uploaded right now, please try again later", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -154,9 +154,9 @@ public class CreateFragment extends Fragment  {
         picUrl = "";
     }
 
-    private Recipe checkText() {
+    private RecipeJSON checkText() {
         //checks to make sure everything has been added and creates message at the end if not everything has been filled out
-        Recipe recipe = new Recipe();
+        RecipeJSON recipe = new RecipeJSON();
         String titleText = title.getText().toString();
         String directionsText = directions.getText().toString();
         String yieldText = yield.getText().toString();
@@ -255,7 +255,7 @@ public class CreateFragment extends Fragment  {
             }
         });
 
-        final fooddotjson fooddotjson = new fooddotjson(1); //TODO decide how much they should have? Random?
+        final fooddotjson fooddotjson = new fooddotjson(1); //TODO How and what does @POST return?
         String[] uriTwo = fooddotjson.findIngredient(entitySearches);
         fooddotjson.addIngredient(uriTwo);
 

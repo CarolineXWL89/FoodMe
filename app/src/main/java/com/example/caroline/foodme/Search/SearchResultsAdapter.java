@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.caroline.foodme.R;
-import com.example.caroline.foodme.Recipe;
+import com.example.caroline.foodme.RecipeJSON;
 import com.example.caroline.foodme.RecyclerViewOnClick;
 import com.squareup.picasso.Picasso;
 
@@ -22,11 +22,11 @@ import java.util.List;
 
 public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdapter.MyViewHolder> {
         private RecyclerViewOnClick click;
-        private List<Recipe> recipes;
+        private List<RecipeJSON> recipes;
         private Context context;
         public static final String TAG = "SearchResultsAdapter";
 
-    public SearchResultsAdapter( List<Recipe> recipes, Context context, RecyclerViewOnClick click) {
+    public SearchResultsAdapter(List<RecipeJSON> recipes, Context context, RecyclerViewOnClick click) {
             this.recipes = recipes;
             this.context = context;
             this.click = click;
@@ -42,7 +42,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
             //wires widgets
-            Recipe result = recipes.get(position);
+            RecipeJSON result = recipes.get(position);
             holder.description.setText(result.getRecipeName());
             holder.timeToPrepare.setText(result.getTimeNeeded());
             //loads picture into results

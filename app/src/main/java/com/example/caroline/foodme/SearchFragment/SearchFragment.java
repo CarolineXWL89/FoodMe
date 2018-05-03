@@ -20,7 +20,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
 import com.example.caroline.foodme.R;
-import com.example.caroline.foodme.Recipe;
+import com.example.caroline.foodme.RecipeJSON;
 import com.example.caroline.foodme.RecyclerViewOnClick;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ import java.util.List;
 public class SearchFragment extends Fragment {
 
     public static final String TAG = "fragments";
-    private ArrayList<Recipe> recipes;
+    private ArrayList<RecipeJSON> recipes;
     private FloatingActionButton addRecipe, submit;
     private ArrayList<String> ingredients;
     private RecyclerView recyclerView;
@@ -127,9 +127,9 @@ public class SearchFragment extends Fragment {
         //todo implement api
         DataQueryBuilder queryBuilder = DataQueryBuilder.create();
         queryBuilder.setWhereClause(whereClause.toString());
-        Backendless.Data.of(Recipe.class).find(queryBuilder, new AsyncCallback<List<Recipe>>() {
+        Backendless.Data.of(RecipeJSON.class).find(queryBuilder, new AsyncCallback<List<RecipeJSON>>() {
             @Override
-            public void handleResponse(List<Recipe> response) {
+            public void handleResponse(List<RecipeJSON> response) {
                 recipes.clear();
                 recipes.addAll(response);
                 if(recipes.size()!=0) {
