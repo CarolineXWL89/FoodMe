@@ -42,11 +42,11 @@ public class NewIngredientsDisplayAdapter extends RecyclerView.Adapter<NewIngred
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.newIngredientsDisplay.setText(ingredients.get(position));
-        Log.d(TAG, "onBindViewHolder: "+position);
+        //wired edit texts so that ingredients can be edited
         holder.newIngredientsDisplay.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                //yada
+
             }
 
             @Override
@@ -58,7 +58,6 @@ public class NewIngredientsDisplayAdapter extends RecyclerView.Adapter<NewIngred
             public void afterTextChanged(Editable s) {
                 ingredients.remove(position);
                 ingredients.add(position, holder.newIngredientsDisplay.getText().toString());
-                //notifyDataSetChanged();
             }
         });
     }
@@ -99,7 +98,6 @@ public class NewIngredientsDisplayAdapter extends RecyclerView.Adapter<NewIngred
                 @Override
                 public void onClick(View v) {
                     String name = ingredients.get(getAdapterPosition());
-
                     // backup of removed item for undo purpose
                     final String deletedItem = ingredients.get(getAdapterPosition());
                     final int deletedIndex = getAdapterPosition();
@@ -120,6 +118,5 @@ public class NewIngredientsDisplayAdapter extends RecyclerView.Adapter<NewIngred
                 }
             });
         }
-
     }
 }

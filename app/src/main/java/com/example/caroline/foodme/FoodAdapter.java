@@ -16,6 +16,8 @@ import java.util.List;
  * RecyclerView adapter
  */
 
+//todo DELETE?
+
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> {
 
     private List<Food> foods; //items in recycler view
@@ -36,7 +38,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
         //fills in view w/ info
         Food food = foods.get(position);
         holder.foodNameView.setText(food.getFoodName());
-        //TODO: put something here having to do with the Food API to get the image for the food
     }
 
     @Override

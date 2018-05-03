@@ -23,10 +23,14 @@ import com.backendless.persistence.DataQueryBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by maylisw on 3/21/18.
+ */
+
 public class SearchFragment extends Fragment {
 
     public static final String TAG = "fragments";
-    private ArrayList<Recipe> recipies;
+    private ArrayList<Recipe> recipes;
     private FloatingActionButton addRecipe, submit;
     private ArrayList<String> ingredients;
     private RecyclerView recyclerView;
@@ -35,8 +39,8 @@ public class SearchFragment extends Fragment {
     private Context context;
     private View rootView;
     private EditText newRecipeEditText;
-
     private IngredientSearchAdapter ingredientSearchAdapter;
+
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -44,7 +48,6 @@ public class SearchFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -52,18 +55,18 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_search, container, false);
         context = rootView.getContext();
-        // Inflate the layout for this fragment
         wireDaStuff();
         return rootView;
     }
-//
 
     private void wireDaStuff() {
-        recipies = new ArrayList<>();
-        ingredients=new ArrayList<>();
+        recipes = new ArrayList<>();
+        ingredients = new ArrayList<>();
         ingredients.add(" ");
+        newRecipeEditText = rootView.findViewById(R.id.newIngredientSearchEdit);
+
+        //recycler view wired
         recyclerView = rootView.findViewById(R.id.search_recipe_recycler_view);
-        newRecipeEditText=rootView.findViewById(R.id.newIngredientSearchEdit);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -71,26 +74,16 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View v, int pos) {
                 //todo load recipe
-                Toast.makeText(context, "We are making "+ recipies.get(pos).getRecipeName(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "We are making "+ recipes.get(pos).getRecipeName(), Toast.LENGTH_LONG).show();
             }
         };
-        ingredientSearchAdapter= new IngredientSearchAdapter(ingredients, listener,context);
+        ingredientSearchAdapter = new IngredientSearchAdapter(ingredients, listener,context);
         ingredients.remove(0);
         recyclerView.setAdapter(ingredientSearchAdapter);
         registerForContextMenu(recyclerView);
-        submit = rootView.findViewById(R.id.button_submit_search);
-        addRecipe=rootView.findViewById(R.id.button_new_ingredient);
-        addRecipe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ingredients.add( newRecipeEditText.getText().toString());
-                Log.d(TAG, "onClick: ingredients"+ingredients.toString());
-                recyclerView.smoothScrollToPosition(ingredients.size()-1);
-                ingredientSearchAdapter.notifyDataSetChanged();
-                newRecipeEditText.setText("");
 
-            }
-        });
+        //wires buttons
+        submit = rootView.findViewById(R.id.button_submit_search);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,57 +98,62 @@ public class SearchFragment extends Fragment {
 
             }
         });
+        addRecipe = rootView.findViewById(R.id.button_new_ingredient);
+        addRecipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ingredients.add( newRecipeEditText.getText().toString());
+                Log.d(TAG, "onClick: ingredients"+ingredients.toString());
+                recyclerView.smoothScrollToPosition(ingredients.size()-1);
+                ingredientSearchAdapter.notifyDataSetChanged();
+                newRecipeEditText.setText("");
 
-
-
+            }
+        });
     }
 
     private void backendlessSearchByIngredient(final ArrayList<String> theStuff) {
+        //creates backendless where clause
         StringBuilder whereClause = new StringBuilder();
         whereClause.append("ingredients like '%"+theStuff.get(0)+"%'");
         for(String ingredient:theStuff) {
             whereClause.append("and ingredients like '%" + ingredient + "%'");
         }
-        Log.d(TAG, "backendlessSearchByIngredient: " +whereClause.toString());
-
-
-
+        //seraches backendless by ingredients
+        //todo implement api
         DataQueryBuilder queryBuilder = DataQueryBuilder.create();
-
-
         queryBuilder.setWhereClause(whereClause.toString());
         Backendless.Data.of(Recipe.class).find(queryBuilder, new AsyncCallback<List<Recipe>>() {
             @Override
             public void handleResponse(List<Recipe> response) {
-                Log.d(TAG, "handleResponse: "+response.size());
-//                Log.d(TAG, "handleResponse: "+response.get(0).getRecipeName());
-                recipies.clear();
-                recipies.addAll(response);
-                for (Recipe p : recipies) {
+                recipes.clear();
+                recipes.addAll(response);
+                //todo why is this needed? (debugging?)
+                for (Recipe p : recipes) {
                     if (p != null){
                         Log.d(TAG, "handleResponse: " + p.getRecipeName());
                     }else{
                         Log.d(TAG, "handleResponse: null");
                     }
                 }
-
-                if(recipies.size()!=0) {
+                if(recipes.size()!=0) {
+                    //starts results activity
                     Intent i = new Intent(getActivity(), SearchResultsDisplayer.class);
-                    i.putExtra("the_stuff", recipies);
+                    i.putExtra("the_stuff", recipes);
                     startActivity(i);
                 }
                 else {
                     Toast.makeText(context, "No Results Found", Toast.LENGTH_SHORT).show();
+                    //todo display empty result page
                 }
             }
 
             @Override
             public void handleFault(BackendlessFault fault) {
                 Log.d(TAG, "handleFault: "+fault.getMessage());
+                Toast.makeText(context, fault.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-
 
     }
 }

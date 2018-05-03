@@ -22,6 +22,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
         private List<Recipe> recipes;
         private Context context;
         public static final String TAG = "SearchResultsAdapter";
+
     public SearchResultsAdapter( List<Recipe> recipes, Context context, RecyclerViewOnClick click) {
             this.recipes = recipes;
             this.context = context;
@@ -37,17 +38,15 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
+            //wires widgets
             Recipe result = recipes.get(position);
-
             holder.description.setText(result.getRecipeName());
             holder.timeToPrepare.setText(result.getTimeNeeded());
+            //loads picture into results
            if(result.getImageURL() != null) {
                 Picasso.with(context).load(result.getImageURL()).into(holder.image);
                Log.d(TAG, "onBindViewHolder: should have added pic:"+ result.getImageURL());
             } else {
-
-
-
                Picasso.with(context).load(R.drawable.ic_error_outline_black_24dp).into(holder.image);
            }
         }
@@ -65,6 +64,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
 
             public MyViewHolder(View itemView, RecyclerViewOnClick click) {
                 super(itemView);
+                //wires widgets in view holder
                 image = itemView.findViewById(R.id.food_picture);
                 description = itemView.findViewById(R.id.recipe_description);
                 timeToPrepare = itemView.findViewById(R.id.time_to_prepare);

@@ -64,8 +64,7 @@ public class LoginScreen extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_help:
-                //enters settings activity
-                //todo  intent for help
+                //todo create an activity for a help page for help
                 return true;
             default:
                 // If we got here, the user's action was not recognized.

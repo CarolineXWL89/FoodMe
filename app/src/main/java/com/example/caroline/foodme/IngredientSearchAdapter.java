@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by per6 on 3/27/18.
+ * Created by Nicolo on 3/27/18.
  */
 
 public class IngredientSearchAdapter extends RecyclerView.Adapter<IngredientSearchAdapter.MyViewHolder> {
@@ -28,8 +28,6 @@ public class IngredientSearchAdapter extends RecyclerView.Adapter<IngredientSear
         this.click = click;
         this.context = context;
     }
-
-
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -47,13 +45,7 @@ public class IngredientSearchAdapter extends RecyclerView.Adapter<IngredientSear
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.ingredientNumberTextView.setText("Ingredient #"+(position+1));
         holder.ingredientText.setText(ingredients.get(position));
-
-
-
-
     }
-
-
 
     public ArrayList<String> getIngredients() {
         return ingredients;
@@ -81,9 +73,9 @@ public class IngredientSearchAdapter extends RecyclerView.Adapter<IngredientSear
 
         public MyViewHolder( final View itemView, RecyclerViewOnClick click) {
             super(itemView);
-            ingredientText= itemView.findViewById(R.id.ingredient_content_textview);
-            ingredientNumberTextView=itemView.findViewById(R.id.ingredient_name_textview);
-            deleteButton=itemView.findViewById(R.id.deleteButtonSearchFragment);
+            ingredientText = itemView.findViewById(R.id.ingredient_content_textview);
+            ingredientNumberTextView = itemView.findViewById(R.id.ingredient_name_textview);
+            deleteButton = itemView.findViewById(R.id.deleteButtonSearchFragment);
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

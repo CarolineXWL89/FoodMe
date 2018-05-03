@@ -11,9 +11,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Created by nicPorcu on 4/13/18.
+ */
 
 public class SearchResultsDisplayer extends AppCompatActivity {
 
@@ -27,24 +30,23 @@ public class SearchResultsDisplayer extends AppCompatActivity {
     private RecyclerViewOnClick click;
     private Toolbar toolbar;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results_displayer);
-        Log.d(TAG, "onCreate: hi");
+
+        //gets arraylist of search results from intent
         recipes = new ArrayList<>();
         Intent i = getIntent();
         ArrayList<Recipe> r = i.getParcelableArrayListExtra("the_stuff");
-
         recipes.addAll(r);
-        for (int j=0; j<recipes.size(); j++) {
+        //todo what is this for?
+        for (int j = 0; j<recipes.size(); j++) {
             if (recipes.get(j) != null){
                 Log.d(TAG, "onCreate: " + recipes.get(0).getRecipeName());
             }else{
                 Log.d(TAG, "onCreate: null");
                 recipes.remove(j);
-
             }
         }
         wireWidgets();
@@ -55,9 +57,8 @@ public class SearchResultsDisplayer extends AppCompatActivity {
     }
 
     private void wireWidgets() {
-
-        recyclerView=findViewById(R.id.search_results_recycler_view);
-        toolbar=findViewById(R.id.toolbar_search_results_displayer);
+        //wires toolbar
+        toolbar = findViewById(R.id.toolbar_search_results_displayer);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -65,26 +66,23 @@ public class SearchResultsDisplayer extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-                //What to do on back clicked
+                //todo go back on back clicked
             }
         });
-        click=new RecyclerViewOnClick() {
+
+        //wires recyclerview
+        recyclerView = findViewById(R.id.search_results_recycler_view);
+        click = new RecyclerViewOnClick() {
             @Override
             public void onClick(View v, int pos) {
                 Toast.makeText(SearchResultsDisplayer.this, "We are making "+ recipes.get(pos).getRecipeName(), Toast.LENGTH_LONG).show();
+                //todo load recipe
             }
         };
-        searchResultsAdapter= new SearchResultsAdapter(recipes,this,click);
-        layoutManager= new LinearLayoutManager(this);
+        searchResultsAdapter = new SearchResultsAdapter(recipes,this,click);
+        layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        RecyclerViewOnClick listener = new RecyclerViewOnClick() {
-            @Override
-            public void onClick(View v, int pos) {
-                //todo load recipe
-                Toast.makeText(context, "We are making "+ recipes.get(pos).getRecipeName(), Toast.LENGTH_LONG).show();
-            }
-        };
         recyclerView.setAdapter(searchResultsAdapter);
         registerForContextMenu(recyclerView);
 

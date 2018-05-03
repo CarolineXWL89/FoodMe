@@ -38,7 +38,7 @@ Contains: account settings, notifications, help, terms of use, about, language (
 Can: launch into basically a text page for each part EXCEPTING --> account settings, notifications
  */
 public class SettingsPageActivity extends AppCompatPreferenceActivity {
-    //todo add header with back button
+    //todo add toolbar with back button
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.

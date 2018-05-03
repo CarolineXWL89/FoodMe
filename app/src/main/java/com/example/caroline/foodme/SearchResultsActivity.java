@@ -39,64 +39,53 @@ public class SearchResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
         wireWidgets();
-
+        //deals with search intent
         handleIntent(getIntent());
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-
         handleIntent(intent);
     }
 
     private void handleIntent(Intent intent) {
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            //gets query and saves search to recent searches
             String query = intent.getStringExtra(SearchManager.QUERY);
             SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
                     MyRecentSuggestionProvider.AUTHORITY, MyRecentSuggestionProvider.MODE);
             suggestions.saveRecentQuery(query, null);
-
-            Log.d(TAG, "handleIntent:  query saved");
             showResults(query);
         }
     }
 
     private void showResults(String query) {
-
-        Log.d(TAG, "showResults: query"+query);
-
+        //displays the results
         StringBuilder whereClause = new StringBuilder();
         whereClause.append("recipeName like '%" + query + "%'");
         DataQueryBuilder queryBuilder = DataQueryBuilder.create();
         queryBuilder.setWhereClause(whereClause.toString());
-
-
-
+        //does the search on backendless
+        //todo implement api search too
         Backendless.Data.of(Recipe.class).find(queryBuilder, new AsyncCallback<List<Recipe>>() {
             @Override
             public void handleResponse(List<Recipe> response) {
-                Log.d(TAG, "handleResponse: " + response.size());
                 recipes.addAll(response);
                 searchResultsAdapter.notifyDataSetChanged();
-
             }
-
             @Override
             public void handleFault(BackendlessFault fault) {
                 Log.d(TAG, "handleFault: " + fault.getMessage());
+                Toast.makeText(context, fault.getMessage(), Toast.LENGTH_SHORT).show();
             }
-            // Query your data set and show results
-            // ...
         });
     }
     private void wireWidgets() {
-        recipes=new ArrayList<>();
-
-        recyclerView=findViewById(R.id.search_results_recycle);
-        toolbar=findViewById(R.id.toolbar_search_results_activity);
-
+        recipes = new ArrayList<>();
+        //wires toolbar
+        toolbar = findViewById(R.id.toolbar_search_results_activity);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -104,25 +93,22 @@ public class SearchResultsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                //todo on back pressed take back
             }
         });
-        click=new RecyclerViewOnClick() {
-            @Override
-            public void onClick(View v, int pos) {
-                Toast.makeText(SearchResultsActivity.this, "We are making "+ recipes.get(pos).getRecipeName(), Toast.LENGTH_LONG).show();
-            }
-        };
-        searchResultsAdapter= new SearchResultsAdapter(recipes,this,click);
-        layoutManager= new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        RecyclerViewOnClick listener = new RecyclerViewOnClick() {
+        //wires recycler view etc..
+        recyclerView = findViewById(R.id.search_results_recycle);
+        click = new RecyclerViewOnClick() {
             @Override
             public void onClick(View v, int pos) {
                 //todo load recipe
-                Toast.makeText(context, "We are making "+ recipes.get(pos).getRecipeName(), Toast.LENGTH_LONG).show();
+                Toast.makeText(SearchResultsActivity.this, "We are making "+ recipes.get(pos).getRecipeName(), Toast.LENGTH_LONG).show();
             }
         };
+        searchResultsAdapter = new SearchResultsAdapter(recipes,this,click);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(searchResultsAdapter);
         registerForContextMenu(recyclerView);
 

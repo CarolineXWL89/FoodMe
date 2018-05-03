@@ -4,7 +4,10 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,69 +36,11 @@ public class ImageUploadClicker implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         boolean camera = false;
-        //todo use native android app icons
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        // Get the layout inflater
-        LayoutInflater inflater = activity.getLayoutInflater();
-
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
-        View view = inflater.inflate(R.layout.custom_alert_dialog_box, null);
-
-        //todo fix card views
-        /*
-        CardView cameraCardView  = (CardView) v.findViewById(R.id.captureCardView);
-        cameraCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkCameraPermissions();
-                if(!canUseCamera){
-                    Snackbar snackbar = Snackbar.make(view, "Camera Permissions are not enabled \n Please enable in order to take photos", Snackbar.LENGTH_LONG);
-                    snackbar.setAction("Allow Access", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            checkCameraPermissions();
-                        }
-                    });
-                    snackbar.show();
-                } else {
-                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    createFragment.startActivityForResult(cameraIntent, CAMERA_REQUEST);
-                }
-            }
-        });
-
-        CardView galleryCardView  = v.findViewById(R.id.galleryCardView);
-        galleryCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkStoragePermissions();
-                if(!canUseStorage){
-                    Snackbar snackbar = Snackbar.make(view, "Storage Permissions are not enabled \n Please enable in order to upload", Snackbar.LENGTH_LONG);
-                    snackbar.setAction("Allow Access", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            checkStoragePermissions();
-                        }
-                    });yada
-                    snackbar.show();
-                } else {
-                    Intent intent = new Intent(Intent.ACTION_PICK,
-                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    createFragment.startActivityForResult(intent, STORAGE_REQUEST);
-                }
-            }
-        });
-
-        builder.setView(inflater.inflate(R.layout.custom_alert_dialog_box, null));
-        builder.create().show();*/
-        /*
-        //todo make two options
-        if(camera){
-            checkCameraPermissions();
+        //todo make two buttons
+        if(!camera){
             if(!canUseCamera){
                 Snackbar snackbar = Snackbar.make(v, "Camera Permissions are not enabled \n Please enable in order to take photos", Snackbar.LENGTH_LONG);
-                snackbar.setAction("Allow Access", new View.OnClickListener() {
+                snackbar.setAction("ALLOW", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         checkCameraPermissions();
@@ -103,14 +48,13 @@ public class ImageUploadClicker implements View.OnClickListener {
                 });
                 snackbar.show();
             } else {
-                Intent cameraIntent = new Intent(ACTION_IMAGE_CAPTURE);
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 createFragment.startActivityForResult(cameraIntent, CAMERA_REQUEST);
             }
         } else {
-            checkStoragePermissions();
             if(!canUseStorage){
                 Snackbar snackbar = Snackbar.make(v, "Storage Permissions are not enabled \n Please enable in order to upload", Snackbar.LENGTH_LONG);
-                snackbar.setAction("Allow Access", new View.OnClickListener() {
+                snackbar.setAction("ALLOW", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         checkStoragePermissions();
@@ -123,7 +67,6 @@ public class ImageUploadClicker implements View.OnClickListener {
                 createFragment.startActivityForResult(intent, STORAGE_REQUEST);
             }
         }
-        */
     }
 
     public void setCanUseStorage(boolean canUseStorage) {
@@ -139,6 +82,7 @@ public class ImageUploadClicker implements View.OnClickListener {
     }
 
     private void checkStoragePermissions() {
+        //checks permissions for storage
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             createFragment.requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_EXTERNAL_STORAGE);
         } else{

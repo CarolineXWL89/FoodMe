@@ -56,12 +56,10 @@ public class CreateFragment extends Fragment  {
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 123;
     private static final int MY_PERMISSIONS_REQUEST_EXTERNAL_STORAGE = 456;
 
-    public static final String TAG = "fragments";
     public CreateFragment() {
         // Required empty public constructor
     }
 
-    //todo CLEAN UP CODE
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,7 +107,7 @@ public class CreateFragment extends Fragment  {
         timeNeeded = rootview.findViewById(R.id.timeEditText);
         directions = rootview.findViewById(R.id.directions);
 
-        //wires recyvler view and adds adapters
+        //wires recycler view and adds adapters
         ingredientsRecylerView = rootview.findViewById(R.id.ingrediantsRecylerView);
         layoutManager = new GridLayoutManager(getActivity(), 2);
         ingredientsRecylerView.setLayoutManager(layoutManager);
@@ -120,8 +118,7 @@ public class CreateFragment extends Fragment  {
 
         //wires submit button
         submit = rootview.findViewById(R.id.submit);
-        submit.setOnClickListener(
-                new View.OnClickListener() {
+        submit.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Recipe recipe = checkText();
@@ -130,14 +127,8 @@ public class CreateFragment extends Fragment  {
                         @Override
                         public void handleResponse(Recipe response) {
                             Toast.makeText(context, "Success, "+ recipe.getRecipeName()+ " has been uploaded", Toast.LENGTH_SHORT).show();
-                            title.setText("");
-                            yield.setText("");
-                            timeNeeded.setText("");
-                            directions.setText("");
-                            ingredients.clear();
-                            picUrl = "";
+                            clear();
                         }
-
                         @Override
                         public void handleFault(BackendlessFault fault) {
                             Toast.makeText(context, "Recipe cannot be uploaded right now, please try again later", Toast.LENGTH_SHORT).show();
@@ -151,12 +142,7 @@ public class CreateFragment extends Fragment  {
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                title.setText("");
-                yield.setText("");
-                timeNeeded.setText("");
-                directions.setText("");
-                ingredients.clear();
-                picUrl = "";
+                clear();
             }
         });
 
@@ -164,7 +150,17 @@ public class CreateFragment extends Fragment  {
         newIngredientsDisplayAdapter.removeItem(0);
     }
 
+    private void clear() {
+        title.setText("");
+        yield.setText("");
+        timeNeeded.setText("");
+        directions.setText("");
+        ingredients.clear();
+        picUrl = "";
+    }
+
     private Recipe checkText() {
+        //checks to make sure everything has been added and creates message at the end if not everything has been filled out
         Recipe recipe = new Recipe();
         String titleText = title.getText().toString();
         String directionsText = directions.getText().toString();
@@ -201,7 +197,6 @@ public class CreateFragment extends Fragment  {
             message[4] = "Please add ingredients";
         }
 
-
         if(notEmpty(message)){
             return null;
         } else {
@@ -229,6 +224,7 @@ public class CreateFragment extends Fragment  {
     }
 
     private boolean isOk(String titleText) {
+        //checks to make sure its not empty
         if(titleText.equals("")){
             return false;
         } else if(titleText.equals(" ")){
@@ -243,6 +239,7 @@ public class CreateFragment extends Fragment  {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        //saves user's data in case screen rotated
         outState.putString(getString(R.string.pictureUrl), picUrl);
         outState.putString(getString(R.string.recipeTitle), title.getText().toString());
         outState.putString(getString(R.string.servingSize), yield.getText().toString());
@@ -254,6 +251,7 @@ public class CreateFragment extends Fragment  {
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
+        //reloaded data after rotation
         if (savedInstanceState != null) {
             picUrl = savedInstanceState.getString(getString(R.string.pictureUrl), "");
             title.setText(savedInstanceState.getString(getString(R.string.recipeTitle), ""));
@@ -262,18 +260,17 @@ public class CreateFragment extends Fragment  {
             ingredients = savedInstanceState.getStringArrayList(getString(R.string.ingredients));
             directions.setText(savedInstanceState.getString(getString(R.string.directions)));
         }
-
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        //handles results for camera and storage permissions requests
         if(requestCode ==  MY_PERMISSIONS_REQUEST_CAMERA) {
             // If request is cancelled, the result arrays are empty.
             //if results array is not empty then we can use the camera
             imageUploadClicker.setCanUseCamera(grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED);
         } else if(requestCode ==  MY_PERMISSIONS_REQUEST_EXTERNAL_STORAGE) {
-
             imageUploadClicker.setCanUseStorage(grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED);
         }
@@ -281,11 +278,11 @@ public class CreateFragment extends Fragment  {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //handles picture taken or storage and (theoretically uploads to imgur but that's a stretch)
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             imageUpload.setImageBitmap(imageBitmap);
-            //todo upload to imagur and save to image url here
         } else if (requestCode == STORAGE_REQUEST && resultCode == RESULT_OK) {
             Uri targetUri = data.getData();
             Bitmap bitmap;
@@ -295,57 +292,7 @@ public class CreateFragment extends Fragment  {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            //todo upload to imagur and save to image url here
         }
+        //todo upload to imagur and save to image url here
     }
 }
-
-
-/*
-HOW TO IMPLEMENT SWIPE TO DELETE
-
-MAIN CLASS:  (implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener)
-    ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
-    new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(/*Recycler view*//*);
-
-    @Override
-    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
-        if (viewHolder instanceof /*Adapter type*//*.MyViewHolder) {
-            // get the removed item name to display it in snack bar
-            String name = /*Array List*//*.get(viewHolder.getAdapterPosition());
-
-            // backup of removed item for undo purpose
-            final String deletedItem = /*Array List*//*.get(viewHolder.getAdapterPosition());
-            final int deletedIndex = viewHolder.getAdapterPosition();
-
-            // remove the item from recycler view
-            /*Adapter*//*.removeItem(viewHolder.getAdapterPosition());
-
-            // showing snack bar with Undo option
-            Snackbar snackbar = Snackbar.make(/*view*//*, name + " removed!", Snackbar.LENGTH_LONG);
-            snackbar.setAction("UNDO", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    /*Adapter*//*.restoreItem(deletedItem, deletedIndex);
-                }
-            });
-            snackbar.show();
-        }
-    }
-ADAPTER CLASS:
-
-    public void removeItem(int position) {
-        ingredients.remove(position);
-        notifyItemRemoved(position);
-    }
-
-    public void restoreItem(String item, int position) {
-        ingredients.add(position, item);
-        notifyItemInserted(position);
-    }
-
-    public ArrayList<String> getListOfIngredients() {
-        return ingredients;
-    }
-
-* */
