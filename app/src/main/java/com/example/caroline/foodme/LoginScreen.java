@@ -97,18 +97,15 @@ public class LoginScreen extends AppCompatActivity {
                 Backendless.UserService.login(usernameInput.getText().toString(), passwordInput.getText().toString(), new AsyncCallback<BackendlessUser>() {
                     @Override
                     public void handleResponse(BackendlessUser response) {
-                        Log.d("logged in", "working");
                         String username = (String) response.getProperty("username");
                         Toast.makeText(LoginScreen.this, "Hello " +username, Toast.LENGTH_SHORT).show();
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString(getString(R.string.user_ID), response.getUserId());
                         if(rememberMe.isChecked()){
                             editor.putInt(getString(R.string.user), 2); //means there is a saved user
-                            editor.commit();
                         }
                         else{
                             editor.putInt(getString(R.string.user), 1); //means there is a saved user, but user does not wish to be remembered.
-                            editor.commit();
                             Toast.makeText(LoginScreen.this, "Not remembering you", Toast.LENGTH_SHORT).show();
                         }
                         editor.commit();
@@ -128,7 +125,6 @@ public class LoginScreen extends AppCompatActivity {
 
                     @Override
                     public void handleFault(BackendlessFault fault) {
-                        Log.d("fault", fault.getMessage());
                         Toast.makeText(LoginScreen.this, fault.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });

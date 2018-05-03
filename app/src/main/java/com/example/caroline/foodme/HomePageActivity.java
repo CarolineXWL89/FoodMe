@@ -18,6 +18,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.backendless.Backendless;
+
 /*
 Contains stuff like recently added seen after logging in (NOT 1st time)
 Implements: accessing ALL users' entries
@@ -41,12 +43,9 @@ public class HomePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+        Backendless.initApp(this, BackendlessSettings.APP_ID, BackendlessSettings.API_KEY);
         logIn(); //checks if user ahs already logged in, if not switches to log in screen
         wireWidgets();
-
-
-
-
         hideNavBar();
     }
 
