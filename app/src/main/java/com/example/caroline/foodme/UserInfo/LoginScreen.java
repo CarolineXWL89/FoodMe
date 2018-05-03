@@ -1,15 +1,13 @@
 package com.example.caroline.foodme.UserInfo;
 
-import android.content.Intent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -56,13 +54,7 @@ public class LoginScreen extends AppCompatActivity {
         setOnClickListeners();
     }
 
-
-
-    @Overridepublic void handleFault(BackendlessFault fault) {
-
-                    }
-
-                    @Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_help:
@@ -90,7 +82,6 @@ public class LoginScreen extends AppCompatActivity {
         help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
             }
         });*/
         }
