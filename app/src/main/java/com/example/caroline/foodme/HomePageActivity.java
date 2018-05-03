@@ -186,7 +186,7 @@ public class HomePageActivity extends AppCompatActivity{
 //            public void handleFault(BackendlessFault fault) {
 //                Log.d(TAG, "handleFault: " + fault.getMessage());
 //            }
-//        });
+//        });//
     }
 
 }
