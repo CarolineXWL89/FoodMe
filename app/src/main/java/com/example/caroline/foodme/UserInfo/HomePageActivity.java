@@ -76,7 +76,7 @@ public class HomePageActivity extends AppCompatActivity {
         int userExists = sharedPref.getInt(getString(R.string.user), 0);
         Log.d("userExists", userExists+"");
 //        userExists = 0; //todo delete me later
-//        //checks if previous user exists
+// checks if previous user exists
         if (userExists == 0) {
             Intent i = new Intent(this, LoginScreen.class);
             startActivity(i);
