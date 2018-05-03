@@ -1,0 +1,45 @@
+HOW TO IMPLEMENT SWIPE TO DELETE
+
+MAIN CLASS:  (implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener)
+    ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
+    new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(/*Recycler view*//*);
+
+    @Override
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
+        if (viewHolder instanceof /*Adapter type*//*.MyViewHolder) {
+            // get the removed item name to display it in snack bar
+            String name = /*Array List*//*.get(viewHolder.getAdapterPosition());
+
+            // backup of removed item for undo purpose
+            final String deletedItem = /*Array List*//*.get(viewHolder.getAdapterPosition());
+            final int deletedIndex = viewHolder.getAdapterPosition();
+
+            // remove the item from recycler view
+            /*Adapter*//*.removeItem(viewHolder.getAdapterPosition());
+
+            // showing snack bar with Undo option
+            Snackbar snackbar = Snackbar.make(/*view*//*, name + " removed!", Snackbar.LENGTH_LONG);
+            snackbar.setAction("UNDO", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    /*Adapter*//*.restoreItem(deletedItem, deletedIndex);
+                }
+            });
+            snackbar.show();
+        }
+    }
+ADAPTER CLASS:
+
+    public void removeItem(int position) {
+        ingredients.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(String item, int position) {
+        ingredients.add(position, item);
+        notifyItemInserted(position);
+    }
+
+    public ArrayList<String> getListOfIngredients() {
+        return ingredients;
+    }

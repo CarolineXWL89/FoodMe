@@ -3,6 +3,7 @@ package com.example.caroline.foodme;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -24,6 +25,7 @@ public class CreateAccount extends AppCompatActivity {
     private EditText firstNameInput, miInput, lastNameInput, usernameInput, emailInput, passInput, confirmPassInput;
     private Button createAccount;
     private CheckBox terms;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,43 +39,37 @@ public class CreateAccount extends AppCompatActivity {
     }
 
     public void wireWidgets(){
-        createAccount = findViewById(R.id.create_account_button);
-        firstNameInput = findViewById(R.id.first_name_editText);
-        miInput = findViewById(R.id.mi_editText);
-        lastNameInput = findViewById(R.id.last_name_editText);
-        usernameInput = findViewById(R.id.username_editText);
-        emailInput = findViewById(R.id.email_editText);
-        passInput = findViewById(R.id.password_editText);
-        confirmPassInput = findViewById(R.id.password_confirm_editText);
-        terms = findViewById(R.id.terms_checkBox);
-        createAccountScreen = findViewById(R.id.create_account_textView);
-        firstName = findViewById(R.id.first_name_textView);
-        mi = findViewById(R.id.middle_initial_textView);
-        lastName = findViewById(R.id.last_name_textView);
-        username = findViewById(R.id.username_editText);
-        email = findViewById(R.id.email_textView);
-        password = findViewById(R.id.password_textView);
-        confirmPass = findViewById(R.id.password_confirm_textView);
-    }
-
-    public void setOnCLickListeners(){
-        //OnClickListener for the createAccount Button, creates an account in Backendless
+        createAccount = (Button) findViewById(R.id.create_account_button);
+        firstNameInput = (EditText) findViewById(R.id.first_name_editText);
+        lastNameInput = (EditText) findViewById(R.id.last_name_edit_text);
+        usernameInput = (EditText) findViewById(R.id.username_editText);
+        emailInput = (EditText) findViewById(R.id.email_editText);
+        passInput = (EditText) findViewById(R.id.password_editText);
+        confirmPassInput = (EditText) findViewById(R.id.password_confirm_editText);
+        terms = (CheckBox) findViewById(R.id.terms_checkBox);
+        firstName = (TextView) findViewById(R.id.first_name_textView);
+        lastName = (TextView) findViewById(R.id.last_name_text_view);
+        username = (TextView) findViewById(R.id.username_editText);
+        email = (TextView) findViewById(R.id.email_textView);
+        password = (TextView) findViewById(R.id.password_textView);
+        confirmPass = (TextView) findViewById(R.id.password_confirm_textView);
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(confirmPassword()){
                     //process for creating a new user:
                     BackendlessUser user = new BackendlessUser();
-                    user.setProperty("name", firstNameInput.getText().toString() + " " + miInput.getText().toString()+". "+lastNameInput.getText().toString());
+                  //                    user.setProperty("name", firstNameInput.getText().toString() + " " + miInput.getText().toString()+". "+lastNameInput.getText().toString());
+                    user.setProperty("name", firstNameInput.getText().toString() + " "+lastNameInput.getText().toString());
                     user.setProperty("email", emailInput.getText().toString());
                     user.setProperty("password", passInput.getText().toString());
                     user.setProperty("username", usernameInput.getText().toString());
+                    user.setProperty("updatedsetup", false);
                     Backendless.UserService.register(user, new AsyncCallback<BackendlessUser>() {
                         @Override
                         public void handleResponse(BackendlessUser response) {
                             String username = (String) response.getProperty("username");
-                            Toast.makeText(CreateAccount.this, "Welcome " +username, Toast.LENGTH_SHORT).show();
-
+                            Toast.makeText(CreateAccount.this, "Welcome " +username+", please confirm your email before logging in.", Toast.LENGTH_LONG).show();
                         }
 
                         @Override
@@ -81,25 +77,17 @@ public class CreateAccount extends AppCompatActivity {
                             Toast.makeText(CreateAccount.this, fault.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
-                    Intent i = new Intent(CreateAccount.this, AccountSetUpActivity.class);
-                    startActivity(i);
-                }
-                else{
-                    Intent i = new Intent(CreateAccount.this, AccountSetUpActivity.class);
+                    Intent i = new Intent(CreateAccount.this, LoginScreen.class);
                     startActivity(i);
                 }
             }
         });
+        toolbar= (Toolbar)findViewById(R.id.toolbar_login);
+        setSupportActionBar(toolbar);
     }
 
-    //checks to make sure the password was imputed properly in the two EditTexts
     public boolean confirmPassword(){
-        if(passInput.getText().toString().equals(confirmPassInput.getText().toString())){
-            return true;
-        }
-        else{
-            Toast.makeText(CreateAccount.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+        return (passInput.getText().toString().equals(confirmPassInput.getText().toString())) && terms.isChecked();
+
     }
 }

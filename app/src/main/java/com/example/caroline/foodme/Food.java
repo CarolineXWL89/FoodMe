@@ -3,8 +3,8 @@ package com.example.caroline.foodme;
 /**
  * Created by michaelxiong on 3/13/18.
  * Placeholder class for objects from backendless
- * TODO update to reflect what we want to pull
  */
+//todo DELETE?
 
 public class Food {
 

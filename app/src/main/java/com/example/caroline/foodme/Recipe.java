@@ -1,36 +1,138 @@
 package com.example.caroline.foodme;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-public class Recipe extends AppCompatActivity {
+/**
+ * Created by per6 on 3/23/18.
+ */
 
-    private ImageView background, image;
-    private ImageButton speaker;
-    private Button conversions, servingsCyghdzgonversion;
-    private TextView name, creator, time, servings, recipe;
+public class Recipe implements Parcelable {
+
+    private String recipeName;
+    private String directions;
+    private String servings;
+    private String timeNeeded;
+    private String ingredients;
+    private String ImageURL;
+    private String objectId;
+    private String ownerId;
+
+    public Recipe(){
+    }
+
+    public Recipe(String recipeName, String ingredients, String directions, String servings, String timeNeeded, String imageURL, String ownerId) {
+        this.recipeName = recipeName;
+        this.directions = directions;
+        this.servings = servings;
+        this.timeNeeded = timeNeeded;
+        this.ingredients = ingredients;
+        ImageURL = imageURL;
+        this.ownerId = ownerId;
+    }
+
+    public String getRecipeName() {
+        return recipeName;
+    }
+
+    public void setRecipeName(String recipeName) {
+        this.recipeName = recipeName;
+    }
+
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public String getDirections() {
+        return directions;
+    }
+
+    public void setDirections(String directions) {
+        this.directions = directions;
+    }
+
+    public String getServings() {
+        return servings;
+    }
+
+    public void setServings(String servings) {
+        this.servings = servings;
+    }
+
+    public String getTimeNeeded() {
+        return timeNeeded;
+    }
+
+    public void setTimeNeeded(String timeNeeded) {
+        this.timeNeeded = timeNeeded;
+    }
+
+    public String getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(String ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public String getImageURL() {
+        return ImageURL;
+    }
+
+    public void setImageURL(String url) {
+        this.ImageURL = url;
+    }
+
+    protected Recipe(Parcel in) {
+        recipeName = in.readString();
+        directions = in.readString();
+        servings = in.readString();
+        timeNeeded = in.readString();
+        ingredients = in.readString();
+        ImageURL = in.readString();
+        objectId = in.readString();
+        ownerId = in.readString();
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe);
-        wireWidgets();
+    public int describeContents() {
+        return 0;
     }
 
-    private void wireWidgets() {
-        background = (ImageView) findViewById(R.id.background_image);
-        image = (ImageView) findViewById(R.id.image_image);
-        speaker = (ImageButton) findViewById(R.id.speaker_button);
-        //conversions = (Button) findViewById(R.id.);
-        //servingsCyghdzgonversion = (Button) findViewById(R.id.);
-        name = (TextView) findViewById(R.id.name_textview);
-        creator = (TextView) findViewById(R.id.creator__textView);
-        time = (TextView) findViewById(R.id.time_textView);
-        servings = (TextView) findViewById(R.id.servings_textView);
-        recipe = (TextView) findViewById(R.id.recipe_textView);
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(recipeName);
+        dest.writeString(directions);
+        dest.writeString(servings);
+        dest.writeString(timeNeeded);
+        dest.writeString(ingredients);
+        dest.writeString(ImageURL);
+        dest.writeString(objectId);
+        dest.writeString(ownerId);
     }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {
+        @Override
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+
+        @Override
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
 }
