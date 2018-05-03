@@ -7,6 +7,7 @@
     tools:context="com.example.caroline.foodme.CreateAccount">
 
     <TextView
+
         android:id="@+id/first_name_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,6 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
+
 
     <TextView
         android:id="@+id/last_name_text_view"
@@ -30,6 +32,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
+
     <TextView
         android:id="@+id/email_textView"
         android:layout_width="wrap_content"
@@ -42,6 +45,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
+
     <TextView
         android:id="@+id/username_textView"
         android:layout_width="wrap_content"
@@ -53,6 +57,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+
     <TextView
         android:id="@+id/password_textView"
         android:layout_width="wrap_content"
@@ -63,6 +68,7 @@
         app:layout_constraintBottom_toTopOf="@+id/password_editText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 
     <TextView
         android:id="@+id/password_confirm_textView"
@@ -91,6 +97,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
 
     <EditText
         android:id="@+id/last_name_edit_text"
@@ -123,6 +130,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/last_name_edit_text" />
 
+
     <EditText
         android:id="@+id/username_editText"
         android:layout_width="wrap_content"
@@ -137,6 +145,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_editText" />
+
 
     <EditText
         android:id="@+id/password_editText"
@@ -153,6 +162,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username_editText" />
 
+
     <EditText
         android:id="@+id/password_confirm_editText"
         android:layout_width="wrap_content"
@@ -167,6 +177,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_editText" />
+
 
     <Button
         android:id="@+id/create_account_button"
@@ -196,5 +207,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_confirm_editText" />
+
 
 </android.support.constraint.ConstraintLayout>

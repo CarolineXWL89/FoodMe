@@ -4,25 +4,15 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.caroline.foodme.FavoritesFragment">
-    <!--
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recipe_cards_split_recyclerView"
-        android:layout_width="368dp"
-        android:layout_height="246dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="257dp" />
-    <TextView
-        android:id="@+id/carouselViewHolder_textView"
-        android:layout_width="355dp"
-        android:layout_height="183dp"/>
-       -->
-    <TextView
+    <com.synnapps.carouselview.CarouselView
+        android:id="@+id/carouselView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment_favorite" />
+        app:fillColor="#FFFFFFFF"
+        app:pageColor="#00000000"
+        app:radius="6dp"
+        app:slideInterval="3000"
+        app:strokeColor="#FF777777"
+        app:strokeWidth="1dp"/>
 
 </FrameLayout>

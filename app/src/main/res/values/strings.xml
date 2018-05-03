@@ -3,6 +3,8 @@
     <string name="title_activity_settings_page">Settings</string>
     <string name="title_activity_home_page">Home</string>
     <string name="title_search">Search</string>
+    //i need to edit to push
+    //again
     <string name="title_favorites">Favorites</string>
     <string name="title_create">Create</string>
 
@@ -63,6 +65,20 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+
+    <string name="pref_header_user_preferences">User Preferences</string>
+
+    <string name="pref_header_color_theme">Color Theme</string>
+    <string-array name="list_preference_colors">
+        <item>White</item>
+        <item>Black</item>
+        <item>Blue</item>
+        <item>Red</item>
+        <item>Green</item>
+        <item>Purple</item>
+        <item>Turquoise</item>
+    </string-array>
+
 
     <string-array name="multi_select_list_preference_default_value" />
 

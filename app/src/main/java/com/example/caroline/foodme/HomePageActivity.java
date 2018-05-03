@@ -27,7 +27,7 @@ Contains: scrolling image gallery; access toolbar for fav, add, search; settings
 Can: be accessed by clicking on logo/home, NOT launching activity!!! (Need to change)
  */
 public class HomePageActivity extends AppCompatActivity {
-
+//
     /*
     GET USERID //todo delete user exists when you log out
     SharedPreferences sharedPref = getSharedPreferences(

@@ -1,14 +1,15 @@
 package com.example.caroline.foodme;
 
+import android.content.Intent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -26,12 +27,13 @@ Initial screen seen when opening app
  */
 public class LoginScreen extends AppCompatActivity {
 
-    private Button login, newAccount;
+    private Button login, newAccount, help;
     private EditText usernameInput, passwordInput;
     private CheckBox rememberMe;
     private TextView username, password, forgotPassword;
     private Toolbar toolbar;
     private SharedPreferences sharedPref;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +41,7 @@ public class LoginScreen extends AppCompatActivity {
         setContentView(R.layout.activity_login_screen);
         sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         wireWidgets();
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.login_action_bar, menu);
-        return true;
+
     }
 
     public void wireWidgets(){
@@ -59,6 +56,17 @@ public class LoginScreen extends AppCompatActivity {
         setOnClickListeners();
     }
 
+    public void setOnClickListeners(){
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Backendless.UserService.login(usernameInput.getText().toString(), passwordInput.getText().toString(), new AsyncCallback<BackendlessUser>() {
+                    @Override
+                    public void handleResponse(BackendlessUser response) {
+                        String username = (String) response.getProperty("username");
+                        Toast.makeText(LoginScreen.this, "Hello " +username, Toast.LENGTH_SHORT).show();
+                        
+                    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -70,8 +78,27 @@ public class LoginScreen extends AppCompatActivity {
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
+/* why is this here
+                    @Override
+                    public void handleFault(BackendlessFault fault) {
+                        Toast.makeText(LoginScreen.this, fault.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+        newAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginScreen.this, CreateAccount.class);
+                startActivity(i);
+            }
+        });
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        }
+            }
+        });*/
     }
 
     public void setOnClickListeners(){

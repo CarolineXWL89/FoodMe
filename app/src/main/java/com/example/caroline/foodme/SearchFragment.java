@@ -27,6 +27,7 @@ import java.util.List;
  * Created by maylisw on 3/21/18.
  */
 
+
 public class SearchFragment extends Fragment {
 
     public static final String TAG = "fragments";
@@ -58,7 +59,7 @@ public class SearchFragment extends Fragment {
         wireDaStuff();
         return rootView;
     }
-
+  
     private void wireDaStuff() {
         recipes = new ArrayList<>();
         ingredients = new ArrayList<>();

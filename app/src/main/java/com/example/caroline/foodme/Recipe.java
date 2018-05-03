@@ -1,5 +1,4 @@
 package com.example.caroline.foodme;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 

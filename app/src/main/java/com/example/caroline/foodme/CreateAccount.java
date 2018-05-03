@@ -33,6 +33,7 @@ public class CreateAccount extends AppCompatActivity {
         setContentView(R.layout.activity_create_account);
 
         wireWidgets();
+        setOnCLickListeners();
 
         //TODO Backendless connection, createAccount sends out confirmation email OR FOR NOW brings to Login, adds user
     }
@@ -58,7 +59,7 @@ public class CreateAccount extends AppCompatActivity {
                 if(confirmPassword()){
                     //process for creating a new user:
                     BackendlessUser user = new BackendlessUser();
-//                    user.setProperty("name", firstNameInput.getText().toString() + " " + miInput.getText().toString()+". "+lastNameInput.getText().toString());
+                  //                    user.setProperty("name", firstNameInput.getText().toString() + " " + miInput.getText().toString()+". "+lastNameInput.getText().toString());
                     user.setProperty("name", firstNameInput.getText().toString() + " "+lastNameInput.getText().toString());
                     user.setProperty("email", emailInput.getText().toString());
                     user.setProperty("password", passInput.getText().toString());
@@ -69,7 +70,6 @@ public class CreateAccount extends AppCompatActivity {
                         public void handleResponse(BackendlessUser response) {
                             String username = (String) response.getProperty("username");
                             Toast.makeText(CreateAccount.this, "Welcome " +username+", please confirm your email before logging in.", Toast.LENGTH_LONG).show();
-
                         }
 
                         @Override
@@ -88,5 +88,6 @@ public class CreateAccount extends AppCompatActivity {
 
     public boolean confirmPassword(){
         return (passInput.getText().toString().equals(confirmPassInput.getText().toString())) && terms.isChecked();
+
     }
 }

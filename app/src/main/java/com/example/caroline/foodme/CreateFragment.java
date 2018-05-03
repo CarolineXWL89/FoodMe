@@ -20,6 +20,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -234,6 +235,41 @@ public class CreateFragment extends Fragment  {
         } else{
             return true;
         }
+        /*
+        final ArrayList<EntitySearch> entitySearches = new ArrayList<>();
+        String foodSearched = "";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DataMuseNutritionIngr.baseURL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        DataMuseNutritionIngr api = retrofit.create(DataMuseNutritionIngr.class);
+
+
+        Call<ArrayList<EntitySearch>> call = api.getIngrNutrient(foodSearched, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
+
+        call.enqueue(new Callback<ArrayList<EntitySearch>>() {
+            @Override
+            public void onResponse(Call<ArrayList<EntitySearch>> call, Response<ArrayList<EntitySearch>> response) {
+                entitySearches.clear();
+                entitySearches.addAll(response.body());
+            }
+            @Override
+            public void onFailure(Call<ArrayList<EntitySearch>> call, Throwable t) {
+                //NOTHING YET
+            }
+        });
+
+        final fooddotjson fooddotjson = new fooddotjson(1); //TODO decide how much they should have? Random?
+        String[] uriTwo = fooddotjson.findIngredient(entitySearches);
+        fooddotjson.addIngredient(uriTwo);
+
+        DataMuseNutritionSearch apiFoodPackage = retrofit.create(DataMuseNutritionSearch.class);
+        Call<fooddotjson> sendingCall = apiFoodPackage.sendFood(EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION); //TODO Probably should include sending JSON at a point
+
+
+        return inflater.inflate(R.layout.fragment_create, container, false);*/
     }
 
     @Override
