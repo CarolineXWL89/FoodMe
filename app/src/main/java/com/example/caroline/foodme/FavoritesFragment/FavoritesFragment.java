@@ -23,7 +23,7 @@ public class FavoritesFragment extends Fragment {
 
     public static final String TAG = "fragments";
     public FavoritesFragment() {
-        // Required empty public constructor
+        // Required empty public constructorr
     }
 
     @Override
@@ -40,17 +40,19 @@ public class FavoritesFragment extends Fragment {
         carouselView = (CarouselView) view.findViewById(R.id.carouselView);
         carouselView.setPageCount(images.size());
         carouselView.setViewListener(viewListener);
-
-
+        //todo update xml to have recycler view two columns w/ all favorites
         return view;
     }
 
 
     public void setImages(){
+        //todo use top four favorites with your dietary needs aroudn the world (aka our user database)
         images = new ArrayList<Integer>();
         titles = new ArrayList<String>();
         images.add(R.drawable.ic_settings_black_24dp);
+        images.add(R.drawable.ic_access_time_black_24dp);
         titles.add("Settings");
+        titles.add("Time");
     }
 
     ViewListener viewListener = new ViewListener() {

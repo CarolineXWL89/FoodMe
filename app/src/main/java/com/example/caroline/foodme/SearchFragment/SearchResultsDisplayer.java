@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.caroline.foodme.R;
-import com.example.caroline.foodme.Recipe;
+import com.example.caroline.foodme.RecipeJSON;
 import com.example.caroline.foodme.RecyclerViewOnClick;
 import com.example.caroline.foodme.Search.SearchResultsAdapter;
 
@@ -28,7 +28,7 @@ public class SearchResultsDisplayer extends AppCompatActivity {
 
 
     private static final String TAG ="SearchResultsDisplayer";
-    private List<Recipe> recipes;
+    private List<RecipeJSON> recipes;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private SearchResultsAdapter searchResultsAdapter;
@@ -44,7 +44,7 @@ public class SearchResultsDisplayer extends AppCompatActivity {
         //gets arraylist of search results from intent
         recipes = new ArrayList<>();
         Intent i = getIntent();
-        ArrayList<Recipe> r = i.getParcelableArrayListExtra("the_stuff");
+        ArrayList<RecipeJSON> r = i.getParcelableArrayListExtra("the_stuff");
         recipes.addAll(r);
         for (int j = 0; j<recipes.size(); j++) {
             if (recipes.get(j) != null){
@@ -67,6 +67,8 @@ public class SearchResultsDisplayer extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //todo add sorting method for search results
+        // mine vesurs nirmal
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

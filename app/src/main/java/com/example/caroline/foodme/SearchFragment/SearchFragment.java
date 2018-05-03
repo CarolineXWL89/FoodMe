@@ -20,7 +20,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
 import com.example.caroline.foodme.R;
-import com.example.caroline.foodme.Recipe;
+import com.example.caroline.foodme.RecipeJSON;
 import com.example.caroline.foodme.RecyclerViewOnClick;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ import java.util.List;
 public class SearchFragment extends Fragment {
 
     public static final String TAG = "fragments";
-    private ArrayList<Recipe> recipes;
+    private ArrayList<RecipeJSON> recipes;
     private FloatingActionButton addRecipe, submit;
     private ArrayList<String> ingredients;
     private RecyclerView recyclerView;
@@ -45,6 +45,9 @@ public class SearchFragment extends Fragment {
     private EditText newRecipeEditText;
     private IngredientSearchAdapter ingredientSearchAdapter;
 
+    //todo make edit text with UI of text view
+    //todo search with api
+    //todo have clear buttn
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -127,9 +130,9 @@ public class SearchFragment extends Fragment {
         //todo implement api
         DataQueryBuilder queryBuilder = DataQueryBuilder.create();
         queryBuilder.setWhereClause(whereClause.toString());
-        Backendless.Data.of(Recipe.class).find(queryBuilder, new AsyncCallback<List<Recipe>>() {
+        Backendless.Data.of(RecipeJSON.class).find(queryBuilder, new AsyncCallback<List<RecipeJSON>>() {
             @Override
-            public void handleResponse(List<Recipe> response) {
+            public void handleResponse(List<RecipeJSON> response) {
                 recipes.clear();
                 recipes.addAll(response);
                 if(recipes.size()!=0) {
@@ -153,3 +156,39 @@ public class SearchFragment extends Fragment {
 
     }
 }
+/*
+        //todo who made this? fix
+        final ArrayList<EntitySearch> entitySearches = new ArrayList<>();
+        String foodSearched = "";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DataMuseNutritionIngr.baseURL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        DataMuseNutritionIngr api = retrofit.create(DataMuseNutritionIngr.class);
+
+
+        Call<ArrayList<EntitySearch>> call = api.getIngrNutrient(foodSearched, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
+
+        call.enqueue(new Callback<ArrayList<EntitySearch>>() {
+            @Override
+            public void onResponse(Call<ArrayList<EntitySearch>> call, Response<ArrayList<EntitySearch>> response) {
+                entitySearches.clear();
+                entitySearches.addAll(response.body());
+            }
+            @Override
+            public void onFailure(Call<ArrayList<EntitySearch>> call, Throwable t) {
+                //NOTHING YET
+            }
+        });
+
+        final fooddotjson fooddotjson = new fooddotjson(1); //TODO decide how much they should have? Random?
+        String[] uriTwo = fooddotjson.findIngredient(entitySearches);
+        fooddotjson.addIngredient(uriTwo);
+
+        DataMuseNutritionSearch apiFoodPackage = retrofit.create(DataMuseNutritionSearch.class);
+        Call<fooddotjson> sendingCall = apiFoodPackage.sendFood(EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION); //TODO Probably should include sending JSON at a point
+
+
+        return inflater.inflate(R.layout.fragment_create, container, false);*/
