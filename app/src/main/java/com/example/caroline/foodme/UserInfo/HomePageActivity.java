@@ -1,4 +1,4 @@
-package com.example.caroline.foodme;
+package com.example.caroline.foodme.UserInfo;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
+import com.example.caroline.foodme.BackendlessSettings;
+import com.example.caroline.foodme.CreateFragment.CreateFragment;
+import com.example.caroline.foodme.FavoritesFragment.FavoritesFragment;
+import com.example.caroline.foodme.R;
+import com.example.caroline.foodme.SearchFragment.SearchFragment;
 
 /*
 Contains stuff like recently added seen after logging in (NOT 1st time)
