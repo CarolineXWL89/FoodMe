@@ -13,15 +13,21 @@ public class RecipeJSON implements Parcelable {
     private String directions;
     private String servings;
     private String timeNeeded;
-    private String ingredients;
+    //private String ingredients;
     private String ImageURL;
     private String objectId;
     private String ownerId;
+    private String uri, label, source, url;
+    private int yield;
+    private float calories, totalWeight;
+    private Ingredient[] ingredients;
+
+
 
     public RecipeJSON(){
     }
 
-    public RecipeJSON(String recipeName, String ingredients, String directions, String servings, String timeNeeded, String imageURL, String ownerId) {
+    public RecipeJSON(String recipeName, Ingredient[] ingredients, String directions, String servings, String timeNeeded, String imageURL, String ownerId) {
         this.recipeName = recipeName;
         this.directions = directions;
         this.servings = servings;
@@ -79,11 +85,11 @@ public class RecipeJSON implements Parcelable {
         this.timeNeeded = timeNeeded;
     }
 
-    public String getIngredients() {
+    public Ingredient[] getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(String ingredients) {
+    public void setIngredients(Ingredient[] ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -100,7 +106,7 @@ public class RecipeJSON implements Parcelable {
         directions = in.readString();
         servings = in.readString();
         timeNeeded = in.readString();
-        ingredients = in.readString();
+        //ingredients = in.; TODO arraylist read impout
         ImageURL = in.readString();
         objectId = in.readString();
         ownerId = in.readString();
@@ -117,7 +123,7 @@ public class RecipeJSON implements Parcelable {
         dest.writeString(directions);
         dest.writeString(servings);
         dest.writeString(timeNeeded);
-        dest.writeString(ingredients);
+        //////dest.writeString(ingredients);
         dest.writeString(ImageURL);
         dest.writeString(objectId);
         dest.writeString(ownerId);
