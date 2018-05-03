@@ -13,7 +13,7 @@ public class RecipeJSON implements Parcelable {
     private String directions;
     private String servings;
     private String timeNeeded;
-    //private String ingredients;
+    //private String ingredients; m
     private String ImageURL;
     private String objectId;
     private String ownerId;
