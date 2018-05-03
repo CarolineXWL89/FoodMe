@@ -40,7 +40,6 @@ public class SearchResultsDisplayer extends AppCompatActivity {
         Intent i = getIntent();
         ArrayList<Recipe> r = i.getParcelableArrayListExtra("the_stuff");
         recipes.addAll(r);
-        //todo what is this for?
         for (int j = 0; j<recipes.size(); j++) {
             if (recipes.get(j) != null){
                 Log.d(TAG, "onCreate: " + recipes.get(0).getRecipeName());

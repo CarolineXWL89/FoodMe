@@ -2,14 +2,12 @@ package com.example.caroline.foodme;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.view.LayoutInflater;
 import android.view.View;
 
 /**
@@ -93,4 +91,53 @@ public class ImageUploadClicker implements View.OnClickListener {
     public void setCanUseCamera(boolean canUseCamera) {
         this.canUseCamera = canUseCamera;
     }
+
+    public static int getCameraRequest() {
+        return CAMERA_REQUEST;
+    }
+
+    public static int getStorageRequest() {
+        return STORAGE_REQUEST;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
+
+    public int getMY_PERMISSIONS_REQUEST_CAMERA() {
+        return MY_PERMISSIONS_REQUEST_CAMERA;
+    }
+
+    public static int getMyPermissionsRequestExternalStorage() {
+        return MY_PERMISSIONS_REQUEST_EXTERNAL_STORAGE;
+    }
+
+    public boolean isCanUseCamera() {
+        return canUseCamera;
+    }
+
+    public boolean isCanUseStorage() {
+        return canUseStorage;
+    }
+
+    public CreateFragment getCreateFragment() {
+        return createFragment;
+    }
+
+    public void setCreateFragment(CreateFragment createFragment) {
+        this.createFragment = createFragment;
+    }
+
 }

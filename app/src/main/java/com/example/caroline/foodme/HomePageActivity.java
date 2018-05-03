@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,7 +26,7 @@ Implements: accessing ALL users' entries
 Contains: scrolling image gallery; access toolbar for fav, add, search; settings icon
 Can: be accessed by clicking on logo/home, NOT launching activity!!! (Need to change)
  */
-public class HomePageActivity extends AppCompatActivity{
+public class HomePageActivity extends AppCompatActivity {
 
     /*
     GET USERID //todo delete user exists when you log out
@@ -46,7 +45,7 @@ public class HomePageActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
-        Backendless.initApp( this, BackendlessSettings.APP_ID, BackendlessSettings.API_KEY );
+        Backendless.initApp(this, BackendlessSettings.APP_ID, BackendlessSettings.API_KEY);
         //todo uncomment logIn(); //checks if user ahs already logged in, if not switches to log in screen
         wireWidgets();
         hideNavBar();
@@ -58,7 +57,7 @@ public class HomePageActivity extends AppCompatActivity{
         super.onResume();
     }
 
-    public void hideNavBar(){
+    public void hideNavBar() {
         //hides navigation bar so app can be fullscreen
         decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
@@ -75,11 +74,11 @@ public class HomePageActivity extends AppCompatActivity{
         int userExists = sharedPref.getInt(getString(R.string.user), 0);
 //        userExists = 0; //todo delete me later
         //checks if previous user exists
-        if(userExists == 0){
+        if (userExists == 0) {
             Intent i = new Intent(this, LoginScreen.class);
             startActivity(i);
         }
-        if(userExists == 1){
+        if (userExists == 1) {
             editor.clear();
             editor.putInt(getString(R.string.user), 0);
             Toast.makeText(this, "Next time you'll need to login again", Toast.LENGTH_SHORT).show();
@@ -126,7 +125,7 @@ public class HomePageActivity extends AppCompatActivity{
             }
             //transmits proper fragment
             FragmentManager fm = getSupportFragmentManager();
-            if(currentFragment != null) {
+            if (currentFragment != null) {
                 fm.beginTransaction()
                         .replace(R.id.fragment_container, currentFragment)
                         .commit();
@@ -157,36 +156,4 @@ public class HomePageActivity extends AppCompatActivity{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
-
-    //todo why do we need this @ nicolo and then this file is done
-    private void doMySearch(String query) {
-        //todo make call to backendless and display as recycler view
-        //todo get user id to use for sorting
-        StringBuilder whereClause = new StringBuilder();
-        whereClause.append("recipeName like '%" + query + "%'");
-
-        Intent i = new Intent(HomePageActivity.this, SearchResultsActivity.class);
-        i.putExtra("query",whereClause.toString());
-        startActivity(i);
-//        DataQueryBuilder queryBuilder = DataQueryBuilder.create();
-//        queryBuilder.setWhereClause(whereClause.toString());
-//        Backendless.Data.of(Recipe.class).find(queryBuilder, new AsyncCallback<List<Recipe>>() {
-//            @Override
-//            public void handleResponse(List<Recipe> response) {
-//                Log.d(TAG, "handleResponse: " + response.size());
-//                ArrayList<Recipe> recipies = new ArrayList<>();
-//                recipies.addAll(response);
-//                Intent i = new Intent(HomePageActivity.this, SearchResultsDisplayer.class);
-//                i.putExtra("the_stuff", recipies);
-//                startActivity(i);
-//                //searchResultsAdapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void handleFault(BackendlessFault fault) {
-//                Log.d(TAG, "handleFault: " + fault.getMessage());
-//            }
-//        });//
-    }
-
 }

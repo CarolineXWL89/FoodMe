@@ -128,14 +128,6 @@ public class SearchFragment extends Fragment {
             public void handleResponse(List<Recipe> response) {
                 recipes.clear();
                 recipes.addAll(response);
-                //todo why is this needed? (debugging?)
-                for (Recipe p : recipes) {
-                    if (p != null){
-                        Log.d(TAG, "handleResponse: " + p.getRecipeName());
-                    }else{
-                        Log.d(TAG, "handleResponse: null");
-                    }
-                }
                 if(recipes.size()!=0) {
                     //starts results activity
                     Intent i = new Intent(getActivity(), SearchResultsDisplayer.class);
