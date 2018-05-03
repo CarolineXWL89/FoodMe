@@ -27,7 +27,7 @@ import com.example.caroline.foodme.SearchFragment.SearchFragment;
 Contains stuff like recently added seen after logging in (NOT 1st time)
 Implements: accessing ALL users' entries
 Contains: scrolling image gallery; access toolbar for fav, add, search; settings icon
-Can: be accessed by clicking on logo/home, NOT launching activity!!! (Need to change)
+Can: be accessed by clicking on logo/home, NOT launching activity!!! (Need to change
  */
 public class HomePageActivity extends AppCompatActivity {
 //
