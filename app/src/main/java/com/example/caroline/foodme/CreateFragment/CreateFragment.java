@@ -189,7 +189,7 @@ public class CreateFragment extends Fragment {
         }
 
         if (ingredients.size() > 0) {
-            recipe.setIngredients(ingredients.toString());
+            //recipe.setIngredients(ingredients.toString());
         } else {
             message[4] = "Please add ingredients";
         }

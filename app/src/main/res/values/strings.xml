@@ -117,5 +117,8 @@
     <string name="timeNeeded">TimeNeeded</string>
     <string name="ingredients">Ingredients</string>
     <string name="directions">Directions</string>
+    <string name="trueString">true</string>
+    <string name="accept">Yes</string>
+    <string name="decline">no</string>
 
 </resources>
