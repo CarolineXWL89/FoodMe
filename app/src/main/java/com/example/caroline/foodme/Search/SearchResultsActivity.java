@@ -43,7 +43,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_results);
         wireWidgets();
         //deals with search intent
-        handleIntent(getIntent());
+        handleIntent(getIntent());//
     }
 
     @Override
