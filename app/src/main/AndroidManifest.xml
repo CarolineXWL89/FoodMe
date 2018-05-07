@@ -3,9 +3,8 @@
     package="com.example.caroline.foodme">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -21,6 +20,7 @@
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SearchResultsActivity" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,18 +41,19 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-
         <activity android:name=".Search.SearchResultsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-
         </activity>
-        <provider android:name=".Search.MyRecentSuggestionProvider"
-            android:authorities="com.example.caroline.foodme.Search.MyRecentSuggestionProvider"/>
+
+        <provider
+            android:name=".Search.MyRecentSuggestionProvider"
+            android:authorities="com.example.caroline.foodme.Search.MyRecentSuggestionProvider" />
 
         <activity android:name=".EntitySearchExtraction" />
         <activity android:name=".isThisUnused.AccountSetUpActivity">
@@ -62,6 +63,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".UserInfo.LoginHelpActivity" />
+        <activity android:name=".UserInfo.TermsOfUseActivity"></activity>
     </application>
 
 </manifest>

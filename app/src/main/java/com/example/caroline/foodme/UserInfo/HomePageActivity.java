@@ -19,6 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
+import com.backendless.BackendlessUser;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
 import com.example.caroline.foodme.BackendlessSettings;
 import com.example.caroline.foodme.CreateFragment.CreateFragment;
 import com.example.caroline.foodme.FavoritesFragment.FavoritesFragment;
@@ -82,7 +85,6 @@ public class HomePageActivity extends AppCompatActivity {
         sharedPref = getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-
         int userExists = sharedPref.getInt(getString(R.string.user), 0);
         Log.d("userExists", userExists+"");
 //        userExists = 0; //todo delete me later

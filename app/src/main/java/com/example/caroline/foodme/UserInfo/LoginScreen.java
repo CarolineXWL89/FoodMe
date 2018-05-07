@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -55,35 +57,22 @@ public class LoginScreen extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.login_action_bar, menu);
+        return true;
+    }
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_help:
-                //todo create an activity for a help page for help
+                Intent i = new Intent(this, LoginHelpActivity.class);
+                startActivity(i);
                 return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-/* why is this here
-                    @Override
-                    public void handleFault(BackendlessFault fault) {
-                        Toast.makeText(LoginScreen.this, fault.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-        newAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(LoginScreen.this, CreateAccount.class);
-                startActivity(i);
-            }
-        });
-        help.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });*/
         }
     }
 
@@ -91,13 +80,17 @@ public class LoginScreen extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("Login", "clicked");
                 Backendless.UserService.login(usernameInput.getText().toString(), passwordInput.getText().toString(), new AsyncCallback<BackendlessUser>() {
                     @Override
                     public void handleResponse(BackendlessUser response) {
+                        Log.d("Login", "success");
                         String username = (String) response.getProperty("username");
                         Toast.makeText(LoginScreen.this, "Hello " +username, Toast.LENGTH_SHORT).show();
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString(getString(R.string.user_ID), response.getUserId());
+                        editor.putString("userUserName", (String) response.getProperty("username"));
+                        editor.putString("userPassword", response.getPassword());
                         if(rememberMe.isChecked()){
                             editor.putInt(getString(R.string.user), 2); //means there is a saved user
                         }
@@ -122,6 +115,7 @@ public class LoginScreen extends AppCompatActivity {
 
                     @Override
                     public void handleFault(BackendlessFault fault) {
+                        Log.d("Login", "failed");
                         Toast.makeText(LoginScreen.this, fault.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });

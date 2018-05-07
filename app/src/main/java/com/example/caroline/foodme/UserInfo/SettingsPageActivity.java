@@ -3,6 +3,7 @@ package com.example.caroline.foodme.UserInfo;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -12,14 +13,22 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.backendless.Backendless;
+import com.backendless.BackendlessUser;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
 import com.example.caroline.foodme.AppCompatPreferenceActivity;
+import com.example.caroline.foodme.BackendlessSettings;
 import com.example.caroline.foodme.R;
 
 import java.util.List;
@@ -167,7 +176,8 @@ public class SettingsPageActivity extends AppCompatPreferenceActivity {
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
                 || DataSyncPreferenceFragment.class.getName().equals(fragmentName)
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName)
-                || UserPreferenceFragment.class.getName().equals(fragmentName);
+                || UserPreferenceFragment.class.getName().equals(fragmentName)
+                || AccountPreferenceFragment.class.getName().equals(fragmentName);
     } //TODO Ben get on it please
 
     /**
@@ -181,7 +191,38 @@ public class SettingsPageActivity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
+            findPreference("example_text").getEditor().putString("bob", "John Smith").commit();
 
+            Backendless.UserService.isValidLogin(new AsyncCallback<Boolean>() {
+                @Override
+                public void handleResponse(Boolean response) {
+                    if( response && Backendless.UserService.CurrentUser() == null )
+                    {
+                        String currentUserId = Backendless.UserService.loggedInUser();
+                        if( !currentUserId.equals( "" ) )
+                        {
+                            Backendless.UserService.findById(currentUserId, new AsyncCallback<BackendlessUser>() {
+                                @Override
+                                public void handleResponse(BackendlessUser response) {
+                                    Log.d("userNameEdit", (String) response.getProperty("name"));
+                                    findPreference("example_text").setDefaultValue(response.getProperty("name"));                                }
+
+                                @Override
+                                public void handleFault(BackendlessFault fault) {
+                                    Log.d("findById", fault.getMessage());
+                                }
+                            });
+
+                        }
+                    }
+                }
+
+                @Override
+                public void handleFault(BackendlessFault fault) {
+                    Log.d("isValidLogin", fault.getMessage());
+
+                }
+            });
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
@@ -283,6 +324,21 @@ public class SettingsPageActivity extends AppCompatPreferenceActivity {
                 startActivity(new Intent(getActivity(), SettingsPageActivity.class));
                 return true;
             }
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class AccountPreferenceFragment extends PreferenceFragment{
+        @Override
+        public void onCreate(@Nullable Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref_account);
+            setHasOptionsMenu(true);
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
             return super.onOptionsItemSelected(item);
         }
     }

@@ -21,5 +21,9 @@
         android:fragment="com.example.caroline.foodme.UserInfo.SettingsPageActivity$UserPreferenceFragment"
         android:icon="@drawable/ic_settings_black_24dp"
         android:title="User Preferences" />
+    <header
+        android:fragment="com.example.caroline.foodme.UserInfo.SettingsPageActivity$AccountPreferenceFragment"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="AccountPreferences" />
 
 </preference-headers>
