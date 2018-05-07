@@ -2,32 +2,34 @@ package com.example.caroline.foodme;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.caroline.foodme.EdamamObjects.Ingredient;
+
 
 /**
  * Created by per6 on 3/23/18.
  */
 
-public class RecipeJSON implements Parcelable {
+public class RecipeNative implements Parcelable {
 
     private String recipeName;
     private String directions;
     private String servings;
     private String timeNeeded;
-    //private String ingredients; m
+    //private String ingredients; mRd
     private String ImageURL;
     private String objectId;
     private String ownerId;
-    private String uri, label, source, url;
+    /*private String uri, label, source, url;
     private int yield;
-    private float calories, totalWeight;
-    private Ingredient[] ingredients;
+    private float calories, totalWeight;*/
+    private String ingredients;
 
 
 
-    public RecipeJSON(){
+    public RecipeNative(){
     }
 
-    public RecipeJSON(String recipeName, Ingredient[] ingredients, String directions, String servings, String timeNeeded, String imageURL, String ownerId) {
+    public RecipeNative(String recipeName, String ingredients, String directions, String servings, String timeNeeded, String imageURL, String ownerId) {
         this.recipeName = recipeName;
         this.directions = directions;
         this.servings = servings;
@@ -85,11 +87,11 @@ public class RecipeJSON implements Parcelable {
         this.timeNeeded = timeNeeded;
     }
 
-    public Ingredient[] getIngredients() {
+    public String getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(Ingredient[] ingredients) {
+    public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -101,12 +103,12 @@ public class RecipeJSON implements Parcelable {
         this.ImageURL = url;
     }
 
-    protected RecipeJSON(Parcel in) {
+    protected RecipeNative(Parcel in) {
         recipeName = in.readString();
         directions = in.readString();
         servings = in.readString();
         timeNeeded = in.readString();
-        //ingredients = in.; TODO arraylist read impout
+        ingredients = in.readString();
         ImageURL = in.readString();
         objectId = in.readString();
         ownerId = in.readString();
@@ -130,15 +132,15 @@ public class RecipeJSON implements Parcelable {
     }
 
     @SuppressWarnings("unused")
-    public static final Parcelable.Creator<RecipeJSON> CREATOR = new Parcelable.Creator<RecipeJSON>() {
+    public static final Parcelable.Creator<RecipeNative> CREATOR = new Parcelable.Creator<RecipeNative>() {
         @Override
-        public RecipeJSON createFromParcel(Parcel in) {
-            return new RecipeJSON(in);
+        public RecipeNative createFromParcel(Parcel in) {
+            return new RecipeNative(in);
         }
 
         @Override
-        public RecipeJSON[] newArray(int size) {
-            return new RecipeJSON[size];
+        public RecipeNative[] newArray(int size) {
+            return new RecipeNative[size];
         }
     };
 }

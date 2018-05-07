@@ -38,6 +38,7 @@
 - JSON for: Hits, Hit, Recipe, Ingredient (diff from what we have), NutrientInfo, Measure + Food (diff?), Health + Diet Info
 - Where are the directions???
 
-###TODO for NutrientSearch
-- How is @POST being sent
-- What is returned and what is the Curl for the next @GET
+###UserPreference/Theme/Change
+- https://stackoverflow.com/questions/2748830/how-to-change-background-color-in-android-app
+- Button changeTheme --> Menu w/ span of colours/etc (choose 3) --> what will be set for xml 3 options + background
+- Username/Password/Username --> access Backendless specific user (using id/key) and change --> send confirmation code or something

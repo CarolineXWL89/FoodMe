@@ -1,4 +1,4 @@
-package com.example.caroline.foodme;
+package com.example.caroline.foodme.EdamamObjects;
 
 import java.util.ArrayList;
 

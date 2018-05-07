@@ -1,4 +1,4 @@
-package com.example.caroline.foodme;
+package com.example.caroline.foodme.EdamamObjects;
 
 /**
  * Created by princ on 23/04/2018.

@@ -1,4 +1,10 @@
-package com.example.caroline.foodme;
+package com.example.caroline.foodme.EdamamObjects;
+
+import com.example.caroline.foodme.EdamamObjects.EntitySearch;
+import com.example.caroline.foodme.EdamamObjects.FoodEdamame;
+import com.example.caroline.foodme.EdamamObjects.Ingredient;
+import com.example.caroline.foodme.EdamamObjects.Measure;
+import com.example.caroline.foodme.EdamamObjects.Parsed;
 
 import java.util.ArrayList;
 

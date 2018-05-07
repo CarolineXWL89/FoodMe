@@ -20,7 +20,7 @@ public class FavoritesFragment extends Fragment {
     private ArrayList<Integer> images;
     private ArrayList<String> titles;
 
-
+    //TODO Caroline
     public static final String TAG = "fragments";
     public FavoritesFragment() {
         // Required empty public constructorr

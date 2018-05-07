@@ -24,8 +24,8 @@ import android.widget.Toast;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.R;
-import com.example.caroline.foodme.RecipeJSON;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -117,18 +117,18 @@ public class CreateFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final RecipeJSON recipe = checkText();
+                final RecipeNative recipe = checkText();
                 if (recipe != null) {
-                    Backendless.Data.of(RecipeJSON.class).save(recipe, new AsyncCallback<RecipeJSON>() {
+                    Backendless.Data.of(RecipeNative.class).save(recipe, new AsyncCallback<RecipeNative>() {
                         @Override
-                        public void handleResponse(RecipeJSON response) {
+                        public void handleResponse(RecipeNative response) {
                             Toast.makeText(context, "Success, " + recipe.getRecipeName() + " has been uploaded", Toast.LENGTH_SHORT).show();
                             clear();
                         }
 
                         @Override
                         public void handleFault(BackendlessFault fault) {
-                            Toast.makeText(context, "RecipeJSON cannot be uploaded right now, please try again later", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "RecipeNative cannot be uploaded right now, please try again later", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -156,9 +156,9 @@ public class CreateFragment extends Fragment {
         picUrl = "";
     }
 
-    private RecipeJSON checkText() {
+    private RecipeNative checkText() {
         //checks to make sure everything has been added and creates message at the end if not everything has been filled out
-        RecipeJSON recipe = new RecipeJSON();
+        RecipeNative recipe = new RecipeNative();
         String titleText = title.getText().toString();
         String directionsText = directions.getText().toString();
         String yieldText = yield.getText().toString();
