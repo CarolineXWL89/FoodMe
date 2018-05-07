@@ -18,12 +18,18 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
+import com.example.caroline.foodme.API_Interfaces.DataMuseRecipe;
+import com.example.caroline.foodme.EdamamObjects.EntitySearch;
+import com.example.caroline.foodme.EdamamObjects.RecipeJSON;
 import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.R;
 import com.example.caroline.foodme.RecyclerViewOnClick;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchResultsActivity extends AppCompatActivity {
 
@@ -44,6 +50,76 @@ public class SearchResultsActivity extends AppCompatActivity {
         wireWidgets();
         //deals with search intent
         handleIntent(getIntent());
+
+
+
+
+
+
+
+
+//
+//        final ArrayList<EntitySearch> entitySearches = new ArrayList<>();
+//        String foodSearched = "";
+//
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(DataMuseNutritionIngr.baseURL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//
+//        DataMuseNutritionIngr api = retrofit.create(DataMuseNutritionIngr.class);
+//
+//
+//        Call<ArrayList<EntitySearch>> call = api.getIngrNutrient(foodSearched, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
+//
+//        call.enqueue(new Callback<ArrayList<EntitySearch>>() {
+//            @Override
+//            public void onResponse(Call<ArrayList<EntitySearch>> call, Response<ArrayList<EntitySearch>> response) {
+//                entitySearches.clear();
+//                entitySearches.addAll(response.body());
+//            }
+//            @Override
+//            public void onFailure(Call<ArrayList<EntitySearch>> call, Throwable t) {
+//                //NOTHING YET
+//            }
+//        });
+//
+//        final fooddotjson fooddotjson = new fooddotjson(1); //TODO decide how much they should have? Random?
+//        String[] uriTwo = fooddotjson.findIngredient(entitySearches);
+//        fooddotjson.addIngredient(uriTwo);
+//
+//        DataMuseNutritionSearch apiFoodPackage = retrofit.create(DataMuseNutritionSearch.class);
+//        Call<fooddotjson> sendingCall = apiFoodPackage.sendFood(EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION); //TODO Probably should include sending JSON at a point
+//
+//
+//        return inflater.inflate(R.layout.fragment_create, container, false);
+//
+//
+
+
+        final ArrayList<RecipeJSON> recipeJSON = new ArrayList<>();
+        String keyword = "";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DataMuseRecipe.baseURL}
+               // .addConverterFactory(GsonConverterFactory.create.()).build();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     @Override
