@@ -18,8 +18,8 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
+import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.R;
-import com.example.caroline.foodme.RecipeJSON;
 import com.example.caroline.foodme.RecyclerViewOnClick;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import java.util.List;
 public class SearchResultsActivity extends AppCompatActivity {
 
     private static final String TAG = "SearchResultsActivity";
-    private List<RecipeJSON> recipes;
+    private List<RecipeNative> recipes;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private SearchResultsAdapter searchResultsAdapter;
@@ -72,9 +72,9 @@ public class SearchResultsActivity extends AppCompatActivity {
         queryBuilder.setWhereClause(whereClause.toString());
         //does the search on backendless
         //todo implement api search too
-        Backendless.Data.of(RecipeJSON.class).find(queryBuilder, new AsyncCallback<List<RecipeJSON>>() {
+        Backendless.Data.of(RecipeNative.class).find(queryBuilder, new AsyncCallback<List<RecipeNative>>() {
             @Override
-            public void handleResponse(List<RecipeJSON> response) {
+            public void handleResponse(List<RecipeNative> response) {
                 recipes.addAll(response);
                 searchResultsAdapter.notifyDataSetChanged();
             }

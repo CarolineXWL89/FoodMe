@@ -12,8 +12,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.R;
-import com.example.caroline.foodme.RecipeJSON;
 import com.example.caroline.foodme.RecyclerViewOnClick;
 import com.example.caroline.foodme.Search.SearchResultsAdapter;
 
@@ -28,7 +28,7 @@ public class SearchResultsDisplayer extends AppCompatActivity {
 
 
     private static final String TAG ="SearchResultsDisplayer";
-    private List<RecipeJSON> recipes;
+    private List<RecipeNative> recipes;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private SearchResultsAdapter searchResultsAdapter;
@@ -44,7 +44,7 @@ public class SearchResultsDisplayer extends AppCompatActivity {
         //gets arraylist of search results from intent
         recipes = new ArrayList<>();
         Intent i = getIntent();
-        ArrayList<RecipeJSON> r = i.getParcelableArrayListExtra("the_stuff");
+        ArrayList<RecipeNative> r = i.getParcelableArrayListExtra("the_stuff");
         recipes.addAll(r);
         for (int j = 0; j<recipes.size(); j++) {
             if (recipes.get(j) != null){

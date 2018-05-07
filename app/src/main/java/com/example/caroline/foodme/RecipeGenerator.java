@@ -29,8 +29,8 @@ public class RecipeGenerator extends AppCompatActivity {
     private String oilList;
     private String fruitList;
 
-    public RecipeGenerator( ArrayList<String> ingrdients){
-        this.ingredients = ingrdients;
+    public RecipeGenerator( ArrayList<String> ingredients){
+        this.ingredients = ingredients;
 
         getLists();
         sortIngredients();

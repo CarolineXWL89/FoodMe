@@ -1,7 +1,8 @@
-package com.example.caroline.foodme;
+package com.example.caroline.foodme.API_Interfaces;
+
+import com.example.caroline.foodme.EdamamObjects.EntitySearch;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
