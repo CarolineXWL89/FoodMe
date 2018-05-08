@@ -8,6 +8,7 @@ import com.example.caroline.foodme.API_Interfaces.DataMuseNutritionIngr;
 import com.example.caroline.foodme.API_Interfaces.DataMuseNutritionSearch;
 import com.example.caroline.foodme.EdamamNutritionKeys;
 import com.example.caroline.foodme.EdamamObjects.EntitySearch;
+import com.example.caroline.foodme.EdamamObjects.NutritionResponse;
 import com.example.caroline.foodme.EdamamObjects.fooddotjson;
 import com.example.caroline.foodme.R;
 
@@ -51,13 +52,18 @@ public class AutoGenerateFragment extends AppCompatActivity {
             }
         });
 
-        final fooddotjson fooddotjson = new fooddotjson(1); //TODO decide how much they should have? Random?
+        final fooddotjson fooddotjson = new fooddotjson(1);
         String[] uriTwo = fooddotjson.findIngredient(entitySearches);
         fooddotjson.addIngredient(uriTwo);
 
         DataMuseNutritionSearch apiFoodPackage = retrofit.create(DataMuseNutritionSearch.class);
-        Call<fooddotjson> sendingCall = apiFoodPackage.sendFood(EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION); //TODO Probably should include sending JSON at a point
+        final NutritionResponse nutritionResponse = apiFoodPackage.sendFood(fooddotjson, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION); //TODO check assignment
 
+        //assuming this is returning a package with the FoodResponse object information
+
+
+
+        //private String foodKeyword = "";
 
         //return inflater.inflate(R.layout.fragment_create, container, false);
     }
