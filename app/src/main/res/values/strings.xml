@@ -107,6 +107,7 @@
     <string name="user">user</string>
     <string name="action_help"> help </string>
 
+    <!--TODO: What are all these tags someone help me are we actually using these???-->
     <!-- TODO: Change search hint -->
     <string name="search_hint">Search</string>
     <string name="app_label">Food Me</string>
