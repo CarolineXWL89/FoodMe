@@ -1,11 +1,16 @@
-package com.example.caroline.foodme;
+package com.example.caroline.foodme.GenerateFragment;
 
 import android.support.v7.app.AppCompatActivity;
+
+import com.example.caroline.foodme.EdamamObjects.RecipeJSON;
+import com.example.caroline.foodme.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+
+import retrofit2.Response;
 
 /**
  * Created by michaelxiong on 4/10/18.
@@ -14,13 +19,13 @@ import java.util.ArrayList;
 public class RecipeGenerator extends AppCompatActivity {
 
     private ArrayList<String> ingredients;
-    private ArrayList<String> staples = new ArrayList<String>();
-    private ArrayList<String> proteins = new ArrayList<String>();
-    private ArrayList<String> vegetables = new ArrayList<String>();
-    private ArrayList<String> spices = new ArrayList<String>();
-    private ArrayList<String> oils = new ArrayList<String>();
-    private ArrayList<String> sauces = new ArrayList<String>();
-    private ArrayList<String> fruits = new ArrayList<String>();
+    private ArrayList<String> staples = new ArrayList<>();
+    private ArrayList<String> proteins = new ArrayList<>();
+    private ArrayList<String> vegetables = new ArrayList<>();
+    private ArrayList<String> spices = new ArrayList<>();
+    private ArrayList<String> oils = new ArrayList<>();
+    private ArrayList<String> sauces = new ArrayList<>();
+    private ArrayList<String> fruits = new ArrayList<>();
     private String stapleList;
     private String proteinList;
     private String vegetableList;
@@ -98,8 +103,19 @@ public class RecipeGenerator extends AppCompatActivity {
         return outputStream.toString();
     }
 
-    public void generateRecipe(){
+    public RecipeJSON generateRandomRecipe(){
+        //TODO Decide on recipe templates
 
+
+        RecipeJSON recipeJSONRand = new RecipeJSON();
+        return recipeJSONRand;
+    }
+
+    public RecipeJSON userControledGenerate(){
+        //TODO Based on what user haves --> chooses some stuff
+
+        RecipeJSON recipeJSONGen = new RecipeJSON();
+        return recipeJSONGen;
     }
 
 }
