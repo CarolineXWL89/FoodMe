@@ -1,6 +1,7 @@
 package com.example.caroline.foodme.API_Interfaces;
 
 import com.example.caroline.foodme.EdamamObjects.EntitySearch;
+import com.example.caroline.foodme.EdamamObjects.Hints;
 
 import java.util.ArrayList;
 
@@ -23,6 +24,8 @@ public interface DataMuseNutritionIngr {
     @GET("ingrs")
     Call<ArrayList<EntitySearch>> getIngrNutrient(@Query("ingr=") String foodIngr, @Query("app_id=") String appId, @Query("app_key") String appKey);
 
+    @GET("hints")
+    Call<ArrayList<Hints>> getAllHints(@Query("ingr") String foodIngr, @Query("page") int pageNum, @Query("app_id=") String appId, @Query("app_key") String appKey);
 
 
 }

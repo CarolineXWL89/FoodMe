@@ -17,6 +17,35 @@ import java.util.ArrayList;
 public class RecipeGeneratorMethods extends AppCompatActivity {
 
     private ArrayList<String> ingredients = new ArrayList<>();
+
+    public ArrayList<String> getCarbohydrates() {
+        return carbohydrates;
+    }
+
+    public ArrayList<String> getProteins() {
+        return proteins;
+    }
+
+    public ArrayList<String> getVegetables() {
+        return vegetables;
+    }
+
+    public ArrayList<String> getSpices() {
+        return spices;
+    }
+
+    public ArrayList<String> getOils() {
+        return oils;
+    }
+
+    public ArrayList<String> getSauces() {
+        return sauces;
+    }
+
+    public ArrayList<String> getFruits() {
+        return fruits;
+    }
+
     private ArrayList<String> carbohydrates = new ArrayList<>();
     private ArrayList<String> proteins = new ArrayList<>();
     private ArrayList<String> vegetables = new ArrayList<>();
