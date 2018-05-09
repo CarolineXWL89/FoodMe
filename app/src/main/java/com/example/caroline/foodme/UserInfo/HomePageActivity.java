@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.backendless.Backendless;
 import com.example.caroline.foodme.BackendlessSettings;
 import com.example.caroline.foodme.CreateFragment.CreateFragment;
 import com.example.caroline.foodme.FavoritesFragment.FavoritesFragment;
+import com.example.caroline.foodme.GenerateFragment.AutoGenerateFragment;
 import com.example.caroline.foodme.R;
 import com.example.caroline.foodme.SearchFragment.SearchFragment;
 
@@ -47,6 +49,7 @@ public class HomePageActivity extends AppCompatActivity {
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
     private Fragment currentFragment;
+    private Button temporaryButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +117,22 @@ public class HomePageActivity extends AppCompatActivity {
         //wires bottom navigation
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        temporaryButton = findViewById(R.id.temporary_button);
+        temporaryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: DELETE THIS PART AFTER FLOATING ACTION BUTTON IS MADE
+//                currentFragment = new AutoGenerateFragment();
+//                FragmentManager fm = getSupportFragmentManager();
+//                if(currentFragment != null) {
+//                    fm.beginTransaction()
+//                            .replace(R.id.fragment_container, currentFragment)
+//                            .commit();
+//                }
+                Intent i = new Intent(HomePageActivity.this, AutoGenerateFragment.class);
+                startActivity(i);
+            }
+        });
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -162,6 +181,7 @@ public class HomePageActivity extends AppCompatActivity {
 
         }
     }
+
 
 //
 }
