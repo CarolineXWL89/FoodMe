@@ -68,6 +68,10 @@ public class HomePageActivity extends AppCompatActivity {
         }
     }
 
+    public Context getSharedContext(){
+        return HomePageActivity.this;
+    }
+
     @Override
     protected void onResume() {
         hideNavBar();

@@ -1,6 +1,7 @@
 package com.example.caroline.foodme.UserInfo;
 
 import android.annotation.TargetApi;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,6 +33,7 @@ import com.example.caroline.foodme.BackendlessSettings;
 import com.example.caroline.foodme.R;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -191,42 +193,6 @@ public class SettingsPageActivity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
-            findPreference("example_text").getEditor().putString("bob", "John Smith").commit();
-
-            Backendless.UserService.isValidLogin(new AsyncCallback<Boolean>() {
-                @Override
-                public void handleResponse(Boolean response) {
-                    if( response && Backendless.UserService.CurrentUser() == null )
-                    {
-                        String currentUserId = Backendless.UserService.loggedInUser();
-                        if( !currentUserId.equals( "" ) )
-                        {
-                            Backendless.UserService.findById(currentUserId, new AsyncCallback<BackendlessUser>() {
-                                @Override
-                                public void handleResponse(BackendlessUser response) {
-                                    Log.d("userNameEdit", (String) response.getProperty("name"));
-                                    findPreference("example_text").setDefaultValue(response.getProperty("name"));                                }
-
-                                @Override
-                                public void handleFault(BackendlessFault fault) {
-                                    Log.d("findById", fault.getMessage());
-                                }
-                            });
-
-                        }
-                    }
-                }
-
-                @Override
-                public void handleFault(BackendlessFault fault) {
-                    Log.d("isValidLogin", fault.getMessage());
-
-                }
-            });
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
             bindPreferenceSummaryToValue(findPreference("example_text"));
             bindPreferenceSummaryToValue(findPreference("example_list"));
         }
@@ -342,4 +308,5 @@ public class SettingsPageActivity extends AppCompatPreferenceActivity {
             return super.onOptionsItemSelected(item);
         }
     }
+
 }
