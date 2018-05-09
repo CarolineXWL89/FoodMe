@@ -97,29 +97,14 @@ public class SearchResultsActivity extends AppCompatActivity {
 //
 //
 
-
+        //TODO finish recipeSearch retrofit call
         final ArrayList<RecipeJSON> recipeJSON = new ArrayList<>();
         String keyword = "";
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DataMuseRecipe.baseURL)
-               // .addConverterFactory(GsonConverterFactory.create.()).build();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
     }
 

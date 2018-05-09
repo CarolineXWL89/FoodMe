@@ -32,6 +32,14 @@ public class RecipeGeneratorMethods extends AppCompatActivity {
     private String oilList;
     private String fruitList;
 
+    public final static int CARB_INDEX = 0;
+    public final static int FRUIT_INDEX = 1;
+    public final static int OIL_INDEX = 2;
+    public final static int PROTEIN_INDEX = 3;
+    public final static int SAUCE_INDEX = 4;
+    public final static int SPICE_INDEX = 5;
+    public final static int VEG_INDEX = 6;
+
     public RecipeGeneratorMethods(){
         //this.ingredients = ingredients;
         /*this.getLists();
@@ -105,8 +113,9 @@ public class RecipeGeneratorMethods extends AppCompatActivity {
     @return ArrayList<ArrayList<String>> of food ingredients
      */
     public ArrayList<ArrayList<String>> listAllIngredients(){
-        //going through carbs
-        ArrayList<ArrayList<String>> all = new ArrayList<>();
+        ArrayList<ArrayList<String>> all = new ArrayList<>(); //holds all ALs
+
+        //list of all food items
         ArrayList<String> carbs = new ArrayList<>();
         ArrayList<String> fruits = new ArrayList<>();
         ArrayList<String> oils = new ArrayList<>();
@@ -114,7 +123,9 @@ public class RecipeGeneratorMethods extends AppCompatActivity {
         ArrayList<String> sauces = new ArrayList<>();
         ArrayList<String> spices = new ArrayList<>();
         ArrayList<String> veggies = new ArrayList<>();
-        int lCarb = stapleList.length()
+
+        //length of each raw food string
+        int lCarb = stapleList.length();
         int lFruit = fruitList.length();
         int lOil = oilList.length();
         int lProtein = proteinList.length();
@@ -122,14 +133,95 @@ public class RecipeGeneratorMethods extends AppCompatActivity {
         int lSpice = spiceList.length();
         int lVeg = vegetableList.length();
 
-        //going through carbohydrates file
-        for(int i = 0; i < lCarb; i++){
 
-            int startIndex = i;
-            int endIndex = stapleList.indexOf(",");
+        //going through carbohydrates file
+        String testCarb = stapleList;
+        String testFruit = fruitList;
+        String testOil = oilList;
+        String testProtein = proteinList;
+        String testSauce = sauceList;
+        String testSpice = spiceList;
+        String testVeg = vegetableList;
+
+        //creating ALs of each food type then adding to AL of AL of Ss
+        for(int i = 0; i < lCarb; i++){
+            int startIndex = 0;
+            int endIndex = testCarb.indexOf(",");
+            if(i == endIndex){
+                String test = testCarb.substring(startIndex, endIndex);
+                carbs.add(test);
+                testCarb = testCarb.substring(endIndex += 2);
+            }
+            all.add(carbs);
         }
 
-        return ;
+        for(int i = 0; i < lFruit; i++){
+            int startIndex = 0;
+            int endIndex = testFruit.indexOf(",");
+            if(i == endIndex){
+                String test = testFruit.substring(startIndex, endIndex);
+                fruits.add(test);
+                testFruit = testFruit.substring(endIndex += 2);
+            }
+            all.add(fruits);
+        }
+
+        for(int i = 0; i < lOil; i++){
+            int startIndex = 0;
+            int endIndex = testOil.indexOf(",");
+            if(i == endIndex){
+                String test = testOil.substring(startIndex, endIndex);
+                oils.add(test);
+                testOil = testOil.substring(endIndex += 2);
+            }
+            all.add(oils);
+        }
+
+        for(int i = 0; i < lProtein; i++){
+            int startIndex = 0;
+            int endIndex = testProtein.indexOf(",");
+            if(i == endIndex){
+                String test = testProtein.substring(startIndex, endIndex);
+                proteins.add(test);
+                testProtein = testProtein.substring(endIndex += 2);
+            }
+            all.add(proteins);
+        }
+
+        for(int i = 0; i < lSauce; i++){
+            int startIndex = 0;
+            int endIndex = testSauce.indexOf(",");
+            if(i == endIndex){
+                String test = testSauce.substring(startIndex, endIndex);
+                sauces.add(test);
+                testSauce = testSauce.substring(endIndex += 2);
+            }
+            all.add(sauces);
+        }
+
+        for(int i = 0; i < lSpice; i++){
+            int startIndex = 0;
+            int endIndex = testSpice.indexOf(",");
+            if(i == endIndex){
+                String test = testSpice.substring(startIndex, endIndex);
+                spices.add(test);
+                testSpice = testSpice.substring(endIndex += 2);
+            }
+            all.add(spices);
+        }
+
+        for(int i = 0; i < lVeg; i++){
+            int startIndex = 0;
+            int endIndex = testVeg.indexOf(",");
+            if(i == endIndex){
+                String test = testVeg.substring(startIndex, endIndex);
+                veggies.add(test);
+                testVeg = testVeg.substring(endIndex += 2);
+            }
+            all.add(veggies);
+        }
+
+        return all;
     }
 
     public RecipeJSON generateRandomRecipe(){
