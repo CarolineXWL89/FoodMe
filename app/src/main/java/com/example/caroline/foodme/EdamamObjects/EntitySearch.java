@@ -13,15 +13,19 @@ public class EntitySearch{
     private Hints hints = new Hints(new FoodEdamame("", ""), new ArrayList<Measure>());
     private int page, numPages;
 
-    private EntitySearch(String name, int page, int numPages ){
-        text = name;
-        this.page = page;
-        this.numPages = numPages;
+    public EntitySearch(/*String name, int page, int numPages*/ ){
+//        text = name;
+//        this.page = page;
+//        this.numPages = numPages;
 
     }
 
 
     public Parsed getParsed() {
         return parsed;
+    }
+
+    public int getNumPages() {
+        return numPages;
     }
 }

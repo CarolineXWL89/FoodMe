@@ -21,9 +21,9 @@ public class fooddotjson {
         this.yield = yield;
     }
 
-    public String[] findIngredient(ArrayList<EntitySearch> entitySearches){
-        int random = (int) Math.random()* (entitySearches.size());
-        EntitySearch entitySearch = entitySearches.get(random);
+    public String[] findIngredient(EntitySearch entitySearch){
+        //int random = (int) Math.random()* (entitySearches.size());
+        //EntitySearch entitySearch = entitySearches.get(random);
         Parsed parsed = entitySearch.getParsed();
         FoodEdamame foodEdamame = parsed.getFood();
         String foodURI = foodEdamame.getUri();
