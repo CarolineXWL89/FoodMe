@@ -25,21 +25,21 @@
         <com.synnapps.carouselview.CarouselView
             android:id="@+id/carouselView"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="225dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            app:fillColor="#FFFFFFFF"
+            app:fillColor="#00ffffff"
             app:layout_constraintBottom_toTopOf="@+id/favoritesRecyclerView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:pageColor="#00000000"
-            app:radius="6dp"
+            app:radius="4dp"
             app:slideInterval="3000"
-            app:strokeColor="#FF777777"
-            app:strokeWidth="1dp" />
+            app:strokeColor="#00ffffff"
+            app:strokeWidth="0.5dp" />
     </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>
