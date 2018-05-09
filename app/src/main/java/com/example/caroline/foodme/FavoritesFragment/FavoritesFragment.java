@@ -30,7 +30,6 @@ public class FavoritesFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private FavoritesDisplayAdapter favoritesDisplayAdapter;
 
-    //TODO Caroline
     public static final String TAG = "fragments";
     public FavoritesFragment() {
         // Required empty public constructorr
@@ -55,17 +54,17 @@ public class FavoritesFragment extends Fragment {
         //todo work on bckeneless to save users favorites, get thema nd load into favoriteslist
         RecipeNative r = new RecipeNative();
         r.setRecipeName("I love pie");
-        r.setImageURL("https://sallysbakingaddiction.com/wp-content/uploads/2017/06/american-flag-pie.jpg");
+        r.setImageURL("https://static-cdn.jtvnw.net/jtv_user_pictures/e91a3dcf-c15a-441a-b369-996922364cdc-profile_image-300x300.png");
         favoritesList.add(r);
 
         RecipeNative r2 = new RecipeNative();
         r2.setRecipeName("I love apples");
-        r2.setImageURL("http://www.macdentalcare.com/pub/photo/2014-09-apple.jpg");
+        r2.setImageURL("https://vignette.wikia.nocookie.net/phobia/images/1/1b/Purple.jpg/revision/latest?cb=20161109231115");
         favoritesList.add(r2);
 
         RecipeNative r3 = new RecipeNative();
         r3.setRecipeName("I love water");
-        r3.setImageURL("https://www.uiwater.com/images/default-source/utilities-basic/buisness-units/florida/waterdorp.png?sfvrsn=2");
+        r3.setImageURL("http://www.solidbackgrounds.com/images/1920x1080/1920x1080-yellow-solid-color-background.jpg");
         favoritesList.add(r3);
 
         setImages();
@@ -88,7 +87,7 @@ public class FavoritesFragment extends Fragment {
                 View customView = getLayoutInflater().inflate(R.layout.carousel_item, null);
                 ImageView imageView = customView.findViewById(R.id.carousel_image_view);
                 TextView textView = customView.findViewById(R.id.carousel_text_view);
-                Picasso.with(getContext()).load(imageURLS.get(position)).into(imageView);
+                Picasso.with(getContext()).load(imageURLS.get(position)).fit().centerCrop().into(imageView);
                 textView.setText(titles.get(position));
                 return customView;
             }
@@ -97,6 +96,7 @@ public class FavoritesFragment extends Fragment {
         carouselView = (CarouselView) rootview.findViewById(R.id.carouselView);
         carouselView.setPageCount(titles.size());
         carouselView.setViewListener(viewListener);
+        carouselView.reSetSlideInterval(5000);
     }
 
     public void setImages(){
