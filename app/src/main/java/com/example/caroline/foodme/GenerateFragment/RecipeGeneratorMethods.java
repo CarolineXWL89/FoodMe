@@ -10,16 +10,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import retrofit2.Response;
-
 /**
  * Created by michaelxiong on 4/10/18.
  */
 
-public class RecipeGenerator extends AppCompatActivity {
+public class RecipeGeneratorMethods extends AppCompatActivity {
 
-    private ArrayList<String> ingredients;
-    private ArrayList<String> staples = new ArrayList<>();
+    private ArrayList<String> ingredients = new ArrayList<>();
+    private ArrayList<String> carbohydrates = new ArrayList<>();
     private ArrayList<String> proteins = new ArrayList<>();
     private ArrayList<String> vegetables = new ArrayList<>();
     private ArrayList<String> spices = new ArrayList<>();
@@ -34,16 +32,15 @@ public class RecipeGenerator extends AppCompatActivity {
     private String oilList;
     private String fruitList;
 
-    public RecipeGenerator( ArrayList<String> ingredients){
-        this.ingredients = ingredients;
-
-        getLists();
-        sortIngredients();
-        generateRecipe();
+    public RecipeGeneratorMethods(){
+        //this.ingredients = ingredients;
+        /*this.getLists();
+        this.sortIngredients();*/
+        //generateRecipe();
     }
 
     public void getLists(){
-        InputStream stapleFileInputStream = getResources().openRawResource(R.raw.staples);
+        InputStream stapleFileInputStream = getResources().openRawResource(R.raw.carbohydrates);
         stapleList = readTextFile(stapleFileInputStream);
         InputStream proteinFileInputStream = getResources().openRawResource(R.raw.proteins);
         proteinList = readTextFile(proteinFileInputStream);
@@ -63,7 +60,7 @@ public class RecipeGenerator extends AppCompatActivity {
         for(int i = 0; i < ingredients.size(); i++){
             String ingredient = ingredients.get(i);
             if(stapleList.indexOf(ingredient) != -1){
-                staples.add(ingredient);
+                carbohydrates.add(ingredient);
             }
             if(proteinList.indexOf(ingredient) != -1){
                 proteins.add(ingredient);
@@ -103,6 +100,38 @@ public class RecipeGenerator extends AppCompatActivity {
         return outputStream.toString();
     }
 
+    /*
+    Goes through all raw text files and sorts them into an arrayList for each type --> then into an ArrayList of those ALs
+    @return ArrayList<ArrayList<String>> of food ingredients
+     */
+    public ArrayList<ArrayList<String>> listAllIngredients(){
+        //going through carbs
+        ArrayList<ArrayList<String>> all = new ArrayList<>();
+        ArrayList<String> carbs = new ArrayList<>();
+        ArrayList<String> fruits = new ArrayList<>();
+        ArrayList<String> oils = new ArrayList<>();
+        ArrayList<String> proteins = new ArrayList<>();
+        ArrayList<String> sauces = new ArrayList<>();
+        ArrayList<String> spices = new ArrayList<>();
+        ArrayList<String> veggies = new ArrayList<>();
+        int lCarb = stapleList.length()
+        int lFruit = fruitList.length();
+        int lOil = oilList.length();
+        int lProtein = proteinList.length();
+        int lSauce = sauceList.length();
+        int lSpice = spiceList.length();
+        int lVeg = vegetableList.length();
+
+        //going through carbohydrates file
+        for(int i = 0; i < lCarb; i++){
+
+            int startIndex = i;
+            int endIndex = stapleList.indexOf(",");
+        }
+
+        return ;
+    }
+
     public RecipeJSON generateRandomRecipe(){
         //TODO Decide on recipe templates
 
@@ -111,11 +140,15 @@ public class RecipeGenerator extends AppCompatActivity {
         return recipeJSONRand;
     }
 
-    public RecipeJSON userControledGenerate(){
+    public RecipeJSON userControlledGenerate(){
         //TODO Based on what user haves --> chooses some stuff
 
         RecipeJSON recipeJSONGen = new RecipeJSON();
         return recipeJSONGen;
+    }
+
+    public void userAddIngredients(){
+        //how do we have them input?
     }
 
 }
