@@ -102,7 +102,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         String keyword = "";
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(DataMuseRecipe.baseURL}
+                .baseUrl(DataMuseRecipe.baseURL)
                // .addConverterFactory(GsonConverterFactory.create.()).build();
 
 
