@@ -48,13 +48,13 @@ public class RecipeGeneratorMethods extends AppCompatActivity {
         return fruits;
     }
 
-    private ArrayList<String> carbohydrates = new ArrayList<>();
-    private ArrayList<String> proteins = new ArrayList<>();
-    private ArrayList<String> vegetables = new ArrayList<>();
-    private ArrayList<String> spices = new ArrayList<>();
-    private ArrayList<String> oils = new ArrayList<>();
-    private ArrayList<String> sauces = new ArrayList<>();
-    private ArrayList<String> fruits = new ArrayList<>();
+    private ArrayList carbohydrates = new ArrayList();
+    private ArrayList proteins = new ArrayList();
+    private ArrayList vegetables = new ArrayList();
+    private ArrayList spices = new ArrayList();
+    private ArrayList oils = new ArrayList();
+    private ArrayList sauces = new ArrayList();
+    private ArrayList fruits = new ArrayList();
     private String stapleList;
     private String proteinList;
     private String vegetableList;
@@ -62,6 +62,35 @@ public class RecipeGeneratorMethods extends AppCompatActivity {
     private String sauceList;
     private String oilList;
     private String fruitList;
+
+    public String getStapleList() {
+        return stapleList;
+    }
+
+    public String getProteinList() {
+        return proteinList;
+    }
+
+    public String getVegetableList() {
+        return vegetableList;
+    }
+
+    public String getSpiceList() {
+        return spiceList;
+    }
+
+    public String getSauceList() {
+        return sauceList;
+    }
+
+    public String getOilList() {
+        return oilList;
+    }
+
+    public String getFruitList() {
+        return fruitList;
+    }
+
     private Context mContext;
     public final static int CARB_INDEX = 0;
     public final static int FRUIT_INDEX = 1;
@@ -102,24 +131,31 @@ public class RecipeGeneratorMethods extends AppCompatActivity {
             String ingredient = ingredients.get(i);
             if(stapleList.indexOf(ingredient) != -1){
                 carbohydrates.add(ingredient);
+                carbohydrates.add(stapleList.indexOf(ingredient));
             }
             if(proteinList.indexOf(ingredient) != -1){
                 proteins.add(ingredient);
+                proteins.add(proteinList.indexOf(ingredient));
             }
             if(vegetableList.indexOf(ingredient) != -1){
                 vegetables.add(ingredient);
+                vegetables.add(vegetableList.indexOf(ingredient));
             }
             if(spiceList.indexOf(ingredient) != -1){
                 spices.add(ingredient);
+                spices.add(spiceList.indexOf(ingredient));
             }
             if(sauceList.indexOf(ingredient) != -1){
                 sauces.add(ingredient);
+                sauces.add(sauceList.indexOf(ingredient));
             }
             if(oilList.indexOf(ingredient) != -1){
                 oils.add(ingredient);
+                oils.add(oilList.indexOf(ingredient));
             }
             if(fruitList.indexOf(ingredient) != -1){
                 fruits.add(ingredient);
+                fruits.add(fruitList.indexOf(ingredient));
             }
         }
     }
