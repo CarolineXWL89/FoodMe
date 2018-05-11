@@ -68,7 +68,7 @@ public class FavoritesFragment extends Fragment {
         favoritesList.add(r3);
 
         setImages();
-    }
+    }//
 
     private void wireWidgets() {
         //wires recycler view and adds adapters
@@ -81,7 +81,6 @@ public class FavoritesFragment extends Fragment {
         registerForContextMenu(favoritesRecyclerview);
 
         ViewListener viewListener = new ViewListener() {
-
             @Override
             public View setViewForPosition(int position) {
                 View customView = getLayoutInflater().inflate(R.layout.carousel_item, null);
