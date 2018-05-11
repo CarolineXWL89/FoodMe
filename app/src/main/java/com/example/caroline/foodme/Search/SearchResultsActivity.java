@@ -117,7 +117,7 @@ public class SearchResultsActivity extends AppCompatActivity {
 
         call.enqueue(new Callback<RecipeJSON>() {
             @Override
-            public void onResponse(Call<RecipeJSON> call, Response<RecipeJSON> response) {
+            public void onResponse(Call<RecipeJSON> call, Response<RecipeJSON> response) { //stuff
 
             }
 
