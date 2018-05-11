@@ -189,40 +189,43 @@ public class CreateFragment extends Fragment {
         }
 
         if (ingredients.size() > 0) {
-            //recipe.setIngredients(ingredients.toString());
+            recipe.setIngredients(ingredients.toString());
         } else {
             message[4] = "Please add ingredients";
         }
 
         if (notEmpty(message)) {
-            return null;
-        } else {
             return recipe;
+        } else {
+            return null;
         }
     }
 
     private boolean notEmpty(String[] message) {
-        boolean value = true;
+        boolean thisIsEmpty = true;
         String toast = "";
         for (int i = 0; i < message.length; i++) {
-            if (!isOk(message[i])) {
-                value = false;
-                toast = toast + message[i] + ", ";
+            if (isOk(message[i])) { //if there is something written for the message at spot i
+                thisIsEmpty = false; //then the message is not emppty and therefore should be shown
+                toast = toast + message[i] + ", "; //add message to the toast
             }
         }
 
-        if (isOk(toast) && !value) {
-            toast.substring(0, toast.length() - 2);
+        if (isOk(toast)) { //if the toast is not empty and the messge has stuff
+            toast = toast.substring(0, toast.length() - 2);
             Toast.makeText(context, toast, Toast.LENGTH_SHORT).show();
             return false;
         } else {
-            return value;
+            Toast.makeText(context, "Recipe has been uploaded", Toast.LENGTH_SHORT).show();
+            return true;
         }
     }
 
     private boolean isOk(String titleText) {
         //checks to make sure its not empty
-        if (titleText.equals("")) {
+        if(titleText == null){
+            return false;
+        } else if (titleText.equals("")) {
             return false;
         } else if (titleText.equals(" ")) {
             return false;
