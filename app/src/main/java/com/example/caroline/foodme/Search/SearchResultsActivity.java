@@ -20,12 +20,10 @@ import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
 import com.example.caroline.foodme.API_Interfaces.DataMuseRecipe;
 import com.example.caroline.foodme.EdamamObjects.RecipeJSON;
-import com.example.caroline.foodme.EdamamRecipeKeys;
 import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.R;
 import com.example.caroline.foodme.RecyclerViewOnClick;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
