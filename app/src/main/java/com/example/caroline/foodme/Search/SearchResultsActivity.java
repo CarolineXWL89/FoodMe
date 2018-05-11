@@ -92,13 +92,33 @@ public class SearchResultsActivity extends AppCompatActivity {
 //
 
         //TODO finish recipeSearch retrofit call
-        final ArrayList<RecipeJSON> recipeJSON = new ArrayList<>();
-        String keyword = "";
+//        final ArrayList<RecipeJSON> recipeJSON = new ArrayList<>();
+//        String keyword = "";
+//
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(DataMuseRecipe.baseURL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//
+//        DataMuseRecipe coolapi = retrofit.create(DataMuseRecipe.class);
+//
+//
+//        Call<RecipeJSON> call = coolapi.getDatabaseRecipe(keyword, EdmameRecipeKeys.APP_ID_NUTRITION, EdmameRecipeKeys.APP_KEY_NUTRITION);
+//
+//        call.enqueue(new Callback<RecipeJSON>() {
+//            @Override
+//            public void onResponse(Call<RecipeJSON> call, Response<RecipeJSON> response) {
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<RecipeJSON> call, Throwable t) {
+//
+//            }
+//        });
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(DataMuseRecipe.baseURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+
+
 
     }
 
