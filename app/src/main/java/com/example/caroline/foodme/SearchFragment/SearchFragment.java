@@ -13,14 +13,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
-import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.R;
+import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.RecyclerViewOnClick;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class SearchFragment extends Fragment {
 
     public static final String TAG = "fragments";
     private ArrayList<RecipeNative> recipes;
-    private FloatingActionButton addRecipe, submit;
+    private FloatingActionButton clearButton, submit;
     private ArrayList<String> ingredients;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
@@ -44,10 +45,11 @@ public class SearchFragment extends Fragment {
     private View rootView;
     private EditText newRecipeEditText;
     private IngredientSearchAdapter ingredientSearchAdapter;
+    private ImageButton plusButton;
 
     //todo make edit text with UI of text view
     //todo search with api
-    //todo have clear buttn
+    //todo have plusButton buttn
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -105,8 +107,9 @@ public class SearchFragment extends Fragment {
 
             }
         });
-        addRecipe = rootView.findViewById(R.id.button_new_ingredient);
-        addRecipe.setOnClickListener(new View.OnClickListener() {
+        clearButton = rootView.findViewById(R.id.button_clear_ingredient);
+        plusButton =rootView.findViewById(R.id.plusButton);
+        plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ingredients.add( newRecipeEditText.getText().toString());
@@ -116,6 +119,16 @@ public class SearchFragment extends Fragment {
                 newRecipeEditText.setText("");
 
             }
+        });
+
+        clearButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                ingredients.clear();
+                ingredientSearchAdapter.notifyDataSetChanged();
+            }
+
         });
     }
 
@@ -174,7 +187,7 @@ public class SearchFragment extends Fragment {
         call.enqueue(new Callback<ArrayList<EntitySearch>>() {
             @Override
             public void onResponse(Call<ArrayList<EntitySearch>> call, Response<ArrayList<EntitySearch>> response) {
-                entitySearches.clear();
+                entitySearches.plusButton();
                 entitySearches.addAll(response.body());
             }
             @Override
