@@ -68,7 +68,7 @@ public class FavoritesFragment extends Fragment {
         favoritesList.add(r3);
 
         setImages();
-    }
+    }//
 
     private void wireWidgets() {
         //wires recycler view and adds adapters
