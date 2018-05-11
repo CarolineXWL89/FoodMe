@@ -1,5 +1,6 @@
-package com.example.caroline.foodme.UserInfo;
+package com.example.caroline.foodme;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,12 +11,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,12 +23,10 @@ import com.backendless.Backendless;
 import com.example.caroline.foodme.BackendlessSettings;
 import com.example.caroline.foodme.CreateFragment.CreateFragment;
 import com.example.caroline.foodme.FavoritesFragment.FavoritesFragment;
-import com.example.caroline.foodme.GenerateFragment.AutoGenerateFragment;
 import com.example.caroline.foodme.R;
 import com.example.caroline.foodme.SearchFragment.SearchFragment;
-
-
-//todo search bar focus
+import com.example.caroline.foodme.UserInfo.LoginScreen;
+import com.example.caroline.foodme.UserInfo.SettingsPageActivity;
 
 /*
 Contains stuff like recently added seen after logging in (NOT 1st time)
@@ -37,35 +35,29 @@ Contains: scrolling image gallery; access toolbar for fav, add, search; settings
 Can: be accessed by clicking on logo/home, NOT launching activity!!! (Need to change)
  */
 public class HomePageActivity extends AppCompatActivity {
-//
+    //
     /*
     GET USERID //todo delete user exists when you log out
     SharedPreferences sharedPref = getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         String userID = sharedPref.getString(getString(R.string.user_ID), "");*/
-    public static final String TAG = "YADA";
+    public static final String TAG = "HomePageActivity";
     private TextView mTextMessage;
     private View decorView;
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
-    private Fragment currentFragment;
-    private Button temporaryButton;
+    private SearchView searchView;
 
+
+    //todo app icon use adobe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         Backendless.initApp(this, BackendlessSettings.APP_ID, BackendlessSettings.API_KEY);
-        logIn(); //checks if user ahs already logged in, if not switches to log in screen
+        //todo uncomment logIn(); //checks if user ahs already logged in, if not switches to log in screen
         wireWidgets();
         hideNavBar();
-        currentFragment = new FavoritesFragment();
-        FragmentManager fm = getSupportFragmentManager();
-        if(currentFragment != null) {
-            fm.beginTransaction()
-                    .replace(R.id.fragment_container, currentFragment)
-                    .commit();
-        }
     }
 
     @Override
@@ -74,30 +66,30 @@ public class HomePageActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    public void hideNavBar(){
+    public void hideNavBar() {
+        //hides navigation bar so app can be fullscreen
         decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         decorView.setSystemUiVisibility(uiOptions);
-        //todo call when keyboard goes down
+        //todo call again after keyboard is pulled up
     }
 
+    //todo comment @micheal Xiong
     private void logIn() {
         sharedPref = getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
         int userExists = sharedPref.getInt(getString(R.string.user), 0);
-        Log.d("userExists", userExists+"");
 //        userExists = 0; //todo delete me later
-// //checks if previous user exists
+        //checks if previous user exists
         if (userExists == 0) {
             Intent i = new Intent(this, LoginScreen.class);
             startActivity(i);
         }
         if (userExists == 1) {
-            editor.remove(getString(R.string.user));
+            editor.clear();
             editor.putInt(getString(R.string.user), 0);
-            editor.commit();
             Toast.makeText(this, "Next time you'll need to login again", Toast.LENGTH_SHORT).show();
         }
     }
@@ -106,46 +98,34 @@ public class HomePageActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.home_action_bar, menu);
+        SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.search_recipe_general).getActionView();
+        searchView.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE); //todo make search view take up whole bar and onclick open keyboard
         return true;
     }
 
     private void wireWidgets() {
-        Log.d(TAG, "wireWidgets: ");
         //creates toolbar at top for settings icon
         Toolbar myToolbar = (Toolbar) findViewById(R.id.settings_toolbar);
         setSupportActionBar(myToolbar);
-        //wires bottom navigation
+        //creates bottom navigation bar to hold the fragment navigation
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        temporaryButton = findViewById(R.id.temporary_button);
-        temporaryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO: DELETE THIS PART AFTER FLOATING ACTION BUTTON IS MADE
-//                currentFragment = new AutoGenerateFragment();
-//                FragmentManager fm = getSupportFragmentManager();
-//                if(currentFragment != null) {
-//                    fm.beginTransaction()
-//                            .replace(R.id.fragment_container, currentFragment)
-//                            .commit();
-//                }
-                Intent i = new Intent(HomePageActivity.this, AutoGenerateFragment.class);
-                startActivity(i);
-            }
-        });
+
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             //Prepare a null fragment
-            currentFragment = null;
+            Fragment currentFragment = null;
             switch (item.getItemId()) {
                 case R.id.navigation_search:
                     currentFragment = new SearchFragment();
-                    //needs sort by (sorts results)
+                    //todo sort by mine, api, alphabetically? idk what else
                     break;
                 case R.id.navigation_favorites:
                     currentFragment = new FavoritesFragment();
@@ -154,8 +134,9 @@ public class HomePageActivity extends AppCompatActivity {
                     currentFragment = new CreateFragment();
                     break;
             }
+            //transmits proper fragment
             FragmentManager fm = getSupportFragmentManager();
-            if(currentFragment != null) {
+            if (currentFragment != null) {
                 fm.beginTransaction()
                         .replace(R.id.fragment_container, currentFragment)
                         .commit();
@@ -174,14 +155,16 @@ public class HomePageActivity extends AppCompatActivity {
                 Intent i = new Intent(this, SettingsPageActivity.class);
                 startActivity(i);
                 return true;
+            case R.id.search_recipe_general:
+                //begins searching
+                //todo pull up keyboard now
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
-
-//
+@Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }
