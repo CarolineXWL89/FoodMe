@@ -17,7 +17,7 @@ import retrofit2.http.Query;
 
 public interface DataMuseNutritionIngr {
 
-    String baseURL = "https://api.edamam.com/api/food-database/parser"; //nutrition
+    String baseURL = "https://api.edamam.com/api/food-database/parser/"; //nutrition
     //String APP_ID_NUTRITION = "06b894fb";
     //String APP_KEY_NUTRITION = "b6cdc3e30b89f8409d65e44eb788752f";
 
