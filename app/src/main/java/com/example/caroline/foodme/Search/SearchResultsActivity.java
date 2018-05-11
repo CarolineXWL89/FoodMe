@@ -19,13 +19,13 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
 import com.example.caroline.foodme.API_Interfaces.DataMuseRecipe;
-import com.example.caroline.foodme.EdamamObjects.EntitySearch;
 import com.example.caroline.foodme.EdamamObjects.RecipeJSON;
-import com.example.caroline.foodme.EdmameRecipeKeys;
+import com.example.caroline.foodme.EdamamRecipeKeys;
 import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.R;
 import com.example.caroline.foodme.RecyclerViewOnClick;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,17 +113,18 @@ public class SearchResultsActivity extends AppCompatActivity {
         DataMuseRecipe coolapi = retrofit.create(DataMuseRecipe.class);
 
 
-        Call<RecipeJSON> call = coolapi.getDatabaseRecipe(keyword, EdmameRecipeKeys.APP_ID_NUTRITION, EdmameRecipeKeys.APP_KEY_NUTRITION);
+        Call<ArrayList<RecipeJSON>> call = coolapi.getDatabaseRecipe(keyword, EdamamRecipeKeys.APP_ID_NUTRITION, EdamamRecipeKeys.APP_KEY_NUTRITION);
 
-        call.enqueue(new Callback<RecipeJSON>() {
+        call.enqueue(new Callback<ArrayList<RecipeJSON>>() {
             @Override
-            public void onResponse(Call<RecipeJSON> call, Response<RecipeJSON> response) {
-
+            public void onResponse(Call<ArrayList<RecipeJSON>> call, Response<ArrayList<RecipeJSON>> response) {
+                recipeJSON.clear();
+                recipeJSON.addAll(response.body());
             }
 
             @Override
-            public void onFailure(Call<RecipeJSON> call, Throwable t) {
-
+            public void onFailure(Call<ArrayList<RecipeJSON>> call, Throwable t) {
+                Toast.makeText(SearchResultsActivity.this, "The recipe Doesntlas dlfneslkxit", Toast.LENGTH_SHORT).show();
             }
         });
 
