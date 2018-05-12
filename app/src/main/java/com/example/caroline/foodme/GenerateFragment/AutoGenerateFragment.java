@@ -91,7 +91,7 @@ public class AutoGenerateFragment extends Fragment {
     }
 
     /**
-     * Wires all the widgets + functionalities TODO onClicks and setting text
+     * Wires all the widgets + functionalities TODO onClicks and setting text; next task
      */
     private void wireWidgets() {
         inputtedListLinLayout = rootView.findViewById(R.id.list_input_foods); //TODO updates recyclerView
