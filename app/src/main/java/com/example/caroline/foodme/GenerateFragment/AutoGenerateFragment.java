@@ -103,7 +103,7 @@ public class AutoGenerateFragment extends Fragment {
     }
 
     /**
-     * Creates a completely randomised recipe with nutrition of ingredients --> maybe they can choose which ones they want?
+     * Creates a completely randomised recipe with nutrition of ingredients --> maybe they can choose which ones they want
      * Called when Generate/Random button is clicked
      * @param view takes in a view
      */
