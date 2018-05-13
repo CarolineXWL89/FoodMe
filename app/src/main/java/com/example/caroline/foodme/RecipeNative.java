@@ -2,8 +2,6 @@ package com.example.caroline.foodme;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.caroline.foodme.EdamamObjects.Ingredient;
-
 
 /**
  * Created by per6 on 3/23/18.
@@ -103,15 +101,20 @@ public class RecipeNative implements Parcelable {
         this.ImageURL = url;
     }
 
+
+
+
+
+
     protected RecipeNative(Parcel in) {
         recipeName = in.readString();
         directions = in.readString();
         servings = in.readString();
         timeNeeded = in.readString();
-        ingredients = in.readString();
         ImageURL = in.readString();
         objectId = in.readString();
         ownerId = in.readString();
+        ingredients = in.readString();
     }
 
     @Override
@@ -125,10 +128,10 @@ public class RecipeNative implements Parcelable {
         dest.writeString(directions);
         dest.writeString(servings);
         dest.writeString(timeNeeded);
-        //////dest.writeString(ingredients);
         dest.writeString(ImageURL);
         dest.writeString(objectId);
         dest.writeString(ownerId);
+        dest.writeString(ingredients);
     }
 
     @SuppressWarnings("unused")

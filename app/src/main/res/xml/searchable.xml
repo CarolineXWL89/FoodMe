@@ -3,7 +3,7 @@
     android:label="@string/app_label"
     android:hint="@string/search_hint"
     android:imeOptions="actionSearch"
-    android:searchSuggestAuthority="com.example.MyRecentSuggestionProvider"
+    android:searchSuggestAuthority="com.example.caroline.foodme.Search.MyRecentSuggestionProvider"
     android:searchSuggestSelection=" ?"
 >
 

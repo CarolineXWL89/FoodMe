@@ -5,57 +5,52 @@ import android.os.Parcelable;
 
 import com.example.caroline.foodme.EdamamObjects.Ingredient;
 
+import java.util.ArrayList;
+
 /**
  * Created by princ on 03/05/2018.
  */
     public class RecipeJSON {
-//
-//        private String recipeName;
-//        private String directions;
-//        private String servings;
-//        private String timeNeeded;
-//        //private String ingredients; mRd
-        private String ImageURL;
-//        private String objectId;
-//        private String ownerId;
-        private String uri, label, source, url;
-        private int yield;
-        private float calories, totalWeight;
-        private Ingredient[] ingredients;
 
+        private String query;
+        private int from;
+        private int to;
+        //private String [][] params = new String[4][1]; //I THINK
+        private int numFound;
+        private boolean more;
+        private ArrayList<Hit> hits = new ArrayList<>();
 
-
-        public RecipeJSON(){
+        public RecipeJSON(String query, int from, int to, int numFound, boolean more, ArrayList<Hit> hits){
+            //initialise
+            this.query = query;
+            this.from = from;
+            this.to = to;
+            this.numFound = numFound;
+            this.more = more;
+            this.hits = hits;
         }
 
-        public RecipeJSON(String imageURL,Ingredient[] ingredients) {
-
-            this.ingredients = ingredients;
-            ImageURL = imageURL;
-
-        }
-
-
-        public Ingredient[] getIngredients() {
-            return ingredients;
-        }
-
-        public void setIngredients(Ingredient[] ingredients) {
-            this.ingredients = ingredients;
-        }
-
-        public String getImageURL() {
-            return ImageURL;
-        }
-
-        public void setImageURL(String url) {
-            this.ImageURL = url;
-        }
-
-        protected RecipeJSON(Parcel in) {
-
-            //ingredients = in.; TODO arraylist read impout
-            ImageURL = in.readString();
-
-        }
+    public String getQuery() {
+        return query;
     }
+
+    public int getFrom() {
+        return from;
+    }
+
+    public int getTo() {
+        return to;
+    }
+
+    public int getNumFound() {
+        return numFound;
+    }
+
+    public boolean isMore() {
+        return more;
+    }
+
+    public ArrayList<Hit> getHits() {
+        return hits;
+    }
+}

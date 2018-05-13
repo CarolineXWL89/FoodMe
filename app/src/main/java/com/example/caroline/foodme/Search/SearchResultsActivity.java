@@ -18,10 +18,12 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
+import com.example.caroline.foodme.API_Interfaces.DataMuseNutritionIngr;
 import com.example.caroline.foodme.API_Interfaces.DataMuseRecipe;
 import com.example.caroline.foodme.EdamamObjects.EntitySearch;
+import com.example.caroline.foodme.EdamamObjects.Hit;
 import com.example.caroline.foodme.EdamamObjects.RecipeJSON;
-import com.example.caroline.foodme.EdmameRecipeKeys;
+import com.example.caroline.foodme.EdamamRecipeKeys;
 import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.R;
 import com.example.caroline.foodme.RecyclerViewOnClick;
@@ -46,6 +48,8 @@ public class SearchResultsActivity extends AppCompatActivity {
     private RecyclerViewOnClick click;
     private Toolbar toolbar;
 
+    private final ArrayList<RecipeJSON> recipeJSON = new ArrayList<>();
+    private ArrayList<Hit> hits = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,82 +58,46 @@ public class SearchResultsActivity extends AppCompatActivity {
         wireWidgets();
         //deals with search intent
         handleIntent(getIntent());
+    }
 
-
-
-
-//uu
-
-
-
-
-//
-//        final ArrayList<EntitySearch> entitySearches = new ArrayList<>();
-//        String foodSearched = "";
-//
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(DataMuseNutritionIngr.baseURL)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        DataMuseNutritionIngr api = retrofit.create(DataMuseNutritionIngr.class);
-//
-//
-//        Call<ArrayList<EntitySearch>> call = api.getIngrNutrient(foodSearched, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
-//
-//        call.enqueue(new Callback<ArrayList<EntitySearch>>() {
-//            @Override
-//            public void onResponse(Call<ArrayList<EntitySearch>> call, Response<ArrayList<EntitySearch>> response) {
-//                entitySearches.clear();
-//                entitySearches.addAll(response.body());
-//            }
-//            @Override
-//            public void onFailure(Call<ArrayList<EntitySearch>> call, Throwable t) {
-//                //NOTHING YET
-//            }
-//        });
-//
-//        final fooddotjson fooddotjson = new fooddotjson(1); //TODO decide how much they should have? Random?
-//        String[] uriTwo = fooddotjson.findIngredient(entitySearches);
-//        fooddotjson.addIngredient(uriTwo);
-//
-//        DataMuseNutritionSearch apiFoodPackage = retrofit.create(DataMuseNutritionSearch.class);
-//        Call<fooddotjson> sendingCall = apiFoodPackage.sendFood(EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION); //TODO Probably should include sending JSON at a point
-//
-//
-//        return inflater.inflate(R.layout.fragment_create, container, false);
-//
-//
-
-        //TODO finish recipeSearch retrofit call
-        final ArrayList<RecipeJSON> recipeJSON = new ArrayList<>();
-        String keyword = "";
+    /**
+     * Searches through Edamam API for recipes with the keyword(s) searched for //TODO if input has spaces replace w/ %20
+     * @param dataMuseRecipe API accessed
+     * @param foodKeyword user food input
+     * @param firstShown first result index (depending on # chosen per page) --> not required?
+     * @param lastShown last result index --> not required
+     * @return AL of 1 RecipeJSON object to parse through for recipes
+     */
+    private void firstRecipeCall(DataMuseRecipe dataMuseRecipe, String foodKeyword, int firstShown, int lastShown){
+        //TODO decide how to choose # shown on a page --> next page fxn
+        //gotten from search bar?
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DataMuseRecipe.baseURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+        DataMuseRecipe recipeAPI = retrofit.create(DataMuseRecipe.class);
+        //do we want users choosing how many displayed or have a pre-set limit?
+        Call<ArrayList<RecipeJSON>> callFirst = recipeAPI.getListedRecipes(foodKeyword, firstShown, lastShown, EdamamRecipeKeys.APP_ID_RECIPE, EdamamRecipeKeys.APP_KEY_RECIPE);
 
-        DataMuseRecipe coolapi = retrofit.create(DataMuseRecipe.class);
-
-
-        Call<RecipeJSON> call = coolapi.getDatabaseRecipe(keyword, EdmameRecipeKeys.APP_ID_NUTRITION, EdmameRecipeKeys.APP_KEY_NUTRITION);
-
-        call.enqueue(new Callback<RecipeJSON>() {
+        callFirst.enqueue(new Callback<ArrayList<RecipeJSON>>() {
             @Override
-            public void onResponse(Call<RecipeJSON> call, Response<RecipeJSON> response) {
-
+            public void onResponse(Call<ArrayList<RecipeJSON>> call, Response<ArrayList<RecipeJSON>> response) { //stuff
+                recipeJSON.clear();
+                recipeJSON.addAll(response.body());
+                searchResultsAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onFailure(Call<RecipeJSON> call, Throwable t) {
-
+            public void onFailure(Call<ArrayList<RecipeJSON>> call, Throwable t){
             }
         });
+        //return recipeJSON;
+    }
 
-
-
-
+    private ArrayList<Hit> getFavourites(ArrayList<RecipeJSON> recipeJSONS){
+        //TODO What do we want this to do?
+        return hits;
     }
 
     @Override
@@ -156,8 +124,18 @@ public class SearchResultsActivity extends AppCompatActivity {
         whereClause.append("recipeName like '%" + query + "%'");
         DataQueryBuilder queryBuilder = DataQueryBuilder.create();
         queryBuilder.setWhereClause(whereClause.toString());
+
+        //does API search for recipe + returns results
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DataMuseNutritionIngr.baseURL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        DataMuseRecipe recipeAPI = retrofit.create(DataMuseRecipe.class);
+        int start = 0;
+        int end = 40; //TODO get user choice
+        this.firstRecipeCall(recipeAPI, query, start, end);
+
         //does the search on backendless
-        //todo implement api search too
         Backendless.Data.of(RecipeNative.class).find(queryBuilder, new AsyncCallback<List<RecipeNative>>() {
             @Override
             public void handleResponse(List<RecipeNative> response) {
