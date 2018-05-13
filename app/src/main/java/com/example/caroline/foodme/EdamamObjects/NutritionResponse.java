@@ -21,7 +21,7 @@ public class NutritionResponse {
 //    private Parsed ingredient;
 
     public NutritionResponse() {
-        //required empty constructor
+        //required empty constructor thing
     }
 
     public String getUri() {
