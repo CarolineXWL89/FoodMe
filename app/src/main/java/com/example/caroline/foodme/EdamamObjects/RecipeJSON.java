@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Created by princ on 03/05/2018.
+ * Recipe Search API (Hits)
  */
     public class RecipeJSON {
 

@@ -2,6 +2,7 @@ package com.example.caroline.foodme.EdamamObjects;
 
 /**
  * Created by princ on 11/05/2018.
+ * Recipe Search API
  */
 
 public class Hit {

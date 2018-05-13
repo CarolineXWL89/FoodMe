@@ -18,9 +18,8 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
-import com.example.caroline.foodme.API_Interfaces.DataMuseNutritionIngr;
+import com.example.caroline.foodme.API_Interfaces.DataMuseNutritionIngrParser;
 import com.example.caroline.foodme.API_Interfaces.DataMuseRecipe;
-import com.example.caroline.foodme.EdamamObjects.EntitySearch;
 import com.example.caroline.foodme.EdamamObjects.Hit;
 import com.example.caroline.foodme.EdamamObjects.RecipeJSON;
 import com.example.caroline.foodme.EdamamRecipeKeys;
@@ -127,7 +126,7 @@ public class SearchResultsActivity extends AppCompatActivity {
 
         //does API search for recipe + returns results
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(DataMuseNutritionIngr.baseURL)
+                .baseUrl(DataMuseNutritionIngrParser.baseURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         DataMuseRecipe recipeAPI = retrofit.create(DataMuseRecipe.class);

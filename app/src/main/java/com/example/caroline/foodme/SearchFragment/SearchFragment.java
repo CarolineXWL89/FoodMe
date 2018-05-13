@@ -175,11 +175,11 @@ public class SearchFragment extends Fragment {
         String foodSearched = "";
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(DataMuseNutritionIngr.baseURL)
+                .baseUrl(DataMuseNutritionIngrParser.baseURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        DataMuseNutritionIngr api = retrofit.create(DataMuseNutritionIngr.class);
+        DataMuseNutritionIngrParser api = retrofit.create(DataMuseNutritionIngrParser.class);
 
 
         Call<ArrayList<EntitySearch>> call = api.getIngrNutrient(foodSearched, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);

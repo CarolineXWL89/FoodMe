@@ -14,11 +14,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.caroline.foodme.API_Interfaces.DataMuseNutritionIngr;
+import com.example.caroline.foodme.API_Interfaces.DataMuseNutritionIngrParser;
 import com.example.caroline.foodme.API_Interfaces.DataMuseNutritionSearch;
 import com.example.caroline.foodme.EdamamNutritionKeys;
 import com.example.caroline.foodme.EdamamObjects.EntitySearch;
-import com.example.caroline.foodme.EdamamObjects.Hints;
+import com.example.caroline.foodme.EdamamObjects.Hint;
 import com.example.caroline.foodme.EdamamObjects.NutritionResponse;
 import com.example.caroline.foodme.EdamamObjects.fooddotjson;
 import com.example.caroline.foodme.InputFoodsAdapter;
@@ -51,7 +51,7 @@ public class AutoGenerateFragment extends Fragment {
 
 //    private ArrayList<EntitySearch> entitySearches = new ArrayList<>();
     private ArrayList firstAPICallReturn = new ArrayList();
-//    private ArrayList<Hints> hintsAutoFill = new ArrayList<>();
+//    private ArrayList<Hint> hintsAutoFill = new ArrayList<>();
     final RecipeGeneratorMethods recipeGeneratorMethods = new RecipeGeneratorMethods(context); //what context?
 
 
@@ -65,7 +65,7 @@ public class AutoGenerateFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         //inflates layout for autogen fragment
-        rootView = inflater.inflate(R.layout.activity_auto_generate_fragment, container, false); //TODO Why do we need it here?
+        rootView = inflater.inflate(R.layout.auto_generate_fragment, container, false); //TODO Why do we need it here?
         wireWidgets();
         return view;
     }
@@ -112,7 +112,7 @@ public class AutoGenerateFragment extends Fragment {
 //        ArrayList<NutritionResponse> nutritionResponses = new ArrayList<>();
 //
 //        final ArrayList<EntitySearch> entitySearches = new ArrayList<>();
-//        final ArrayList<Hints> hintsAutoFill = new ArrayList<>();
+//        final ArrayList<Hint> hintsAutoFill = new ArrayList<>();
 //        final RecipeGeneratorMethods recipeGeneratorMethods = new RecipeGeneratorMethods(this);
         ArrayList<ArrayList<String>> allFoods = recipeGeneratorMethods.listAllIngredients();
         /*
@@ -125,10 +125,10 @@ public class AutoGenerateFragment extends Fragment {
 
         //Tester
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(DataMuseNutritionIngr.baseURL)
+                .baseUrl(DataMuseNutritionIngrParser.baseURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        DataMuseNutritionIngr api = retrofit.create(DataMuseNutritionIngr.class);
+        DataMuseNutritionIngrParser api = retrofit.create(DataMuseNutritionIngrParser.class);
 
         /*
         This part goes through all the database parts --> goes through all the things that are in the strings that are chosen
@@ -165,10 +165,10 @@ public class AutoGenerateFragment extends Fragment {
     private void userChoiceIngrs(View view) { //how do we do this
         //TODO have user have input into textEdits in RecyclerView and then uses that as a matching
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(DataMuseNutritionIngr.baseURL)
+                .baseUrl(DataMuseNutritionIngrParser.baseURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        DataMuseNutritionIngr api = retrofit.create(DataMuseNutritionIngr.class);
+        DataMuseNutritionIngrParser api = retrofit.create(DataMuseNutritionIngrParser.class);
 
         DataMuseNutritionSearch apiNutritionSearch = retrofit.create(DataMuseNutritionSearch.class);
 
@@ -330,15 +330,15 @@ public class AutoGenerateFragment extends Fragment {
     }
 
     /**
-     * API Calls from the 7 categories after they're separated --> runs through multiple times
+     * API Calls from the 7 categories after they're separated; then goes through each entry (Hint) for the NutrientInfo
      * @param nutritionIngrAPI DatamuseNutritionSearch api call (declared earlier in method call)
      * @param foodSearched food that's wanted to get nutrient of
      * @param index identifies type of food [0, 6]
-     * @return ArrayList w/ index 0 of AL of EntitySearches (later used to get Nutrients) + index 1 of AL of Hints (later for autofill)
+     * @return ArrayList w/ index 0 of AL of EntitySearches (later used to get Nutrients) + index 1 of AL of Hint (later for autofill)
      */
-    private ArrayList IngrSearchAPICall(DataMuseNutritionIngr nutritionIngrAPI, String foodSearched, int index) {
+    private ArrayList IngrSearchAPICall(DataMuseNutritionIngrParser nutritionIngrAPI, String foodSearched, int index) {
         final ArrayList<EntitySearch> entitySearches = new ArrayList<>();
-        final ArrayList<Hints> hintsAutoFill = new ArrayList<>();
+        final ArrayList<Hint> hintsAutoFill = new ArrayList<>();
         Call<ArrayList<EntitySearch>> callFirst = nutritionIngrAPI.getIngrNutrient(foodSearched, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
         callFirst.enqueue(new Callback<ArrayList<EntitySearch>>() {
             @Override
@@ -357,16 +357,16 @@ public class AutoGenerateFragment extends Fragment {
         firstAPICallReturn.add(entitySearches);
 
         for (int k = 0; k < totalPages; k++) {
-            Call<ArrayList<Hints>> callSecond = nutritionIngrAPI.getAllHints(foodSearched, k, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
-            callSecond.enqueue(new Callback<ArrayList<Hints>>() {
+            Call<ArrayList<Hint>> callSecond = nutritionIngrAPI.getAllHints(foodSearched, k, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
+            callSecond.enqueue(new Callback<ArrayList<Hint>>() {
                 @Override
-                public void onResponse(Call<ArrayList<Hints>> call, Response<ArrayList<Hints>> response) {
+                public void onResponse(Call<ArrayList<Hint>> call, Response<ArrayList<Hint>> response) {
                     hintsAutoFill.clear();
                     hintsAutoFill.addAll(response.body());
                 }
 
                 @Override
-                public void onFailure(Call<ArrayList<Hints>> call, Throwable t) {
+                public void onFailure(Call<ArrayList<Hint>> call, Throwable t) {
                     Toast.makeText(recipeGeneratorMethods, "Uh oh. No hints for you.", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -384,7 +384,8 @@ public class AutoGenerateFragment extends Fragment {
      */
     private ArrayList<NutritionResponse> nutritionSearchAPICall(DataMuseNutritionSearch nutritionSearchAPI, ArrayList<EntitySearch> entitySearches, int index){
         fooddotjson fooddotjson = new fooddotjson(1);
-        String[] uriTwo = fooddotjson.findIngredient(entitySearches.get(index));
+
+        String[] uriTwo = fooddotjson.findIngredient(entitySearches.get(index), 0); //Should this later be autogen?
         fooddotjson.addIngredient(uriTwo);
         final NutritionResponse nutritionResponse = nutritionSearchAPI.sendFood(fooddotjson, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
         nutritionResponses.add(nutritionResponse);
@@ -398,11 +399,11 @@ public class AutoGenerateFragment extends Fragment {
 //        String foodSearched = ""; //what we want to search for --> gotten from TextEdit
 //
 //        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(DataMuseNutritionIngr.baseURL)
+//                .baseUrl(DataMuseNutritionIngrParser.baseURL)
 //                .addConverterFactory(GsonConverterFactory.create())
 //                .build();
 //        //
-//        DataMuseNutritionIngr api = retrofit.create(DataMuseNutritionIngr.class);
+//        DataMuseNutritionIngrParser api = retrofit.create(DataMuseNutritionIngrParser.class);
 //
 //
 //        Call<ArrayList<EntitySearch>> call = api.getIngrNutrient(foodSearched, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
@@ -446,20 +447,20 @@ public class AutoGenerateFragment extends Fragment {
 //                int totalPages = entitySearches.get(i).getNumPages();
 //
 //                for(int k = 0; k < totalPages; k++){
-//                    Call < ArrayList<Hints>> callSecond = api.getAllHints(foodSearched, k, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
-//                    callSecond.enqueue(new Callback<ArrayList<Hints>>() {
+//                    Call < ArrayList<Hint>> callSecond = api.getAllHints(foodSearched, k, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
+//                    callSecond.enqueue(new Callback<ArrayList<Hint>>() {
 //                        @Override
-//                        public void onResponse(Call<ArrayList<Hints>> call, Response<ArrayList<Hints>> response) {
+//                        public void onResponse(Call<ArrayList<Hint>> call, Response<ArrayList<Hint>> response) {
 //                            hintsAutoFill.clear();
 //                            hintsAutoFill.addAll(response.body());
 //                        }
 //
 //                        @Override
-//                        public void onFailure(Call<ArrayList<Hints>> call, Throwable t) {
+//                        public void onFailure(Call<ArrayList<Hint>> call, Throwable t) {
 //                            Toast.makeText(recipeGeneratorMethods, "Uh oh. No hints for you.", Toast.LENGTH_SHORT).show();
 //                        }
 //                    });
-//                } //TODO Hints will be useful for suggestions + auto-fill
+//                } //TODO Hint will be useful for suggestions + auto-fill
 //            }
 }
 

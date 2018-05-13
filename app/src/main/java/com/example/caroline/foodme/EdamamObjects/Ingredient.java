@@ -2,16 +2,25 @@ package com.example.caroline.foodme.EdamamObjects;
 
 /**
  * Created by per6 on 4/27/18.
+ * Food Database API
+ * Recipe Search API
  */
 
 public class Ingredient {
-    private int quantity;
-    private String measureURI, foodURI;
+    private float quantity = 0;
+    private String foodURI = "";
 
-    public Ingredient(int quantity, String measureURI, String foodURI){
-        this.quantity = quantity;
-        this.measureURI = measureURI;
-        this.foodURI = foodURI;
+    //changed on 2018-05-11
+    private Measure measure = new Measure();
+    private float weight = 0;
+    private FoodEdamame food = new FoodEdamame();
+    private String measureURI = "";
+
+    public Ingredient(){
+//        this.quantity = quantity;
+//        this.measureURI = measureURI;
+//        this.foodURI = foodURI;
+        //required empty constructor
     }
 
     public void setQuantity(int quantity) {
