@@ -99,6 +99,8 @@ public class LoginScreen extends AppCompatActivity {
                         Toast.makeText(LoginScreen.this, "Hello " +username, Toast.LENGTH_SHORT).show();
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString(getString(R.string.user_ID), response.getUserId());
+                        editor.putString("userUserName", username);
+                        editor.putString("userPassword", passwordInput.getText().toString());
                         if(rememberMe.isChecked()){
                             editor.putInt(getString(R.string.user), 2); //means there is a saved user
                         }
