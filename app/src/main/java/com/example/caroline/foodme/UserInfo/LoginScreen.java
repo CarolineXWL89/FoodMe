@@ -90,7 +90,8 @@ public class LoginScreen extends AppCompatActivity {
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString(getString(R.string.user_ID), response.getUserId());
                         editor.putString("userUserName", (String) response.getProperty("username"));
-                        editor.putString("userPassword", response.getPassword());
+                        editor.putString("userPassword", passwordInput.getText().toString());
+                        Log.d("Login", "Password: "+passwordInput.getText().toString());
                         if(rememberMe.isChecked()){
                             editor.putInt(getString(R.string.user), 2); //means there is a saved user
                         }

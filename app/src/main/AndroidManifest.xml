@@ -64,7 +64,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".UserInfo.LoginHelpActivity" />
-        <activity android:name=".UserInfo.TermsOfUseActivity"></activity>
+        <activity android:name=".UserInfo.TermsOfUseActivity" />
+        <activity android:name=".AccountSettingsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

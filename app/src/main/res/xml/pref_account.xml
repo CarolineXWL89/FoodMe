@@ -1,10 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <EditTextPreference
-        android:defaultValue="Your username"
-        android:key="account_username"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="Username" />
+    <Preference
+        android:key="AccountPreferences"
+        android:title="Change Username">
+        <intent
+            android:targetClass="com.example.caroline.foodme.UserInfo.AccountSettingsActivity"
+            android:action="android.intent.action.VIEW">
+            <extra
+                android:name="setting"
+                android:value="username"
+                />
+        </intent>
+    </Preference>
+    <Preference
+        android:key="AccountPreferences"
+        android:title="Change Email">
+        <intent
+            android:targetClass="com.example.caroline.foodme.UserInfo.AccountSettingsActivity"
+            android:action="android.intent.action.VIEW">
+            <extra
+                android:name="setting"
+                android:value="email"
+                />
+        </intent>
+    </Preference>
+    <Preference
+        android:key="AccountPreferences"
+        android:title="Change Name">
+        <intent
+            android:targetClass="com.example.caroline.foodme.UserInfo.AccountSettingsActivity"
+            android:action="android.intent.action.VIEW">
+            <extra
+                android:name="setting"
+                android:value="name"
+                />
+        </intent>
+    </Preference>
+
+    <Preference
+        android:key="AccountPreferences"
+        android:title="Change Password">
+        <intent
+            android:targetClass="com.example.caroline.foodme.UserInfo.AccountSettingsActivity"
+            android:action="android.intent.action.VIEW">
+            <extra
+                android:name="setting"
+                android:value="password"
+                />
+        </intent>
+    </Preference>
+
+
 </PreferenceScreen>
