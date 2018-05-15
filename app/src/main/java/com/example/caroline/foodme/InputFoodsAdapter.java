@@ -36,7 +36,7 @@ public class InputFoodsAdapter extends RecyclerView.Adapter<InputFoodsAdapter.My
     @Override
     public void onBindViewHolder(InputFoodsAdapter.MyViewHolder holder, int position) {
         NutritionResponse nutritionResponse = inputs.get(position);
-        holder.foodName.setText(nutritionResponse.getIngredient().getFood().getLabel());
+        holder.foodName.setText(nutritionResponse.getIngredient().getParsed().getFood());
         holder.infoPlaceholder.setText(nutritionResponse.getHealthLabels().toString()); //TODO specify later
     }
 

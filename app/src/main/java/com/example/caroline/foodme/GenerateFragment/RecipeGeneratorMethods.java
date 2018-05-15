@@ -7,9 +7,11 @@ import android.util.Log;
 import com.example.caroline.foodme.EdamamObjects.RecipeJSON;
 import com.example.caroline.foodme.R;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
@@ -110,20 +112,27 @@ public class RecipeGeneratorMethods extends AppCompatActivity {
 
     public void getLists(){
         InputStream stapleFileInputStream = mContext.getResources().openRawResource(R.raw.carbohydrates);
-        stapleList = readTextFile(stapleFileInputStream);
+//        stapleList = readTextFile(stapleFileInputStream);
+        stapleList = this.readRawResourceFiles(stapleFileInputStream);
         Log.d("stapleList", stapleList);
         InputStream proteinFileInputStream = mContext.getResources().openRawResource(R.raw.proteins);
-        proteinList = readTextFile(proteinFileInputStream);
+//        proteinList = readTextFile(proteinFileInputStream);
+        proteinList = this.readRawResourceFiles(proteinFileInputStream);
         InputStream vegetableFileInputStream = mContext.getResources().openRawResource(R.raw.vegetables);
-        vegetableList = readTextFile(vegetableFileInputStream);
+//        vegetableList = readTextFile(vegetableFileInputStream);
+        vegetableList = this.readRawResourceFiles(vegetableFileInputStream);
         InputStream spiceFileInputStream = mContext.getResources().openRawResource(R.raw.spices);
-        spiceList = readTextFile(spiceFileInputStream);
+//        spiceList = readTextFile(spiceFileInputStream);
+        spiceList = this.readRawResourceFiles(spiceFileInputStream);
         InputStream sauceFileInputStream = mContext.getResources().openRawResource(R.raw.sauces);
-        sauceList = readTextFile(sauceFileInputStream);
+//        sauceList = readTextFile(sauceFileInputStream);
+        sauceList = this.readRawResourceFiles(sauceFileInputStream);
         InputStream oilFileInputStream = mContext.getResources().openRawResource(R.raw.oils);
-        oilList = readTextFile(oilFileInputStream);
+//        oilList = readTextFile(oilFileInputStream);
+        oilList = this.readRawResourceFiles(oilFileInputStream);
         InputStream fruitFileInputStream = mContext.getResources().openRawResource(R.raw.fruits);
-        fruitList = readTextFile(fruitFileInputStream);
+//        fruitList = readTextFile(fruitFileInputStream);
+        fruitList = this.readRawResourceFiles(fruitFileInputStream);
     }
 
     public void sortIngredients(){
@@ -311,6 +320,22 @@ public class RecipeGeneratorMethods extends AppCompatActivity {
 
     public void userAddIngredients(){
         //how do we have them input?
+    }
+
+    public String readRawResourceFiles(InputStream inputStream){
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+        String line = "";
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            while((line = bufferedReader.readLine()) != null){
+                stringBuilder.append(line);
+                //anything else?
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return stringBuilder.toString();
     }
 
 }

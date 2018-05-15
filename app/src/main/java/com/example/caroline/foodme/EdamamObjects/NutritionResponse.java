@@ -18,7 +18,9 @@ public class NutritionResponse {
     private ArrayList<NutritionInfo> totalDaily = new ArrayList<>();
     private String[] dietLabels = {"balanced", "high-protein", "high-fiber", "low-fat", "low-carb", "low-sodium"};
     private String[] healthLabels = {"vegan", "vegetarian", "dairy-free", "low-sugar", "low-fat-abs", "sugar-conscious", "fat-free", "gluten free", "wheat free"};
-//    private Parsed ingredient;
+
+    //    private ParsedRequest ingredient;
+    private SingleIngredientToParsed ingredient = new SingleIngredientToParsed();
 
     public NutritionResponse() {
         //required empty constructor thing
@@ -48,6 +50,10 @@ public class NutritionResponse {
         return healthLabels;
     }
 
+    public SingleIngredientToParsed getIngredient() {
+        return ingredient;
+    }
+
 //    public int getYield() {
 //        return yield;
 //    }
@@ -60,7 +66,7 @@ public class NutritionResponse {
 //        return totalWeight;
 //    }
 //
-//    public Parsed getIngredient() {
+//    public ParsedRequest getIngredient() {
 //        return ingredient;
 //    }
 }

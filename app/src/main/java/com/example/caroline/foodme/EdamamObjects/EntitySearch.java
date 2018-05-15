@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class EntitySearch{
     private String text = "";
-    private Parsed parsed = new Parsed();
+    private ParsedRequest parsed = new ParsedRequest();
 
     private ArrayList<Hint> hints = new ArrayList<>();
     private int page = 0;
@@ -21,7 +21,7 @@ public class EntitySearch{
     }
 
 
-    public Parsed getParsed() {
+    public ParsedRequest getParsed() {
         return parsed;
     }
 

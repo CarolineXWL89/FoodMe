@@ -21,14 +21,14 @@ import java.util.ArrayList;
         private boolean more;
         private ArrayList<Hit> hits = new ArrayList<>();
 
-        public RecipeJSON(String query, int from, int to, int numFound, boolean more, ArrayList<Hit> hits){
+        public RecipeJSON(){
             //initialise
-            this.query = query;
-            this.from = from;
-            this.to = to;
-            this.numFound = numFound;
-            this.more = more;
-            this.hits = hits;
+//            this.query = query;
+//            this.from = from;
+//            this.to = to;
+//            this.numFound = numFound;
+//            this.more = more;
+//            this.hits = hits;
         }
 
     public String getQuery() {

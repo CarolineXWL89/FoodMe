@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class RecipeActual {
 
-    private String uri, recipeTitleLabel, imageURL, sourceSiteID, originalURL;
+    private String uri, label, image, sourceSiteID, originalURL;
     private int yield;
     private float caloriesKCal;
     private float totalWeightGrams;
@@ -18,12 +18,16 @@ public class RecipeActual {
     private ArrayList<NutritionInfo> totalDaily = new ArrayList<>();
     private ArrayList<String> dietLabels = new ArrayList<>();
     private ArrayList<String> healthLabels = new ArrayList<>();
+    private ArrayList<String> cautions = new ArrayList<>(); //from Array
+
+    private ArrayList<String> ingredientLines = new ArrayList<>();
+//    private ArrayList<Ingredient> do we need this?
 
     //TODO do we need parameters for this?
-    public RecipeActual(/*String uri, String recipeTitleLabel, String imageURL, String sourceSiteID, String originalURL, int yield, float caloriesKCal, float totalWeightGrams, ArrayList<Ingredient> ingredients, ArrayList<NutritionInfo> totalNutrients, ArrayList<NutritionInfo> totalDaily, ArrayList<String> dietLabels, ArrayList<String> healthLabels*/) {
+    public RecipeActual(/*String uri, String label, String image, String sourceSiteID, String originalURL, int yield, float caloriesKCal, float totalWeightGrams, ArrayList<Ingredient> ingredients, ArrayList<NutritionInfo> totalNutrients, ArrayList<NutritionInfo> totalDaily, ArrayList<String> dietLabels, ArrayList<String> healthLabels*/) {
 //        this.uri = uri;
-//        this.recipeTitleLabel = recipeTitleLabel;
-//        this.imageURL = imageURL;
+//        this.label = label;
+//        this.image = image;
 //        this.sourceSiteID = sourceSiteID;
 //        this.originalURL = originalURL;
 //        this.yield = yield;
@@ -40,12 +44,12 @@ public class RecipeActual {
         return uri;
     }
 
-    public String getRecipeTitleLabel() {
-        return recipeTitleLabel;
+    public String getLabel() {
+        return label;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public String getImage() {
+        return image;
     }
 
     public String getSourceSiteID() {
@@ -86,5 +90,9 @@ public class RecipeActual {
 
     public ArrayList<String> getHealthLabels() {
         return healthLabels;
+    }
+
+    public ArrayList<String> getIngredientLines() {
+        return ingredientLines;
     }
 }
