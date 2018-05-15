@@ -3,6 +3,9 @@ package com.example.caroline.foodme.UserInfo;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -22,7 +25,7 @@ Has user make new account; linked from New Account button in LoginScreen
  */
 public class CreateAccount extends AppCompatActivity {
 
-    private TextView createAccountScreen, firstName, mi, lastName, username, email, password, confirmPass;
+    private TextView createAccountScreen, firstName, mi, lastName, username, email, password, confirmPass, termsOfUse;
     private EditText firstNameInput, miInput, lastNameInput, usernameInput, emailInput, passInput, confirmPassInput;
     private Button createAccount;
     private CheckBox terms;
@@ -54,6 +57,16 @@ public class CreateAccount extends AppCompatActivity {
         email = (TextView) findViewById(R.id.email_textView);
         password = (TextView) findViewById(R.id.password_textView);
         confirmPass = (TextView) findViewById(R.id.password_confirm_textView);
+        termsOfUse = findViewById(R.id.terms_textView);
+        toolbar= (Toolbar)findViewById(R.id.toolbar_create_account);
+        setSupportActionBar(toolbar);
+        termsOfUse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(CreateAccount.this, TermsOfUseActivity.class);
+                startActivity(i);
+            }
+        });
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,19 +96,40 @@ public class CreateAccount extends AppCompatActivity {
                 }
             }
         });
-        toolbar= (Toolbar)findViewById(R.id.toolbar_login);
-        setSupportActionBar(toolbar);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.login_action_bar, menu);
+        return true;
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_help:
+                Intent i = new Intent(this, LoginHelpActivity.class);
+                startActivity(i);
+                return true;
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     //checks to make sure the password was imputed properly in the two EditTexts
     public boolean confirmPassword(){
-        if(passInput.getText().toString().equals(confirmPassInput.getText().toString())){
+        if(passInput.getText().toString().equals(confirmPassInput.getText().toString()) && terms.isChecked()){
             return true;
         }
         else{
-            Toast.makeText(CreateAccount.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            if(!passInput.getText().toString().equals(confirmPassInput.getText().toString())){
+                Toast.makeText(CreateAccount.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            }
+            if(!terms.isChecked()){
+                Toast.makeText(this, "Please agree to the terms of use.", Toast.LENGTH_SHORT).show();
+            }
             return false;
         }
     }
