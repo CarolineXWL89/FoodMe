@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.caroline.foodme.EdamamObjects.NutritionResponse;
-import com.example.caroline.foodme.Search.SearchResultsAdapter;
 
 import java.util.ArrayList;
 
@@ -30,14 +29,14 @@ public class InputFoodsAdapter extends RecyclerView.Adapter<InputFoodsAdapter.My
     public InputFoodsAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.activity_auto_generate_fragment, parent, false);
+                .inflate(R.layout.auto_generate_fragment, parent, false);
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(InputFoodsAdapter.MyViewHolder holder, int position) {
         NutritionResponse nutritionResponse = inputs.get(position);
-        holder.foodName.setText(nutritionResponse.getIngredient().getFood().getLabel());
+        holder.foodName.setText(nutritionResponse.getIngredient().getParsed().getFood());
         holder.infoPlaceholder.setText(nutritionResponse.getHealthLabels().toString()); //TODO specify later
     }
 

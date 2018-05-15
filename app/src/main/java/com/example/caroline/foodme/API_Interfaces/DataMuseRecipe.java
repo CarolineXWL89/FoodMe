@@ -13,12 +13,14 @@ import retrofit2.http.Query;
  */
 
 public interface DataMuseRecipe {
-
+    //TODO How many options do we want to have?
     String baseURL = "https://api.edamam.com/search";
 
     @GET("recipes")
     Call<ArrayList<RecipeJSON>> getDatabaseRecipe(@Query("q") String keyWord, @Query("app_id") String appID, @Query("app_key") String appKey);
 
 
+    @GET("recipes")
+    Call<ArrayList<RecipeJSON>> getListedRecipes(@Query("q") String keyword, @Query("from") int start, @Query("to") int end, @Query("app_id") String appID, @Query("app_key") String appKey);
 
 }

@@ -1,9 +1,12 @@
 package com.example.caroline.foodme.GenerateFragment;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -11,17 +14,18 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.caroline.foodme.API_Interfaces.DataMuseNutritionIngr;
+import com.example.caroline.foodme.API_Interfaces.DataMuseNutritionIngrParser;
 import com.example.caroline.foodme.API_Interfaces.DataMuseNutritionSearch;
 import com.example.caroline.foodme.EdamamNutritionKeys;
 import com.example.caroline.foodme.EdamamObjects.EntitySearch;
-import com.example.caroline.foodme.EdamamObjects.Hints;
+import com.example.caroline.foodme.EdamamObjects.Hint;
 import com.example.caroline.foodme.EdamamObjects.NutritionResponse;
 import com.example.caroline.foodme.EdamamObjects.fooddotjson;
 import com.example.caroline.foodme.InputFoodsAdapter;
 import com.example.caroline.foodme.R;
 import com.example.caroline.foodme.RecyclerViewOnClick;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -30,15 +34,17 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class AutoGenerateFragment extends AppCompatActivity {
+public class AutoGenerateFragment extends Fragment {
 
-    private Button randomGenButton, inputCreateButton;
+    private Button randomGenButton, inputCreateButton, saveIngredientButton;
     private EditText inputIngrTextView;
     private LinearLayout inputtedListLinLayout;
     private View view;
+    private View rootView;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    private Context context = this.getActivity();
 
     //TODO do we need LayoutInflater and View
 
@@ -46,56 +52,39 @@ public class AutoGenerateFragment extends AppCompatActivity {
 
 //    private ArrayList<EntitySearch> entitySearches = new ArrayList<>();
     private ArrayList firstAPICallReturn = new ArrayList();
-//    private ArrayList<Hints> hintsAutoFill = new ArrayList<>();
-    final RecipeGeneratorMethods recipeGeneratorMethods = new RecipeGeneratorMethods(this);
+//    private ArrayList<Hint> hintsAutoFill = new ArrayList<>();
+    final RecipeGeneratorMethods recipeGeneratorMethods = new RecipeGeneratorMethods(context); //what context?
+
+
+    //Start of rewriting Fragment b/c I did it incorrectly the first time
+    public AutoGenerateFragment(){
+        // public general constructor
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+
+        //inflates layout for autogen fragment
+        rootView = inflater.inflate(R.layout.auto_generate_fragment, container, false); //TODO Why do we need it here?
+        wireWidgets();
+        return view;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_auto_generate_fragment);
 
-        final ArrayList<EntitySearch> entitySearches;
-        wireWidgets();
-
-        //holds list of the return info from searching for a food
-//        final ArrayList<EntitySearch> entitySearches = new ArrayList<>();
-//        String foodSearched = ""; //what we want to search for --> gotten from TextEdit
-//
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(DataMuseNutritionIngr.baseURL)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//        //
-//        DataMuseNutritionIngr api = retrofit.create(DataMuseNutritionIngr.class);
-//
-//
-//        Call<ArrayList<EntitySearch>> call = api.getIngrNutrient(foodSearched, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
-//
-//        call.enqueue(new Callback<ArrayList<EntitySearch>>() {
-//            @Override
-//            public void onResponse(Call<ArrayList<EntitySearch>> call, Response<ArrayList<EntitySearch>> response) {
-//                entitySearches.clear();
-//                entitySearches.addAll(response.body());
-//            }
-//            @Override
-//            public void onFailure(Call<ArrayList<EntitySearch>> call, Throwable t) {
-//                Toast.makeText(AutoGenerateFragment.this, "Invalid food!!!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        final fooddotjson fooddotjson = new fooddotjson(1);
-//        String[] uriTwo = fooddotjson.findIngredient(entitySearches);
-//        fooddotjson.addIngredient(uriTwo);
-//
-//        DataMuseNutritionSearch apiFoodPackage = retrofit.create(DataMuseNutritionSearch.class);
-//        final NutritionResponse nutritionResponse = apiFoodPackage.sendFood(fooddotjson, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION); //TODO check assignment
-        //assuming this is returning a package with the FoodResponse object information
-
-        //return inflater.inflate(R.layout.fragment_create, container, false); TODO Why do we need it here?
+        ArrayList<EntitySearch> entitySearches;
 
         //TODO Have the two possibilities for onClick
         //Randomly generate recipe
-        autoGeneratedIngrs(view);
+        try {
+            autoGeneratedIngrs(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         //Create RecyclerView with foods displayed w/ EditText inputs
         ArrayList<NutritionResponse> nutritionResponses = new ArrayList<>();
@@ -106,26 +95,29 @@ public class AutoGenerateFragment extends AppCompatActivity {
 
     }
 
+    /**
+     * Wires all the widgets + functionalities TODO onClicks and setting text; next task
+     */
     private void wireWidgets() {
-        //TODO wire widgets
-        inputtedListLinLayout = findViewById(R.id.list_input_foods);
-        inputCreateButton = findViewById(R.id.button_choice_create);
-        randomGenButton = findViewById(R.id.button_auto_create);
-        inputIngrTextView = findViewById(R.id.editText_ingr_input);
-        recyclerView = findViewById(R.id.recyclerView); //TODO Why isn't recyclerView_foods showing up?
+        inputtedListLinLayout = rootView.findViewById(R.id.list_input_foods); //TODO updates recyclerView
+        inputCreateButton = rootView.findViewById(R.id.button_choice_create); //TODO setOnClickListener
+        randomGenButton = rootView.findViewById(R.id.button_auto_create); //TODO ""
+        saveIngredientButton = rootView.findViewById(R.id.button_save_ingr); //TODO ""
+        inputIngrTextView = rootView.findViewById(R.id.editText_ingr_input); //TODO needs to get text inputted
+        recyclerView = rootView.findViewById(R.id.recyclerView); //TODO Why isn't recyclerView_foods showing up?
     }
 
     /**
-     * Creates a completely randomised recipe with nutrition of ingredients --> maybe they can choose which ones they want?
+     * Creates a completely randomised recipe with nutrition of ingredients --> maybe they can choose which ones they want
      * Called when Generate/Random button is clicked
      * @param view takes in a view
      */
-    private void autoGeneratedIngrs(View view) {
+    private void autoGeneratedIngrs(View view) throws IOException {
         //TODO Have APIs and set-ups for autocreate --> ONLY uses that as the list ingredients
 //        ArrayList<NutritionResponse> nutritionResponses = new ArrayList<>();
 //
 //        final ArrayList<EntitySearch> entitySearches = new ArrayList<>();
-//        final ArrayList<Hints> hintsAutoFill = new ArrayList<>();
+//        final ArrayList<Hint> hintsAutoFill = new ArrayList<>();
 //        final RecipeGeneratorMethods recipeGeneratorMethods = new RecipeGeneratorMethods(this);
         ArrayList<ArrayList<String>> allFoods = recipeGeneratorMethods.listAllIngredients();
         /*
@@ -137,12 +129,11 @@ public class AutoGenerateFragment extends AppCompatActivity {
          */
 
         //Tester
-
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(DataMuseNutritionIngr.baseURL)
+                .baseUrl(DataMuseNutritionIngrParser.baseURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        DataMuseNutritionIngr api = retrofit.create(DataMuseNutritionIngr.class);
+        DataMuseNutritionIngrParser api = retrofit.create(DataMuseNutritionIngrParser.class);
 
         /*
         This part goes through all the database parts --> goes through all the things that are in the strings that are chosen
@@ -156,38 +147,6 @@ public class AutoGenerateFragment extends AppCompatActivity {
                 String foodSearched = allFoods.get(i).get(j); //what we want to search for --> gotten from TextEdit
                 firstAPICallReturn = this.IngrSearchAPICall(api, foodSearched, i); //should do all commented out code w/o rewriting
 
-//                Call<ArrayList<EntitySearch>> callFirst = api.getIngrNutrient(foodSearched, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
-//                callFirst.enqueue(new Callback<ArrayList<EntitySearch>>() {
-//                    @Override
-//                    public void onResponse(Call<ArrayList<EntitySearch>> call, Response<ArrayList<EntitySearch>> response) {
-//                        entitySearches.clear();
-//                        entitySearches.addAll(response.body());
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<ArrayList<EntitySearch>> call, Throwable t) {
-//                        Toast.makeText(recipeGeneratorMethods, "DETECTED: Alien food. PROCEED: Code Red", Toast.LENGTH_SHORT).show();
-//                        System.exit(1);
-//                    }
-//                });
-//                int totalPages = entitySearches.get(i).getNumPages();
-//
-//                for(int k = 0; k < totalPages; k++){
-//                    Call < ArrayList<Hints>> callSecond = api.getAllHints(foodSearched, k, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
-//                    callSecond.enqueue(new Callback<ArrayList<Hints>>() {
-//                        @Override
-//                        public void onResponse(Call<ArrayList<Hints>> call, Response<ArrayList<Hints>> response) {
-//                            hintsAutoFill.clear();
-//                            hintsAutoFill.addAll(response.body());
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<ArrayList<Hints>> call, Throwable t) {
-//                            Toast.makeText(recipeGeneratorMethods, "Uh oh. No hints for you.", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//                } //TODO Hints will be useful for suggestions + auto-fill
-//            }
             }
 //            final fooddotjson fooddotjson = new fooddotjson(1);
 //            String[] uriTwo = fooddotjson.findIngredient(entitySearches.get(i));
@@ -211,16 +170,21 @@ public class AutoGenerateFragment extends AppCompatActivity {
     private void userChoiceIngrs(View view) { //how do we do this
         //TODO have user have input into textEdits in RecyclerView and then uses that as a matching
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(DataMuseNutritionIngr.baseURL)
+                .baseUrl(DataMuseNutritionIngrParser.baseURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        DataMuseNutritionIngr api = retrofit.create(DataMuseNutritionIngr.class);
+        DataMuseNutritionIngrParser api = retrofit.create(DataMuseNutritionIngrParser.class);
 
         DataMuseNutritionSearch apiNutritionSearch = retrofit.create(DataMuseNutritionSearch.class);
 
         ArrayList<String> userIngrs = new ArrayList<>(); //to store strings we're matching
-        RecipeGeneratorMethods recipeGeneratorMethods = new RecipeGeneratorMethods(this);
-        recipeGeneratorMethods.getLists(); //sets raw xml to Strings
+        RecipeGeneratorMethods recipeGeneratorMethods = new RecipeGeneratorMethods(context);
+        recipeGeneratorMethods.makeLists();
+        try {
+            recipeGeneratorMethods.getLists(); //sets raw xml to Strings
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         recipeGeneratorMethods.sortIngredients(); //sees if it's in hard-coded lists
         for (int i = 0; i < 7; i++) {
             switch (i) {
@@ -354,7 +318,7 @@ public class AutoGenerateFragment extends AppCompatActivity {
     private void setRecyclerView(ArrayList<NutritionResponse> nutritionResponses) {
         //https://developer.android.com/guide/topics/ui/layout/recyclerview#java
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new InputFoodsAdapter(new ArrayList<NutritionResponse>(), new RecyclerViewOnClick() {
             @Override
@@ -364,7 +328,7 @@ public class AutoGenerateFragment extends AppCompatActivity {
         });
         recyclerView.setAdapter(adapter);
 
-        ViewGroup viewGroup = new ViewGroup(this) {
+        ViewGroup viewGroup = new ViewGroup(context) {
             @Override
             protected void onLayout(boolean b, int i, int i1, int i2, int i3) {
 
@@ -376,15 +340,15 @@ public class AutoGenerateFragment extends AppCompatActivity {
     }
 
     /**
-     * API Calls from the 7 categories after they're separated --> runs through multiple times
+     * API Calls from the 7 categories after they're separated; then goes through each entry (Hint) for the NutrientInfo
      * @param nutritionIngrAPI DatamuseNutritionSearch api call (declared earlier in method call)
      * @param foodSearched food that's wanted to get nutrient of
      * @param index identifies type of food [0, 6]
-     * @return ArrayList w/ index 0 of AL of EntitySearches (later used to get Nutrients) + index 1 of AL of Hints (later for autofill)
+     * @return ArrayList w/ index 0 of AL of EntitySearches (later used to get Nutrients) + index 1 of AL of Hint (later for autofill)
      */
-    private ArrayList IngrSearchAPICall(DataMuseNutritionIngr nutritionIngrAPI, String foodSearched, int index) {
+    private ArrayList IngrSearchAPICall(DataMuseNutritionIngrParser nutritionIngrAPI, String foodSearched, int index) {
         final ArrayList<EntitySearch> entitySearches = new ArrayList<>();
-        final ArrayList<Hints> hintsAutoFill = new ArrayList<>();
+        final ArrayList<Hint> hintsAutoFill = new ArrayList<>();
         Call<ArrayList<EntitySearch>> callFirst = nutritionIngrAPI.getIngrNutrient(foodSearched, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
         callFirst.enqueue(new Callback<ArrayList<EntitySearch>>() {
             @Override
@@ -395,7 +359,7 @@ public class AutoGenerateFragment extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ArrayList<EntitySearch>> call, Throwable t) {
-                Toast.makeText(recipeGeneratorMethods, "DETECTED: Alien food. PROCEED: Code Red", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "DETECTED: Alien food. PROCEED: Code Red", Toast.LENGTH_SHORT).show();
                 System.exit(1);
             }
         });
@@ -403,17 +367,17 @@ public class AutoGenerateFragment extends AppCompatActivity {
         firstAPICallReturn.add(entitySearches);
 
         for (int k = 0; k < totalPages; k++) {
-            Call<ArrayList<Hints>> callSecond = nutritionIngrAPI.getAllHints(foodSearched, k, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
-            callSecond.enqueue(new Callback<ArrayList<Hints>>() {
+            Call<ArrayList<Hint>> callSecond = nutritionIngrAPI.getAllHints(foodSearched, k, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
+            callSecond.enqueue(new Callback<ArrayList<Hint>>() {
                 @Override
-                public void onResponse(Call<ArrayList<Hints>> call, Response<ArrayList<Hints>> response) {
+                public void onResponse(Call<ArrayList<Hint>> call, Response<ArrayList<Hint>> response) {
                     hintsAutoFill.clear();
                     hintsAutoFill.addAll(response.body());
                 }
 
                 @Override
-                public void onFailure(Call<ArrayList<Hints>> call, Throwable t) {
-                    Toast.makeText(recipeGeneratorMethods, "Uh oh. No hints for you.", Toast.LENGTH_SHORT).show();
+                public void onFailure(Call<ArrayList<Hint>> call, Throwable t) {
+                    Toast.makeText(context, "Uh oh. No hints for you.", Toast.LENGTH_SHORT).show();
                 }
             });
         } //TODO This will be useful for suggestions + auto-fill
@@ -430,11 +394,83 @@ public class AutoGenerateFragment extends AppCompatActivity {
      */
     private ArrayList<NutritionResponse> nutritionSearchAPICall(DataMuseNutritionSearch nutritionSearchAPI, ArrayList<EntitySearch> entitySearches, int index){
         fooddotjson fooddotjson = new fooddotjson(1);
-        String[] uriTwo = fooddotjson.findIngredient(entitySearches.get(index));
+
+        String[] uriTwo = fooddotjson.findIngredient(entitySearches.get(index), 0); //Should this later be autogen?
         fooddotjson.addIngredient(uriTwo);
         final NutritionResponse nutritionResponse = nutritionSearchAPI.sendFood(fooddotjson, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
         nutritionResponses.add(nutritionResponse);
         return nutritionResponses;
     }
+
+
+    //Stuff that would eventually be in the middle part (onCreate in old activity)
+    //holds list of the return info from searching for a food
+//        final ArrayList<EntitySearch> entitySearches = new ArrayList<>();
+//        String foodSearched = ""; //what we want to search for --> gotten from TextEdit
+//
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(DataMuseNutritionIngrParser.baseURL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//        //
+//        DataMuseNutritionIngrParser api = retrofit.create(DataMuseNutritionIngrParser.class);
+//
+//
+//        Call<ArrayList<EntitySearch>> call = api.getIngrNutrient(foodSearched, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
+//
+//        call.enqueue(new Callback<ArrayList<EntitySearch>>() {
+//            @Override
+//            public void onResponse(Call<ArrayList<EntitySearch>> call, Response<ArrayList<EntitySearch>> response) {
+//                entitySearches.clear();
+//                entitySearches.addAll(response.body());
+//            }
+//            @Override
+//            public void onFailure(Call<ArrayList<EntitySearch>> call, Throwable t) {
+//                Toast.makeText(AutoGenerateFragment.this, "Invalid food!!!", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        final fooddotjson fooddotjson = new fooddotjson(1);
+//        String[] uriTwo = fooddotjson.findIngredient(entitySearches);
+//        fooddotjson.addIngredient(uriTwo);
+//
+//        DataMuseNutritionSearch apiFoodPackage = retrofit.create(DataMuseNutritionSearch.class);
+//        final NutritionResponse nutritionResponse = apiFoodPackage.sendFood(fooddotjson, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION); //TODO check assignment
+    //assuming this is returning a package with the FoodResponse object information
+
+
+    //Stuff that went inside AutoGen method doing API calls
+    //                Call<ArrayList<EntitySearch>> callFirst = api.getIngrNutrient(foodSearched, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
+//                callFirst.enqueue(new Callback<ArrayList<EntitySearch>>() {
+//                    @Override
+//                    public void onResponse(Call<ArrayList<EntitySearch>> call, Response<ArrayList<EntitySearch>> response) {
+//                        entitySearches.clear();
+//                        entitySearches.addAll(response.body());
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<ArrayList<EntitySearch>> call, Throwable t) {
+//                        Toast.makeText(recipeGeneratorMethods, "DETECTED: Alien food. PROCEED: Code Red", Toast.LENGTH_SHORT).show();
+//                        System.exit(1);
+//                    }
+//                });
+//                int totalPages = entitySearches.get(i).getNumPages();
+//
+//                for(int k = 0; k < totalPages; k++){
+//                    Call < ArrayList<Hint>> callSecond = api.getAllHints(foodSearched, k, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
+//                    callSecond.enqueue(new Callback<ArrayList<Hint>>() {
+//                        @Override
+//                        public void onResponse(Call<ArrayList<Hint>> call, Response<ArrayList<Hint>> response) {
+//                            hintsAutoFill.clear();
+//                            hintsAutoFill.addAll(response.body());
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<ArrayList<Hint>> call, Throwable t) {
+//                            Toast.makeText(recipeGeneratorMethods, "Uh oh. No hints for you.", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//                } //TODO Hint will be useful for suggestions + auto-fill
+//            }
 }
 

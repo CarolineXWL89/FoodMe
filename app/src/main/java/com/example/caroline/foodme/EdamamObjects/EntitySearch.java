@@ -5,27 +5,35 @@ import java.util.ArrayList;
 /**
  * Created by princ on 17/04/2018.
  * To get the information to plug into nutrition search
+ * Food Database API
  */
 
 public class EntitySearch{
-    private String text;
-    private Parsed parsed = new Parsed(new FoodEdamame("", ""), 0, new Measure("", ""));
-    private Hints hints = new Hints(new FoodEdamame("", ""), new ArrayList<Measure>());
-    private int page, numPages;
+    private String text = "";
+    private ParsedRequest parsed = new ParsedRequest();
 
-    public EntitySearch(/*String name, int page, int numPages*/ ){
-//        text = name;
-//        this.page = page;
-//        this.numPages = numPages;
+    private ArrayList<Hint> hints = new ArrayList<>();
+    private int page = 0;
+    private int numPages = 0;
 
+    public EntitySearch(){
+        //required empty constructor
     }
 
 
-    public Parsed getParsed() {
+    public ParsedRequest getParsed() {
         return parsed;
     }
 
     public int getNumPages() {
         return numPages;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public ArrayList<Hint> getHints() {
+        return hints;
     }
 }

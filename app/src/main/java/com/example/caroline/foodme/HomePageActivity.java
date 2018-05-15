@@ -20,10 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
-import com.example.caroline.foodme.BackendlessSettings;
-import com.example.caroline.foodme.CreateFragment.CreateFragment;
 import com.example.caroline.foodme.FavoritesFragment.FavoritesFragment;
-import com.example.caroline.foodme.R;
+import com.example.caroline.foodme.GenerateFragment.AutoGenerateFragment;
 import com.example.caroline.foodme.SearchFragment.SearchFragment;
 import com.example.caroline.foodme.UserInfo.LoginScreen;
 import com.example.caroline.foodme.UserInfo.SettingsPageActivity;
@@ -131,7 +129,7 @@ public class HomePageActivity extends AppCompatActivity {
                     currentFragment = new FavoritesFragment();
                     break;
                 case R.id.navigation_create:
-                    currentFragment = new CreateFragment();
+                    currentFragment = new NewRecipeOptionsFragment();//new CreateFragment();
                     break;
             }
             //transmits proper fragment

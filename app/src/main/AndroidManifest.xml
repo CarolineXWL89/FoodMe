@@ -3,8 +3,10 @@
     package="com.example.caroline.foodme">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -14,13 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".HomePageActivity"
+            android:name="HomePageActivity"
             android:banner="@string/title_activity_home_page"
             android:label="@string/app_name">
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.example.caroline.foodme.Search.SearchResultsActivity" />
-
+                android:value=".SearchResultsActivity" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,14 +38,15 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
+
         <activity android:name=".Search.SearchResultsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
+
         </activity>
 
         <provider
@@ -56,6 +58,13 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".AccountSettingsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity android:name=".GenerateFragment.AutoGenerateFragment" />

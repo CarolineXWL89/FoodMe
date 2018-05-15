@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context="com.example.caroline.foodme.UserInfo.CreateAccount">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_create_account"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:title="@string/app_name" />
+
     <TextView
 
         android:id="@+id/first_name_textView"
@@ -95,7 +103,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_create_account"
         app:layout_constraintVertical_bias="0.0" />
 
 
@@ -205,6 +213,23 @@
         android:text="Terms Agreement"
         app:layout_constraintBottom_toTopOf="@+id/create_account_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/terms_textView"
+        app:layout_constraintTop_toBottomOf="@+id/password_confirm_editText" />
+
+    <TextView
+        android:id="@+id/terms_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Terms of use"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.Button"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toTopOf="@+id/create_account_button"
+        app:layout_constraintEnd_toStartOf="@+id/terms_checkBox"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_confirm_editText" />
 
