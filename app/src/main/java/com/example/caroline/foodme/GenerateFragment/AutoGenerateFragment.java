@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.caroline.foodme.API_Interfaces.DataMuseNutritionIngr;
 import com.example.caroline.foodme.API_Interfaces.DataMuseNutritionSearch;
+import com.example.caroline.foodme.EdamamNutritionKeys;
 import com.example.caroline.foodme.EdamamObjects.EntitySearch;
 import com.example.caroline.foodme.EdamamObjects.Hints;
 import com.example.caroline.foodme.EdamamObjects.NutritionResponse;

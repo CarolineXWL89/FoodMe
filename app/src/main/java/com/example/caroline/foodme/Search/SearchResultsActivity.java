@@ -18,22 +18,12 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
-import com.example.caroline.foodme.API_Interfaces.DataMuseRecipe;
-import com.example.caroline.foodme.EdamamObjects.EntitySearch;
-import com.example.caroline.foodme.EdamamObjects.RecipeJSON;
-import com.example.caroline.foodme.EdmameRecipeKeys;
-import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.R;
+import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.RecyclerViewOnClick;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchResultsActivity extends AppCompatActivity {
 
@@ -101,31 +91,31 @@ public class SearchResultsActivity extends AppCompatActivity {
 //
 //
 
-        //TODO finish recipeSearch retrofit call
-        final ArrayList<RecipeJSON> recipeJSON = new ArrayList<>();
-        String keyword = "";
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(DataMuseRecipe.baseURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        DataMuseRecipe coolapi = retrofit.create(DataMuseRecipe.class);
-
-
-        Call<RecipeJSON> call = coolapi.getDatabaseRecipe(keyword, EdmameRecipeKeys.APP_ID_NUTRITION, EdmameRecipeKeys.APP_KEY_NUTRITION);
-
-        call.enqueue(new Callback<RecipeJSON>() {
-            @Override
-            public void onResponse(Call<RecipeJSON> call, Response<RecipeJSON> response) { //stuff
-
-            }
-
-            @Override
-            public void onFailure(Call<RecipeJSON> call, Throwable t) {
-
-            }
-        });
+//        //TODO finish recipeSearch retrofit call
+//        final ArrayList<RecipeJSON> recipeJSON = new ArrayList<>();
+//        String keyword = "";
+//
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(DataMuseRecipe.baseURL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//
+//        DataMuseRecipe coolapi = retrofit.create(DataMuseRecipe.class);
+//
+//
+//        Call<RecipeJSON> call = coolapi.getDatabaseRecipe(keyword, EdamamRecipeKeys.APP_ID_NUTRITION, EdamamRecipeKeys.APP_KEY_NUTRITION);
+//
+//        call.enqueue(new Callback<RecipeJSON>() {
+//            @Override
+//            public void onResponse(Call<RecipeJSON> call, Response<RecipeJSON> response) { //stuff
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<RecipeJSON> call, Throwable t) {
+//
+//            }
+//        });
 
 
 

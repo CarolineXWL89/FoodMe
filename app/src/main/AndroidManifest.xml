@@ -33,8 +33,6 @@
         <activity android:name=".UserInfo.LoginScreen" />
         <activity android:name=".UserInfo.CreateAccount" />
         <activity android:name=".SearchFragment.SearchResultsDisplayer">
-
-
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -53,7 +51,6 @@
             android:name=".Search.MyRecentSuggestionProvider"
             android:authorities="com.example.caroline.foodme.Search.MyRecentSuggestionProvider" />
 
-
         <activity android:name=".isThisUnused.AccountSetUpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -61,7 +58,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GenerateFragment.AutoGenerateFragment"></activity>
+        <activity android:name=".GenerateFragment.AutoGenerateFragment" />
+        <activity android:name=".RecipeDisplayActivity"></activity>
     </application>
 
 </manifest>
