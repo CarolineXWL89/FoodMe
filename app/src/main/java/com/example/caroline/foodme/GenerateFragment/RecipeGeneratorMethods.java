@@ -1,6 +1,7 @@
 package com.example.caroline.foodme.GenerateFragment;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -111,26 +112,27 @@ public class RecipeGeneratorMethods extends AppCompatActivity {
     }
 
     public void getLists(){
-        InputStream stapleFileInputStream = mContext.getResources().openRawResource(R.raw.carbohydrates);
+        Resources r = getResources();
+        InputStream stapleFileInputStream = r.openRawResource(R.raw.carbohydrates);
 //        stapleList = readTextFile(stapleFileInputStream);
         stapleList = this.readRawResourceFiles(stapleFileInputStream);
         Log.d("stapleList", stapleList);
-        InputStream proteinFileInputStream = mContext.getResources().openRawResource(R.raw.proteins);
+        InputStream proteinFileInputStream = r.openRawResource(R.raw.proteins);
 //        proteinList = readTextFile(proteinFileInputStream);
         proteinList = this.readRawResourceFiles(proteinFileInputStream);
-        InputStream vegetableFileInputStream = mContext.getResources().openRawResource(R.raw.vegetables);
+        InputStream vegetableFileInputStream = r.openRawResource(R.raw.vegetables);
 //        vegetableList = readTextFile(vegetableFileInputStream);
         vegetableList = this.readRawResourceFiles(vegetableFileInputStream);
-        InputStream spiceFileInputStream = mContext.getResources().openRawResource(R.raw.spices);
+        InputStream spiceFileInputStream = r.openRawResource(R.raw.spices);
 //        spiceList = readTextFile(spiceFileInputStream);
         spiceList = this.readRawResourceFiles(spiceFileInputStream);
-        InputStream sauceFileInputStream = mContext.getResources().openRawResource(R.raw.sauces);
+        InputStream sauceFileInputStream = r.openRawResource(R.raw.sauces);
 //        sauceList = readTextFile(sauceFileInputStream);
         sauceList = this.readRawResourceFiles(sauceFileInputStream);
-        InputStream oilFileInputStream = mContext.getResources().openRawResource(R.raw.oils);
+        InputStream oilFileInputStream = r.openRawResource(R.raw.oils);
 //        oilList = readTextFile(oilFileInputStream);
         oilList = this.readRawResourceFiles(oilFileInputStream);
-        InputStream fruitFileInputStream = mContext.getResources().openRawResource(R.raw.fruits);
+        InputStream fruitFileInputStream = r.openRawResource(R.raw.fruits);
 //        fruitList = readTextFile(fruitFileInputStream);
         fruitList = this.readRawResourceFiles(fruitFileInputStream);
     }

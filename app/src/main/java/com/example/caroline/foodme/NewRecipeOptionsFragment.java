@@ -64,6 +64,8 @@ public class NewRecipeOptionsFragment extends Fragment {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 CreateFragment createFragment = new CreateFragment();
                 fragmentTransaction.replace(R.id.container_fragment, createFragment);
+                createNewButton.setVisibility(View.INVISIBLE);
+                generatorButton.setVisibility(View.INVISIBLE);
                 fragmentTransaction.commit();
             }
         });
@@ -81,5 +83,7 @@ public class NewRecipeOptionsFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
+
+
     }
 }
