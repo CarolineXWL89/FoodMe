@@ -6,92 +6,97 @@
     android:layout_height="match_parent">
 
 
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="83dp"
+        app:layout_constraintLeft_toRightOf="@id/image_image" />
+
     <ImageView
         android:id="@+id/image_image"
         android:layout_width="75dp"
         android:layout_height="79dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/background_image"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/background_image"
-        app:layout_constraintVertical_bias="0.517"
-        app:srcCompat="@mipmap/ic_launcher_round"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintVertical_bias="0.5"
+        app:srcCompat="@mipmap/ic_launcher_round" />
+
 
     <ImageView
         android:id="@+id/background_image"
         android:layout_width="384dp"
         android:layout_height="168dp"
-        app:srcCompat="@mipmap/ic_launcher"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp" />
-
-    <Button
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:text="A"
-        android:textColor="@android:color/black"
-
-        tools:layout_editor_absoluteX="308dp"
-        tools:layout_editor_absoluteY="186dp" />
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher" />
 
     <View
         android:layout_width="1dp"
         android:layout_height="2dp"
         android:background="#f0f0f0" />
 
-    <Button
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:text="B"
-        android:textColor="@android:color/black"
-        tools:layout_editor_absoluteX="347dp"
-        tools:layout_editor_absoluteY="186dp" />
-
     <TextView
         android:id="@+id/name_textview"
-        android:layout_width="209dp"
-        android:layout_height="34dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginTop="4dp"
         android:text="Name"
-        android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@+id/background_image"
-        tools:layout_editor_absoluteX="99dp" />
-
-    <TextView
-        android:id="@+id/creator__textView"
-        android:layout_width="119dp"
-        android:layout_height="23dp"
-        android:text="Creator"
-        app:layout_constraintTop_toBottomOf="@+id/name_textview"
-        tools:layout_editor_absoluteX="146dp" />
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/background_image" />
 
     <TextView
         android:id="@+id/time_textView"
-        android:layout_width="102dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:text="Time"
-        app:layout_constraintTop_toBottomOf="@+id/creator__textView"
-        tools:layout_editor_absoluteX="99dp" />
+        app:layout_constraintEnd_toStartOf="@+id/servings_textView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toEndOf="@+id/speaker_button"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/name_textview" />
 
     <TextView
         android:id="@+id/servings_textView"
-        android:layout_width="112dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         android:text="Servings"
-        app:layout_constraintTop_toBottomOf="@+id/creator__textView"
-        tools:layout_editor_absoluteX="218dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/time_textView"
+        app:layout_constraintTop_toBottomOf="@+id/name_textview" />
 
     <ImageButton
         android:id="@+id/speaker_button"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_lock_silent_mode_off"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="216dp" />
-
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.727"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_image"
+        app:srcCompat="@android:drawable/ic_lock_silent_mode_off" />
+<!--
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="298dp"
         tools:layout_editor_absoluteY="269dp">
@@ -111,5 +116,6 @@
                 tools:layout_editor_absoluteX="6dp" />
         </LinearLayout>
     </ScrollView>
+    -->
 
 </android.support.constraint.ConstraintLayout>
