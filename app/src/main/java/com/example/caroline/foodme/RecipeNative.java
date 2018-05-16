@@ -2,6 +2,8 @@ package com.example.caroline.foodme;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 
 /**
  * Created by per6 on 3/23/18.
@@ -100,10 +102,6 @@ public class RecipeNative implements Parcelable {
     public void setImageURL(String url) {
         this.ImageURL = url;
     }
-
-
-
-
 
 
     protected RecipeNative(Parcel in) {

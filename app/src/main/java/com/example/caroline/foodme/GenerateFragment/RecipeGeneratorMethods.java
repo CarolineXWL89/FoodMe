@@ -367,9 +367,10 @@ public class RecipeGeneratorMethods {
         return stringBuilder.toString();
     }
 
-    private void writeToFile(String data,Context context, String fileName) {
+    private void writeToFile(String data, Context context , String fileName) {
+        mContext = context;
         try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(fileName, Context.MODE_PRIVATE));
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(fileName, mContext.MODE_PRIVATE));
             outputStreamWriter.write(data);
             outputStreamWriter.close();
         }

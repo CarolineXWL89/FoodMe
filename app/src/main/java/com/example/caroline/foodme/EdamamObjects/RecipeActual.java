@@ -1,5 +1,6 @@
 package com.example.caroline.foodme.EdamamObjects;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -7,9 +8,9 @@ import java.util.ArrayList;
  * Recipe Search API
  */
 
-public class RecipeActual {
+public class RecipeActual implements Serializable {
 
-    private String uri, label, image, sourceSiteID, originalURL;
+    private String uri, label, image, source, url, shareAs;
     private int yield;
     private float caloriesKCal;
     private float totalWeightGrams;
@@ -24,12 +25,12 @@ public class RecipeActual {
 //    private ArrayList<Ingredient> do we need this?
 
     //TODO do we need parameters for this?
-    public RecipeActual(/*String uri, String label, String image, String sourceSiteID, String originalURL, int yield, float caloriesKCal, float totalWeightGrams, ArrayList<Ingredient> ingredients, ArrayList<NutritionInfo> totalNutrients, ArrayList<NutritionInfo> totalDaily, ArrayList<String> dietLabels, ArrayList<String> healthLabels*/) {
+    public RecipeActual(/*String uri, String label, String image, String source, String url, int yield, float caloriesKCal, float totalWeightGrams, ArrayList<Ingredient> ingredients, ArrayList<NutritionInfo> totalNutrients, ArrayList<NutritionInfo> totalDaily, ArrayList<String> dietLabels, ArrayList<String> healthLabels*/) {
 //        this.uri = uri;
 //        this.label = label;
 //        this.image = image;
-//        this.sourceSiteID = sourceSiteID;
-//        this.originalURL = originalURL;
+//        this.source = source;
+//        this.url = url;
 //        this.yield = yield;
 //        this.caloriesKCal = caloriesKCal;
 //        this.totalWeightGrams = totalWeightGrams;
@@ -38,6 +39,7 @@ public class RecipeActual {
 //        this.totalDaily = totalDaily;
 //        this.dietLabels = dietLabels;
 //        this.healthLabels = healthLabels;
+        super();
     }
 
     public String getUri() {
@@ -52,12 +54,16 @@ public class RecipeActual {
         return image;
     }
 
-    public String getSourceSiteID() {
-        return sourceSiteID;
+    public String getSource() {
+        return source;
     }
 
-    public String getOriginalURL() {
-        return originalURL;
+    public String getUrl() {
+        return url;
+    }
+
+    public String getShareAs() {
+        return shareAs;
     }
 
     public int getYield() {
@@ -95,4 +101,6 @@ public class RecipeActual {
     public ArrayList<String> getIngredientLines() {
         return ingredientLines;
     }
+
+
 }

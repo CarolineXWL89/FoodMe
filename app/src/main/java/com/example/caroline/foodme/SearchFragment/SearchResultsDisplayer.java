@@ -12,11 +12,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.caroline.foodme.EdamamObjects.RecipeActual;
+import com.example.caroline.foodme.RecipeDisplayTemp;
 import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.R;
 import com.example.caroline.foodme.RecyclerViewOnClick;
 import com.example.caroline.foodme.Search.SearchResultsAdapter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +31,7 @@ public class SearchResultsDisplayer extends AppCompatActivity {
 
 
     private static final String TAG ="SearchResultsDisplayer";
-    private List<RecipeNative> recipes;
+    private ArrayList recipes;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private SearchResultsAdapter searchResultsAdapter;
@@ -42,18 +45,28 @@ public class SearchResultsDisplayer extends AppCompatActivity {
         setContentView(R.layout.activity_search_results_displayer);
 
         //gets arraylist of search results from intent
-        recipes = new ArrayList<>();
+        recipes = new ArrayList();
         Intent i = getIntent();
         ArrayList<RecipeNative> r = i.getParcelableArrayListExtra("the_stuff");
+        ArrayList<RecipeActual> r2 = (ArrayList<RecipeActual>) i.getSerializableExtra("other_stuff");
+
         recipes.addAll(r);
+        recipes.addAll(r2);
         for (int j = 0; j<recipes.size(); j++) {
             if (recipes.get(j) != null){
-                Log.d(TAG, "onCreate: " + recipes.get(0).getRecipeName());
+                if(recipes.get(j).getClass().getName().equals("RecipeNative")){
+                    Log.d(TAG, "onCreate: " + ((RecipeNative) recipes.get(j)).getRecipeName());
+                }
+                else{
+                    Log.d(TAG, "onCreate: " + ((RecipeActual) recipes.get(j)).getLabel());
+                }
+
             }else{
                 Log.d(TAG, "onCreate: null");
                 recipes.remove(j);
             }
         }
+
         wireWidgets();
 
 
@@ -79,10 +92,23 @@ public class SearchResultsDisplayer extends AppCompatActivity {
 
         //wires recyclerview
         recyclerView = findViewById(R.id.search_results_recycler_view);
+        final Intent i = new Intent(getBaseContext(), RecipeDisplayTemp.class);
         click = new RecyclerViewOnClick() {
             @Override
             public void onClick(View v, int pos) {
-                Toast.makeText(SearchResultsDisplayer.this, "We are making "+ recipes.get(pos).getRecipeName(), Toast.LENGTH_LONG).show();
+                if(recipes.get(pos).getClass().getName().equals("RecipeNative")){
+                    RecipeNative recipeNative = (RecipeNative) recipes.get(pos);
+                    i.putExtra("recipe_native_show", recipeNative);
+                    startActivity(i);
+                    Toast.makeText(SearchResultsDisplayer.this, "We are making "+ ((RecipeNative) recipes.get(pos)).getRecipeName(), Toast.LENGTH_LONG).show();
+                }
+                else{
+                    RecipeActual recipeActual = (RecipeActual) recipes.get(pos);
+                    i.putExtra("recipe_actual_show", recipeActual);
+                    startActivity(i);
+                    Toast.makeText(SearchResultsDisplayer.this, "We are making " + ((RecipeActual) recipes.get(pos)).getLabel(), Toast.LENGTH_SHORT).show();
+                }
+
                 //todo load recipe
             }
         };
