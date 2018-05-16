@@ -35,7 +35,7 @@ public class AccountSetUpActivity extends AppCompatActivity {
     private ArrayList<SetUpChecklistItem> setupItems;
     private SharedPreferences sharedPref;
     private int partsCompleted;
-//
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
