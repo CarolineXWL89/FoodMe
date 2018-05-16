@@ -1,6 +1,7 @@
 package com.example.caroline.foodme.GenerateFragment;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,16 +11,18 @@ import com.example.caroline.foodme.R;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 /**
  * Created by michaelxiong on 4/10/18.
  */
 
-public class RecipeGeneratorMethods extends AppCompatActivity {
+public class RecipeGeneratorMethods {
 
     private ArrayList<String> ingredients = new ArrayList<>();
 
@@ -111,30 +114,54 @@ public class RecipeGeneratorMethods extends AppCompatActivity {
         //generateRecipe();
     }
 
-    public void getLists(){
-        Resources r = getResources();
-        InputStream stapleFileInputStream = r.openRawResource(R.raw.carbohydrates);
-//        stapleList = readTextFile(stapleFileInputStream);
-        stapleList = this.readRawResourceFiles(stapleFileInputStream);
-        Log.d("stapleList", stapleList);
-        InputStream proteinFileInputStream = r.openRawResource(R.raw.proteins);
-//        proteinList = readTextFile(proteinFileInputStream);
-        proteinList = this.readRawResourceFiles(proteinFileInputStream);
-        InputStream vegetableFileInputStream = r.openRawResource(R.raw.vegetables);
-//        vegetableList = readTextFile(vegetableFileInputStream);
-        vegetableList = this.readRawResourceFiles(vegetableFileInputStream);
-        InputStream spiceFileInputStream = r.openRawResource(R.raw.spices);
-//        spiceList = readTextFile(spiceFileInputStream);
-        spiceList = this.readRawResourceFiles(spiceFileInputStream);
-        InputStream sauceFileInputStream = r.openRawResource(R.raw.sauces);
-//        sauceList = readTextFile(sauceFileInputStream);
-        sauceList = this.readRawResourceFiles(sauceFileInputStream);
-        InputStream oilFileInputStream = r.openRawResource(R.raw.oils);
-//        oilList = readTextFile(oilFileInputStream);
-        oilList = this.readRawResourceFiles(oilFileInputStream);
-        InputStream fruitFileInputStream = r.openRawResource(R.raw.fruits);
-//        fruitList = readTextFile(fruitFileInputStream);
-        fruitList = this.readRawResourceFiles(fruitFileInputStream);
+    public void makeLists(){
+        writeToFile("bread, pasta, strawberries, kiwis, yoghurt", mContext, "carbohydrates.xml.txt");
+        writeToFile("bread, pasta, strawberries, kiwis, yoghurt", mContext, "fruits.txt");
+    }
+    public void getLists() throws IOException {
+//        Resources r = getResources();
+//        InputStream stapleFileInputStream = r.openRawResource(R.raw.carbohydrates.xml);
+////        stapleList = readTextFile(stapleFileInputStream);
+//        stapleList = this.readRawResourceFiles(stapleFileInputStream);
+//        Log.d("stapleList", stapleList);
+//        InputStream proteinFileInputStream = r.openRawResource(R.raw.proteins);
+////        proteinList = readTextFile(proteinFileInputStream);
+//        proteinList = this.readRawResourceFiles(proteinFileInputStream);
+//        InputStream vegetableFileInputStream = r.openRawResource(R.raw.vegetables);
+////        vegetableList = readTextFile(vegetableFileInputStream);
+//        vegetableList = this.readRawResourceFiles(vegetableFileInputStream);
+//        InputStream spiceFileInputStream = r.openRawResource(R.raw.spices);
+////        spiceList = readTextFile(spiceFileInputStream);
+//        spiceList = this.readRawResourceFiles(spiceFileInputStream);
+//        InputStream sauceFileInputStream = r.openRawResource(R.raw.sauces);
+////        sauceList = readTextFile(sauceFileInputStream);
+//        sauceList = this.readRawResourceFiles(sauceFileInputStream);
+//        InputStream oilFileInputStream = r.openRawResource(R.raw.oils);
+////        oilList = readTextFile(oilFileInputStream);
+//        oilList = this.readRawResourceFiles(oilFileInputStream);
+//        InputStream fruitFileInputStream = r.openRawResource(R.raw.fruits);
+////        fruitList = readTextFile(fruitFileInputStream);
+//        fruitList = this.readRawResourceFiles(fruitFileInputStream);
+
+//        AssetManager assetManager = getAssets();
+//        InputStream carbInputStream = assetManager.open("carbohydrates.xml");
+//        stapleList = this.readRawResourceFiles(carbInputStream);
+//        InputStream fruitInputStream = assetManager.open("fruits");
+//        fruitList = this.readRawResourceFiles(fruitInputStream);
+//        InputStream oilInputStream = assetManager.open("oils");
+//        oilList = this.readRawResourceFiles(oilInputStream);
+//        InputStream proteinInputStream = assetManager.open("proteins");
+//        proteinList = this.readRawResourceFiles(proteinInputStream);
+//        InputStream sauceInputStream = assetManager.open("sauces");
+//        sauceList = this.readRawResourceFiles(sauceInputStream);
+//        InputStream spiceInputStream = assetManager.open("spices");
+//        spiceList = this.readRawResourceFiles(spiceInputStream);
+//        InputStream veggieInputStream = assetManager.open("vegetables");
+//        vegetableList = this.readRawResourceFiles(veggieInputStream);
+
+        stapleList = readFromFile(mContext, "carbohydrates.xml.txt");
+        fruitList = readFromFile(mContext, "fruits.txt");
+
     }
 
     public void sortIngredients(){
@@ -192,7 +219,7 @@ public class RecipeGeneratorMethods extends AppCompatActivity {
     Goes through all raw text files and sorts them into an arrayList for each type --> then into an ArrayList of those ALs
     @return ArrayList<ArrayList<String>> of food ingredients
      */
-    public ArrayList<ArrayList<String>> listAllIngredients(){
+    public ArrayList<ArrayList<String>> listAllIngredients() throws IOException {
         ArrayList<ArrayList<String>> all = new ArrayList<>(); //holds all ALs
         getLists();
 
@@ -215,7 +242,7 @@ public class RecipeGeneratorMethods extends AppCompatActivity {
         int lVeg = vegetableList.length();
 
 
-        //going through carbohydrates file
+        //going through carbohydrates.xml file
         String testCarb = stapleList;
         String testFruit = fruitList;
         String testOil = oilList;
@@ -338,6 +365,47 @@ public class RecipeGeneratorMethods extends AppCompatActivity {
             e.printStackTrace();
         }
         return stringBuilder.toString();
+    }
+
+    private void writeToFile(String data,Context context, String fileName) {
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(fileName, Context.MODE_PRIVATE));
+            outputStreamWriter.write(data);
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
+
+    private String readFromFile(Context context, String textFile) {
+
+        String list = "";
+
+        try {
+            InputStream inputStream = context.openFileInput(textFile);
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString + ", ");
+                }
+
+                inputStream.close();
+                list = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+
+        return list;
     }
 
 }
