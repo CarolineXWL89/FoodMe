@@ -1,6 +1,5 @@
-package com.example.caroline.foodme;
+package com.example.caroline.foodme.UserInfo;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +16,8 @@ import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.example.caroline.foodme.BackendlessSettings;
+import com.example.caroline.foodme.R;
 
 public class AccountSettingsActivity extends AppCompatActivity {
 

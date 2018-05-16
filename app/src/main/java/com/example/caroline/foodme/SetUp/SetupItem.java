@@ -1,4 +1,4 @@
-package com.example.caroline.foodme.isThisUnused;
+package com.example.caroline.foodme.SetUp;
 
 /**
  * Created by michaelxiong on 3/13/18.
@@ -29,5 +29,10 @@ public class SetupItem {
 
     public void setFoodImage(String foodImage) {
         this.foodImage = foodImage;
+    }
+
+    @Override
+    public String toString() {
+        return "itemName: "+foodName+", itemImage: "+foodImage;
     }
 }
