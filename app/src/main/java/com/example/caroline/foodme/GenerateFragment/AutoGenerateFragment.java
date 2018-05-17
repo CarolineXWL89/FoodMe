@@ -25,6 +25,7 @@ import com.example.caroline.foodme.EdamamObjects.Hint;
 import com.example.caroline.foodme.EdamamObjects.NutritionResponse;
 import com.example.caroline.foodme.EdamamObjects.fooddotjson;
 import com.example.caroline.foodme.InputFoodsAdapter;
+import com.example.caroline.foodme.NewRecipeOptionsFragment;
 import com.example.caroline.foodme.R;
 import com.example.caroline.foodme.RecipeDisplayTemp;
 import com.example.caroline.foodme.RecyclerViewOnClick;
@@ -49,6 +50,7 @@ public class AutoGenerateFragment extends Fragment {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private Context context;
+    private NewRecipeOptionsFragment newRecipeOptionsFragment = new NewRecipeOptionsFragment();
 
     //TODO do we need LayoutInflater and View
 
@@ -69,7 +71,7 @@ public class AutoGenerateFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        context = getActivity(); //TODO WHAT IS THE CONTEXT
+        context = newRecipeOptionsFragment.getContext();//TODO WHAT IS THE CONTEXT
         //inflates layout for autogen fragment
         rootView = inflater.inflate(R.layout.auto_generate_fragment, container, false); //TODO Why do we need it here?
         wireWidgets();

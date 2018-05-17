@@ -1,5 +1,6 @@
 package com.example.caroline.foodme;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,7 +22,8 @@ import com.example.caroline.foodme.GenerateFragment.AutoGenerateFragment;
 public class NewRecipeOptionsFragment extends Fragment {
 
     private View rootView;
-    Button createNewButton, generatorButton;
+    private Button createNewButton, generatorButton;
+    private Context context = getActivity();
 
     public NewRecipeOptionsFragment(){
         //required empty constructor
@@ -85,5 +87,10 @@ public class NewRecipeOptionsFragment extends Fragment {
         });
 
 
+    }
+
+    @Override
+    public Context getContext() {
+        return context;
     }
 }

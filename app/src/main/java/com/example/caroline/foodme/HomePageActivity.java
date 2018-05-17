@@ -48,6 +48,12 @@ public class HomePageActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private SearchView searchView;
 
+    public static Context getContext() {
+        return context;
+    }
+
+    private static Context context;
+
 
     //todo app icon use adobe
     @Override

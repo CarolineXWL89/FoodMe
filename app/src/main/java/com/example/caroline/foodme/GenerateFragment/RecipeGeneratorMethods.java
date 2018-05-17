@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.caroline.foodme.EdamamObjects.RecipeJSON;
+import com.example.caroline.foodme.HomePageActivity;
 import com.example.caroline.foodme.R;
 
 import java.io.BufferedReader;
@@ -368,9 +369,9 @@ public class RecipeGeneratorMethods {
     }
 
     private void writeToFile(String data, Context context , String fileName) {
-        mContext = context;
+        mContext = HomePageActivity.getContext();
         try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(fileName, mContext.MODE_PRIVATE));
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(mContext.openFileOutput(fileName, mContext.MODE_PRIVATE));
             outputStreamWriter.write(data);
             outputStreamWriter.close();
         }

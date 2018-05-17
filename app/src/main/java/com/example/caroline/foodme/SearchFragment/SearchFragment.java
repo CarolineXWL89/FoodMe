@@ -29,8 +29,12 @@ import com.example.caroline.foodme.EdamamRecipeKeys;
 import com.example.caroline.foodme.R;
 import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.RecyclerViewOnClick;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import retrofit2.Call;
@@ -158,40 +162,74 @@ public class SearchFragment extends Fragment {
 
         //todo implement api
         final ArrayList<RecipeJSON> listOfSearches = new ArrayList<>();
+        if(listOfSearches.equals(null)){
+            Log.d("Instance ", "null");
+        }
+        else{
+            Log.d("Instance ", "not null");
+        }
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DataMuseRecipe.baseURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
+        int ingrLength = 0;
         StringBuilder allIngrSearch = new StringBuilder();
         for(String ingredient : theStuff){
             allIngrSearch.append(ingredient + "%20");
+            ingrLength += ingredient.length();
         }
 //        String search = allIngrSearch.toString().substring(0, allIngrSearch.length() - 2);
         int numberIngrs = theStuff.size();
-        Log.d("Ingr number: ", "" + numberIngrs);
-        int indexEnd = numberIngrs + 3 * (numberIngrs - 1);
-        Log.d("End index: ", "" + indexEnd);
-        String currentSearch = allIngrSearch.toString().substring(0, allIngrSearch.length() - 2);
-        Log.d("Current search: ", currentSearch);
+        Log.d("Ingr number ", "" + numberIngrs);
+        int indexEnd = ingrLength + 3 * (numberIngrs - 1);
+        Log.d("End index ", "" + indexEnd);
+        String currentSearch = allIngrSearch.toString().substring(0, allIngrSearch.length() - 3);
+        Log.d("Current search ", currentSearch);
         final DataMuseRecipe recipeAPI = retrofit.create(DataMuseRecipe.class);
 
-        while(numberIngrs > 0){
-            currentSearch = currentSearch.substring(0, indexEnd); //TODO out of bounds exception
-            indexEnd = currentSearch.lastIndexOf("%20");
-            Call<ArrayList<RecipeJSON>> originalCall = recipeAPI.getListedRecipes(currentSearch, 0, 40, EdamamRecipeKeys.APP_ID_RECIPE, EdamamRecipeKeys.APP_KEY_RECIPE);
-            originalCall.enqueue(new Callback<ArrayList<RecipeJSON>>() {
-                @Override
-                public void onResponse(Call<ArrayList<RecipeJSON>> call, Response<ArrayList<RecipeJSON>> response) {
-                    listOfSearches.addAll(response.body());
-                }
+        if(!(listOfSearches.equals(null))){
+            while(numberIngrs > 0){
+                currentSearch = currentSearch.substring(0, indexEnd); //TODO out of bounds exception
+                Log.d("New Currents", "" + numberIngrs + ": " + currentSearch);
+                indexEnd = currentSearch.lastIndexOf("%20");
+                Log.d("Last Index %20", ""+ indexEnd);
+                Call<ArrayList<RecipeJSON>> originalCall = recipeAPI.getListedRecipes(currentSearch, 0, 40, EdamamRecipeKeys.APP_ID_RECIPE, EdamamRecipeKeys.APP_KEY_RECIPE);
+                originalCall.enqueue(new Callback<ArrayList<RecipeJSON>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<RecipeJSON>> call, Response<ArrayList<RecipeJSON>> response) {
+                        if(response.code() == 400 || response.equals(null)){
+                            //testing for bad request (HTTP 400)
+                            Log.d("Response error status ", "" + response.code());
+                            Gson gson = new Gson();
+                            TypeAdapter<RecipeJSON> adapter = gson.getAdapter(RecipeJSON.class);
+                            if(response.errorBody() != null){
+                                try {
+                                    RecipeJSON recipeJSON = adapter.fromJson(response.errorBody().string());
+                                    listOfSearches.add(recipeJSON);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        else{
+                            listOfSearches.addAll((Collection<? extends RecipeJSON>) response.body().get(0));
+                            Log.d("Status search ", "Successfully searched " + listOfSearches.get(0).getQuery());
+                        }
+                    }
 
-                @Override
-                public void onFailure(Call<ArrayList<RecipeJSON>> call, Throwable t) {
-                    //nothing
-                }
-            });
+                    @Override
+                    public void onFailure(Call<ArrayList<RecipeJSON>> call, Throwable t){
+                        Log.d("Status search ", "failed search");
+                    }
+                });
+                numberIngrs--;
+            }
         }
+        else{
+            Log.d("ListSearches Status ", "Why am I null");
+        }
+
 
         for(RecipeJSON recipeJSON : listOfSearches){
             ArrayList<Hit> hits = recipeJSON.getHits();
