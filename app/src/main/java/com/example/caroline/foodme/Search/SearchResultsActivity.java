@@ -18,22 +18,15 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
-import com.example.caroline.foodme.API_Interfaces.DataMuseRecipe;
-import com.example.caroline.foodme.EdamamObjects.EntitySearch;
+import com.example.caroline.foodme.EdamamObjects.Hit;
 import com.example.caroline.foodme.EdamamObjects.RecipeJSON;
-import com.example.caroline.foodme.EdmameRecipeKeys;
-import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.R;
+import com.example.caroline.foodme.RecipeDisplayActivity;
+import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.RecyclerViewOnClick;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchResultsActivity extends AppCompatActivity {
 
@@ -92,10 +85,10 @@ public class SearchResultsActivity extends AppCompatActivity {
         //return recipeJSON;
     }
 
-    private ArrayList<Hit> getFavourites(ArrayList<RecipeJSON> recipeJSONS){
-        //TODO What do we want this to do?
-        return hits;
-    }
+//    private ArrayList<Hit> getFavourites(ArrayList<RecipeJSON> recipeJSONS){
+//        //TODO What do we want this to do?
+//        return hits;
+//    }
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -123,14 +116,14 @@ public class SearchResultsActivity extends AppCompatActivity {
         queryBuilder.setWhereClause(whereClause.toString());
 
         //does API search for recipe + returns results
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(DataMuseNutritionIngrParser.baseURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        DataMuseRecipe recipeAPI = retrofit.create(DataMuseRecipe.class);
-        int start = 0;
-        int end = 40; //TODO get user choice
-        this.firstRecipeCall(recipeAPI, query, start, end);
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(DataMuseNutritionIngrParser.baseURL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//        DataMuseRecipe recipeAPI = retrofit.create(DataMuseRecipe.class);
+//        int start = 0;
+//        int end = 40; //TODO get user choice
+//        this.firstRecipeCall(recipeAPI, query, start, end);
 
         //does the search on backendless
         //todo implement api search too
@@ -169,6 +162,10 @@ public class SearchResultsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v, int pos) {
                 //todo load recipe
+                Intent i=new Intent(SearchResultsActivity.this, RecipeDisplayActivity.class);
+                i.setType("RecipeNative");
+                i.putExtra("recipe_native_show", recipes.get(pos));
+                startActivity(i);
                 Toast.makeText(SearchResultsActivity.this, "We are making "+ recipes.get(pos).getRecipeName(), Toast.LENGTH_LONG).show();
             }
         };

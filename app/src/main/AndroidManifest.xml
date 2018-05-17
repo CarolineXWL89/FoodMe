@@ -20,7 +20,7 @@
             android:label="@string/app_name">
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value=".SearchResultsActivity" />
+                android:value="com.example.caroline.foodme.Search.SearchResultsActivity" />
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
