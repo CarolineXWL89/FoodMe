@@ -41,9 +41,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AutoGenerateFragment extends Fragment {
 
+    //*** DO NOT TOUCH STUFF IN HERE EXCEPT THE CONTEXT PART!!! (b/c it's confusing; if it makes sense go ahead***
+    //Also if someone wants to help me finish the recyclerView it'd be welcome thanks. Scroll WAY down for that!
+
     private Button randomGenButton, inputCreateButton, saveIngredientButton;
     private EditText inputIngrTextView;
-    private LinearLayout inputtedListLinLayout;
+    private LinearLayout inputtedListLinLayout; //not needed?
     private View view;
     private View rootView;
     private RecyclerView recyclerView;
@@ -433,7 +436,6 @@ public class AutoGenerateFragment extends Fragment {
         nutritionResponses.add(nutritionResponse);
         return nutritionResponses;
     }
-
 
     //Stuff that would eventually be in the middle part (onCreate in old activity)
     //holds list of the return info from searching for a food

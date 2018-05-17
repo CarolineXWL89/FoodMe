@@ -87,7 +87,7 @@ public class CreateFragment extends Fragment {
             public void onClick(View v) {
                 String result = newIngredient.getText().toString();
                 if (!(result.equals(" ") || result.equals(""))) {
-                    ingredients.add(result);
+                    ingredients.add(result + ", ");
                     newIngredientsDisplayAdapter.notifyDataSetChanged();
                     newIngredient.setText("");
                 } else {

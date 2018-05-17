@@ -92,7 +92,18 @@ public class RecipeNative implements Parcelable {
     }
 
     public void setIngredients(String ingredients) {
-        this.ingredients = ingredients;
+        String temp = ingredients;
+        int indexComma = ingredients.indexOf(",");
+        int length = ingredients.length();
+        StringBuilder formatted = new StringBuilder();
+        while(length > 0){
+            String ingr = temp.substring(0, indexComma);
+            formatted.append(ingr + "\n");
+            temp = temp.substring(indexComma + 2);
+            indexComma = temp.indexOf(",");
+            length = temp.length();
+        }
+        this.ingredients = formatted.toString();
     }
 
     public String getImageURL() {
