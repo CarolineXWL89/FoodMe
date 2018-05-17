@@ -38,7 +38,7 @@ public class FavoritesDisplayAdapter extends RecyclerView.Adapter<FavoritesDispl
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.recipeTitle.setText(favoritesList.get(position).getRecipeName());
-        Picasso.with(context).load(favoritesList.get(position).getImageURL()).fit().centerCrop().into( holder.recipeImage);
+        Picasso.with(context).load(favoritesList.get(position).getImageURL()).fit().centerCrop().into(holder.recipeImage);
     }
 
     @Override
