@@ -11,9 +11,9 @@
         android:focusableInTouchMode="true" />
     <item
         android:id="@+id/action_settings"
-        android:icon="@android:drawable/ic_menu_preferences"
+        android:icon="@drawable/ic_settings_black_24dp"
         android:title="@string/action_settings"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 
 
 </menu>
