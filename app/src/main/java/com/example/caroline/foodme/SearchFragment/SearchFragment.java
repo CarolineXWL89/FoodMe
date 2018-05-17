@@ -213,7 +213,7 @@ public class SearchFragment extends Fragment {
                             }
                         }
                         else{
-                            listOfSearches.addAll((Collection<? extends RecipeJSON>) response.body().get(0));
+                            listOfSearches.addAll((Collection<? extends RecipeJSON>) response.body().get(0)); //TODO why is this null object reference but not the if part? @Jaemyung
                             Log.d("Status search ", "Successfully searched " + listOfSearches.get(0).getQuery());
                         }
                     }

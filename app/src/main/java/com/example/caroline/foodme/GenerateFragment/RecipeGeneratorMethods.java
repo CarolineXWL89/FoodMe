@@ -120,10 +120,13 @@ public class RecipeGeneratorMethods {
         writeToFile("bread, pasta, strawberries, kiwis, yoghurt", mContext, "fruits.txt");
     }
     public void getLists() throws IOException {
+        //TODO these are all ways of getting resource files except context is null or resources are null etc... don't touch
+        //TODO unless you know what you're doing; use ctrl + / to uncomment WHOLE thing highlighted so right ones appear
+
 //        Resources r = getResources();
 //        InputStream stapleFileInputStream = r.openRawResource(R.raw.carbohydrates.xml);
 ////        stapleList = readTextFile(stapleFileInputStream);
-//        stapleList = this.readRawResourceFiles(stapleFileInputStream);
+//        stapleList = this.readRawResourceFilesurceFiles(stapleFileInputStream);
 //        Log.d("stapleList", stapleList);
 //        InputStream proteinFileInputStream = r.openRawResource(R.raw.proteins);
 ////        proteinList = readTextFile(proteinFileInputStream);
@@ -160,11 +163,15 @@ public class RecipeGeneratorMethods {
 //        InputStream veggieInputStream = assetManager.open("vegetables");
 //        vegetableList = this.readRawResourceFiles(veggieInputStream);
 
+        //These two are testing readFromFile method to try and access the text files
         stapleList = readFromFile(mContext, "carbohydrates.xml.txt");
         fruitList = readFromFile(mContext, "fruits.txt");
 
     }
 
+    /**
+     * Checking input of user is inside text file and which index it's under (for later access) and putting inside AL
+     */
     public void sortIngredients(){
         for(int i = 0; i < ingredients.size(); i++){
             String ingredient = ingredients.get(i);
@@ -199,6 +206,11 @@ public class RecipeGeneratorMethods {
         }
     }
 
+    /**
+     * Reading inputs inside a text file (or attempting to do so? Not used yet); from textfile --> usable String; try #1
+     * @param inputStream Used to read stream of data from source
+     * @return What is read made into a String
+     */
     public String readTextFile(InputStream inputStream) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
@@ -216,9 +228,11 @@ public class RecipeGeneratorMethods {
         return outputStream.toString();
     }
 
-    /*
-    Goes through all raw text files and sorts them into an arrayList for each type --> then into an ArrayList of those ALs
-    @return ArrayList<ArrayList<String>> of food ingredients
+    /**
+     * Goes through all raw text files and sorts them into an arrayList for each type --> then into an ArrayList of those ALs
+     * @return ArrayList<ArrayList<String>> of food ingredients; each original index contains an AL of a TYPE of foodItem
+     * with each next AL containing the food String name
+     * @throws IOException
      */
     public ArrayList<ArrayList<String>> listAllIngredients() throws IOException {
         ArrayList<ArrayList<String>> all = new ArrayList<>(); //holds all ALs
@@ -329,18 +343,24 @@ public class RecipeGeneratorMethods {
             }
             all.add(veggies);
         }
-
         return all;
     }
 
+    /**
+     * Generates random recipe based on set-up preferences and maybe sweet/savoury??
+     * @return recipe in RecipeJSON format? (Or something else?)
+     */
     public RecipeJSON generateRandomRecipe(){
         //TODO Decide on recipe templates
-
 
         RecipeJSON recipeJSONRand = new RecipeJSON();
         return recipeJSONRand;
     }
 
+    /**
+     * Generates random recipe based on what user inputs and doesn't delete from recyclerView
+     * @return recipe in RecipeJSON format? (Or something else?)
+     */
     public RecipeJSON userControlledGenerate(){
         //TODO Based on what user haves --> chooses some stuff
 
@@ -348,10 +368,16 @@ public class RecipeGeneratorMethods {
         return recipeJSONGen;
     }
 
+    @SuppressWarnings("unused currently")
     public void userAddIngredients(){
-        //how do we have them input?
+        //how do we have them input? --> in AutoGenFrag
     }
 
+    /**
+     * Reading resource files and turning them into String (method #2 created)
+     * @param inputStream Used to read stream of data from source
+     * @return String of ingredients
+     */
     public String readRawResourceFiles(InputStream inputStream){
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -368,10 +394,16 @@ public class RecipeGeneratorMethods {
         return stringBuilder.toString();
     }
 
+    /**
+     * If given a line of data/info and write into a text file to be read later
+     * @param data String of ingredients set up as you want it to appear later
+     * @param context //TODO why is this null???
+     * @param fileName what you want the file to be called
+     */
     private void writeToFile(String data, Context context , String fileName) {
         mContext = HomePageActivity.getContext();
         try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(mContext.openFileOutput(fileName, mContext.MODE_PRIVATE));
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(mContext.openFileOutput(fileName, mContext.MODE_PRIVATE)); //TODO again why is mContext null @Jaemyung
             outputStreamWriter.write(data);
             outputStreamWriter.close();
         }
@@ -380,6 +412,12 @@ public class RecipeGeneratorMethods {
         }
     }
 
+    /**
+     * Sister method to writeToFile; reads what's inputted
+     * @param context Null?
+     * @param textFile what the file is called
+     * @return String with ingredients --> we don't need this now right?
+     */
     private String readFromFile(Context context, String textFile) {
 
         String list = "";
@@ -409,5 +447,4 @@ public class RecipeGeneratorMethods {
 
         return list;
     }
-
 }

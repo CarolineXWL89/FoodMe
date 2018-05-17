@@ -16,13 +16,14 @@ import com.example.caroline.foodme.EdamamObjects.RecipeActual;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class RecipeDisplayTemp extends AppCompatActivity {
 
     private ImageView imageView, backgroundImage;
-    private Button A, B;
+    private Button A, B; //TODO convert; A = servings; B = metric/imperial
     private TextView name, creator, time, servings, instructions;
-    private ImageButton speakerButton;
+    private ImageButton speakerButton; //TODO reads everything on the page (for disabled/lazy)
     private RecipeNative recipeNative;
     private RecipeActual recipeActual;
     private String type;
@@ -35,11 +36,12 @@ public class RecipeDisplayTemp extends AppCompatActivity {
 
         wireWidgets();
         gettingIntents();
+        setParts();
 //        setTextViews();
         //show image
     }
 
-    private void wireWidgets(){
+    private void wireWidgets() {
         imageView = findViewById(R.id.image_image);
         backgroundImage = findViewById(R.id.background_image);
         A = findViewById(R.id.button_a);
@@ -52,26 +54,34 @@ public class RecipeDisplayTemp extends AppCompatActivity {
         instructions = findViewById(R.id.recipe_textView);
     }
 
-    private void setTextViews(){
+    /**
+     * Tester (when it actually can run)
+     */
+    private void setTextViews() {
         name.setText("Apple Pie");
         creator.setText("Johnny Appleseed");
         servings.setText("10,000 pies");
         time.setText("25 years");
     }
 
-    private void gettingIntents(){
+    /**
+     * Getting from SearchResultsDisplayer for getting recipes by ingredient
+     */
+    private void gettingIntents() {
         Intent i = getIntent();
         type = i.getType();
-        if(type.equals("RecipeNative")){
+        if (type.equals("RecipeNative")) {
             recipeNative = (RecipeNative) i.getParcelableExtra("recipe_native_show");
-        }
-        else {
+        } else {
             recipeActual = (RecipeActual) i.getSerializableExtra("recipe_actual_show");
         }
     }
 
-    private void setParts(){
-        if(type.equals("RecipeNative")){
+    /**
+     * Setting all the text/images, etc... to activity_recipe_display_temp.xml including via URL depending on the type of recipe
+     */
+    private void setParts() {
+        if (type.equals("RecipeNative")) {
             //set views
             name.setText(recipeNative.getRecipeName());
             creator.setText(recipeNative.getOwnerId());
@@ -80,13 +90,14 @@ public class RecipeDisplayTemp extends AppCompatActivity {
             DownloadImageFromURL downloadImageFromURL = new DownloadImageFromURL(imageView);
             Bitmap bitmap = downloadImageFromURL.doInBackground(recipeNative.getImageURL());
             downloadImageFromURL.onPostExecute(bitmap);
-            instructions.setText(recipeNative.getIngredients() + "\n" + recipeNative.getDirections());
+            String ingredients = recipeNative.getIngredients();
+            recipeNative.setIngredients(ingredients);
+            instructions.setText("Ingredients: \n" + recipeNative.getIngredients() + "\n Directions: " + "\n" + recipeNative.getDirections()); //sets ingredients + directions
             DownloadImageFromURL downloadImageFromURLBackground = new DownloadImageFromURL(backgroundImage); //temp set
             Bitmap bitmapBackground = downloadImageFromURLBackground.doInBackground("https://en.wikipedia.org/wiki/Forest#/media/File:Brazilian_amazon_rainforest.jpg");
             downloadImageFromURLBackground.onPostExecute(bitmapBackground);
 
-        }
-        else{
+        } else {
             //set views
             name.setText(recipeActual.getLabel());
             creator.setText(recipeActual.getSource());
@@ -94,16 +105,25 @@ public class RecipeDisplayTemp extends AppCompatActivity {
             DownloadImageFromURL downloadImageFromURL = new DownloadImageFromURL(imageView);
             Bitmap bitmap = downloadImageFromURL.doInBackground(recipeActual.getImage());
             downloadImageFromURL.onPostExecute(bitmap);
-            instructions.setText("temp");
+            ArrayList<String> ingrs = recipeActual.getIngredientLines();
+            instructions.setText("Ingredients: \n" + recipeActual.setFormattedIngrs(ingrs) + "\nDirections: \n TBD Webview?");
             //TODO display rest in webview?
         }
     }
 
-    private class DownloadImageFromURL extends AsyncTask<String, Void, Bitmap>{
-        public DownloadImageFromURL(ImageView imageView){
+    /**
+     * Inner class extending the AsyncCall (so it doesn't slow down the process) to get an image from a URL.
+     */
+    private class DownloadImageFromURL extends AsyncTask<String, Void, Bitmap> {
+        public DownloadImageFromURL(ImageView imageView) {
             RecipeDisplayTemp.this.imageView = imageView;
         }
 
+        /**
+         * Gets a bitmap from an Image URL
+         * @param urls An image URL as a String
+         * @return image bitmap
+         */
         @Override
         protected Bitmap doInBackground(String... urls) {
             String urlDisplay = urls[0];
@@ -117,43 +137,24 @@ public class RecipeDisplayTemp extends AppCompatActivity {
             }
             return bitmap;
         }
-        protected void onPostExecute(Bitmap result){
+
+        /**
+         * Called after getting the bitmap from doInBackground on the DownloadImageFromURL object
+         * @param result bitmap for image gotten from previous method
+         */
+        protected void onPostExecute(Bitmap result) {
             imageView.setImageBitmap(result);
         }
     }
     /* SAMPLE CODE
-//    // show The Image in a ImageView
-//new DownloadImageTask((ImageView) findViewById(R.id.imageView1))
-//            .execute("http://java.sogeti.nl/JavaBlog/wp-content/uploads/2009/04/android_icon_256.png");
-//
-//public void onClick(View v) {
-//    startActivity(new Intent(this, IndexActivity.class));
-//    finish();
-//}
+     *show The Image in a ImageView
+     *new DownloadImageTask((ImageView) findViewById(R.id.imageView1))
+     *      .execute("http://java.sogeti.nl/JavaBlog/wp-content/uploads/2009/04/android_icon_256.png");
 
-//private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-//    ImageView bmImage;
-//
-//    public DownloadImageTask(ImageView bmImage) {
-//        this.bmImage = bmImage;
-//    }
-//
-//    protected Bitmap doInBackground(String... urls) {
-//        String urldisplay = urls[0];
-//        Bitmap mIcon11 = null;
-//        try {
-//            InputStream in = new java.net.URL(urldisplay).openStream();
-//            mIcon11 = BitmapFactory.decodeStream(in);
-//        } catch (Exception e) {
-//            Log.e("Error", e.getMessage());
-//            e.printStackTrace();
-//        }
-//        return mIcon11;
-//    }
-//
-//    protected void onPostExecute(Bitmap result) {
-//        bmImage.setImageBitmap(result);
-//    }
-//}
-//     */
+     *public void onClick(View v) {
+     *startActivity(new Intent(this, IndexActivity.class));
+     *finish();
+     *}
+     */
 }
+

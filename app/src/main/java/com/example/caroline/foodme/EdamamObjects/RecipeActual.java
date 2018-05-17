@@ -102,5 +102,13 @@ public class RecipeActual implements Serializable {
         return ingredientLines;
     }
 
+    public String setFormattedIngrs(ArrayList<String> ingredientLines){
+        StringBuilder formatted = new StringBuilder();
+        for(String ingr : ingredientLines){
+            formatted.append(ingr + "\n");
+        }
+        return formatted.toString();
+    }
+
 
 }
