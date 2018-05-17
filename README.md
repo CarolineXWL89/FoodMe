@@ -23,22 +23,9 @@
     - Set-up/Other 
         - Recycler/Check-box (Michael)
         - Actual recipe page (Jaemyung)
-        
-###TODOs
-- Link APIs w/ multiple Interfaces (Caroline)
-    - Get the recipes and fit it to the Recipe class (Carolien)
-- Setting Preferences (Ben)
-- Randomisation recipe (Jaemyung + Michael)
-
-
-###Structure of RecipeSearch Documentation
-- Search interface (@GET --> JSON)
-- Should we search for recipes based on nutrition amounts?
-- Look into excluding ingredients
-- JSON for: Hits, Hit, Recipe, Ingredient (diff from what we have), NutrientInfo, Measure + Food (diff?), Health + Diet Info
-- Where are the directions???
-
-###UserPreference/Theme/Change
-- https://stackoverflow.com/questions/2748830/how-to-change-background-color-in-android-app
-- Button changeTheme --> Menu w/ span of colours/etc (choose 3) --> what will be set for xml 3 options + background
-- Username/Password/Username --> access Backendless specific user (using id/key) and change --> send confirmation code or something
+       
+###TODOs Updated
+- Jaemyung: debug for me (@recipeGenMethods + @searchFrag), advise foodIcons
+- Ben: help with debug/food icon
+- Nicolo: get recipe layout/display functioning (2 temp files)
+- Michael: set food icons and make them, check my recyclerView + adapter for create from list input

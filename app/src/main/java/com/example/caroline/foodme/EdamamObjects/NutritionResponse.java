@@ -16,8 +16,10 @@ public class NutritionResponse {
     private float calories;
     private ArrayList<NutritionInfo> totalNutrients = new ArrayList<>();
     private ArrayList<NutritionInfo> totalDaily = new ArrayList<>();
-    private String[] dietLabels = {"balanced", "high-protein", "high-fiber", "low-fat", "low-carb", "low-sodium"};
-    private String[] healthLabels = {"vegan", "vegetarian", "dairy-free", "low-sugar", "low-fat-abs", "sugar-conscious", "fat-free", "gluten free", "wheat free"};
+    private String[] dietLabels = {"", "", "", "", "", ""}; //TODO how to fix
+    private String[] healthLabels = {"", "", "", "", "", "", "", "", ""};
+//    private String[] dietLabels = {"balanced", "high-protein", "high-fiber", "low-fat", "low-carb", "low-sodium"};
+//    private String[] healthLabels = {"vegan", "vegetarian", "dairy-free", "low-sugar", "low-fat-abs", "sugar-conscious", "fat-free", "gluten free", "wheat free"};
 
     //    private ParsedRequest ingredient;
     private SingleIngredientToParsed ingredient = new SingleIngredientToParsed();

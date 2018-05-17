@@ -20,12 +20,28 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
+import com.example.caroline.foodme.API_Interfaces.DataMuseNutritionIngrParser;
+import com.example.caroline.foodme.API_Interfaces.DataMuseRecipe;
+import com.example.caroline.foodme.EdamamObjects.Hit;
+import com.example.caroline.foodme.EdamamObjects.RecipeActual;
+import com.example.caroline.foodme.EdamamObjects.RecipeJSON;
+import com.example.caroline.foodme.EdamamRecipeKeys;
 import com.example.caroline.foodme.R;
 import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.RecyclerViewOnClick;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by maylisw on 3/21/18.
@@ -36,6 +52,9 @@ public class SearchFragment extends Fragment {
 
     public static final String TAG = "fragments";
     private ArrayList<RecipeNative> recipes;
+
+    private ArrayList<RecipeActual> recipes2;
+
     private FloatingActionButton clearButton, submit;
     private ArrayList<String> ingredients;
     private RecyclerView recyclerView;
@@ -140,18 +159,99 @@ public class SearchFragment extends Fragment {
             whereClause.append("and ingredients like '%" + ingredient + "%'");
         }
         //seraches backendless by ingredients
+
         //todo implement api
+        final ArrayList<RecipeJSON> listOfSearches = new ArrayList<>();
+        if(listOfSearches.equals(null)){
+            Log.d("Instance ", "null");
+        }
+        else{
+            Log.d("Instance ", "not null");
+        }
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DataMuseRecipe.baseURL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        int ingrLength = 0;
+        StringBuilder allIngrSearch = new StringBuilder();
+        for(String ingredient : theStuff){
+            allIngrSearch.append(ingredient + "%20");
+            ingrLength += ingredient.length();
+        }
+//        String search = allIngrSearch.toString().substring(0, allIngrSearch.length() - 2);
+        int numberIngrs = theStuff.size();
+        Log.d("Ingr number ", "" + numberIngrs);
+        int indexEnd = ingrLength + 3 * (numberIngrs - 1);
+        Log.d("End index ", "" + indexEnd);
+        String currentSearch = allIngrSearch.toString().substring(0, allIngrSearch.length() - 3);
+        Log.d("Current search ", currentSearch);
+        final DataMuseRecipe recipeAPI = retrofit.create(DataMuseRecipe.class);
+
+        if(!(listOfSearches.equals(null))){
+            while(numberIngrs > 0){
+                currentSearch = currentSearch.substring(0, indexEnd); //TODO out of bounds exception
+                Log.d("New Currents", "" + numberIngrs + ": " + currentSearch);
+                indexEnd = currentSearch.lastIndexOf("%20");
+                Log.d("Last Index %20", ""+ indexEnd);
+                Call<ArrayList<RecipeJSON>> originalCall = recipeAPI.getListedRecipes(currentSearch, 0, 40, EdamamRecipeKeys.APP_ID_RECIPE, EdamamRecipeKeys.APP_KEY_RECIPE);
+                originalCall.enqueue(new Callback<ArrayList<RecipeJSON>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<RecipeJSON>> call, Response<ArrayList<RecipeJSON>> response) {
+                        if(response.code() == 400 || response.equals(null)){ //why is this not working
+                            //testing for bad request (HTTP 400)
+                            Log.d("Response error status ", "" + response.code());
+                            Gson gson = new Gson();
+                            TypeAdapter<RecipeJSON> adapter = gson.getAdapter(RecipeJSON.class);
+                            if(response.errorBody() != null){
+                                try {
+                                    RecipeJSON recipeJSON = adapter.fromJson(response.errorBody().string());
+                                    listOfSearches.add(recipeJSON);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        else{
+                            listOfSearches.addAll((Collection<? extends RecipeJSON>) response.body().get(0)); //TODO why is this null object reference but not the if part? @Jaemyung
+                            Log.d("Status search ", "Successfully searched " + listOfSearches.get(0).getQuery());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<RecipeJSON>> call, Throwable t){
+                        Log.d("Status search ", "failed search");
+                    }
+                });
+                numberIngrs--;
+            }
+        }
+        else{
+            Log.d("ListSearches Status ", "Why am I null");
+        }
+
+
+        for(RecipeJSON recipeJSON : listOfSearches){
+            ArrayList<Hit> hits = recipeJSON.getHits();
+            for(Hit hit : hits){
+                RecipeActual recipeActual = hit.getRecipe();
+                recipes2.add(recipeActual);
+            }
+        }
+
         DataQueryBuilder queryBuilder = DataQueryBuilder.create();
         queryBuilder.setWhereClause(whereClause.toString());
+        //getting results from both recipe lists into 1 intent
         Backendless.Data.of(RecipeNative.class).find(queryBuilder, new AsyncCallback<List<RecipeNative>>() {
             @Override
             public void handleResponse(List<RecipeNative> response) {
                 recipes.clear();
                 recipes.addAll(response);
-                if(recipes.size()!=0) {
+                if(recipes.size()!=0 || recipes2.size()!=0) {
                     //starts results activity
                     Intent i = new Intent(getActivity(), SearchResultsDisplayer.class);
                     i.putExtra("the_stuff", recipes);
+                    i.putExtra("other_stuff", recipes2);
                     startActivity(i);
                 }
                 else {
@@ -169,39 +269,3 @@ public class SearchFragment extends Fragment {
 
     }
 }
-/*
-        //todo who made this? fix
-        final ArrayList<EntitySearch> entitySearches = new ArrayList<>();
-        String foodSearched = "";
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(DataMuseNutritionIngrParser.baseURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        DataMuseNutritionIngrParser api = retrofit.create(DataMuseNutritionIngrParser.class);
-
-
-        Call<ArrayList<EntitySearch>> call = api.getIngrNutrient(foodSearched, EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION);
-
-        call.enqueue(new Callback<ArrayList<EntitySearch>>() {
-            @Override
-            public void onResponse(Call<ArrayList<EntitySearch>> call, Response<ArrayList<EntitySearch>> response) {
-                entitySearches.plusButton();
-                entitySearches.addAll(response.body());
-            }
-            @Override
-            public void onFailure(Call<ArrayList<EntitySearch>> call, Throwable t) {
-                //NOTHING YET
-            }
-        });
-
-        final fooddotjson fooddotjson = new fooddotjson(1); //TODO decide how much they should have? Random?
-        String[] uriTwo = fooddotjson.findIngredient(entitySearches);
-        fooddotjson.addIngredient(uriTwo);
-
-        DataMuseNutritionSearch apiFoodPackage = retrofit.create(DataMuseNutritionSearch.class);
-        Call<fooddotjson> sendingCall = apiFoodPackage.sendFood(EdamamNutritionKeys.APP_ID_NUTRITION, EdamamNutritionKeys.APP_KEY_NUTRITION); //TODO Probably should include sending JSON at a point
-
-
-        return inflater.inflate(R.layout.fragment_create, container, false);*/

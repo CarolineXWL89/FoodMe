@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import com.backendless.Backendless;
 import com.example.caroline.foodme.FavoritesFragment.FavoritesFragment;
 import com.example.caroline.foodme.GenerateFragment.AutoGenerateFragment;
 import com.example.caroline.foodme.SearchFragment.SearchFragment;
+import com.example.caroline.foodme.SetUp.AccountSetUpActivity;
 import com.example.caroline.foodme.UserInfo.LoginScreen;
 import com.example.caroline.foodme.UserInfo.SettingsPageActivity;
 
@@ -46,6 +48,12 @@ public class HomePageActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private SearchView searchView;
 
+    public static Context getContext() {
+        return context;
+    }
+
+    private static Context context;
+
 
     //todo app icon use adobe
     @Override
@@ -53,7 +61,7 @@ public class HomePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         Backendless.initApp(this, BackendlessSettings.APP_ID, BackendlessSettings.API_KEY);
-        //todo uncomment logIn(); //checks if user ahs already logged in, if not switches to log in screen
+        //logIn(); //checks if user ahs already logged in, if not switches to log in screen
         wireWidgets();
         hideNavBar();
     }
@@ -72,7 +80,6 @@ public class HomePageActivity extends AppCompatActivity {
         //todo call again after keyboard is pulled up
     }
 
-    //todo comment @micheal Xiong
     private void logIn() {
         sharedPref = getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -88,6 +95,7 @@ public class HomePageActivity extends AppCompatActivity {
         if (userExists == 1) {
             editor.clear();
             editor.putInt(getString(R.string.user), 0);
+            editor.commit();
             Toast.makeText(this, "Next time you'll need to login again", Toast.LENGTH_SHORT).show();
         }
     }
@@ -110,8 +118,6 @@ public class HomePageActivity extends AppCompatActivity {
         //creates bottom navigation bar to hold the fragment navigation
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
