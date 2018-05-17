@@ -198,7 +198,7 @@ public class SearchFragment extends Fragment {
                 originalCall.enqueue(new Callback<ArrayList<RecipeJSON>>() {
                     @Override
                     public void onResponse(Call<ArrayList<RecipeJSON>> call, Response<ArrayList<RecipeJSON>> response) {
-                        if(response.code() == 400 || response.equals(null)){
+                        if(response.code() == 400 || response.equals(null)){ //why is this not working
                             //testing for bad request (HTTP 400)
                             Log.d("Response error status ", "" + response.code());
                             Gson gson = new Gson();
