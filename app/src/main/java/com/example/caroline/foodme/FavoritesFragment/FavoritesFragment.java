@@ -114,7 +114,7 @@ public class FavoritesFragment extends Fragment {
         titles = new String[5];
         int i = 0;
         for(Favorites f: favorites){
-            if(f.getBackendless()){ //if from backendless gets recipe
+            if(f.getBackendless()){ //if from backendless gets recipe TODO null object reference f
                 RecipeNative r =  Backendless.Data.of(RecipeNative.class).findById(f.getBackendlessID());
                 imageURLS[i] = r.getImageURL();
                 titles[i] = r.getRecipeName();

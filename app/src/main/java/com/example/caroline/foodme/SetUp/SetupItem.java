@@ -8,9 +8,10 @@ package com.example.caroline.foodme.SetUp;
 
 public class SetupItem {
 
-    private String foodName, foodImage;
+    private String foodName;
+    private int foodImage;
 
-    public SetupItem(String foodName, String foodImage){
+    public SetupItem(String foodName, int foodImage){
         this.foodName = foodName;
         this.foodImage = foodImage;
     }
@@ -23,11 +24,11 @@ public class SetupItem {
         this.foodName = foodName;
     }
 
-    public String getFoodImage() {
+    public int getFoodImage() {
         return foodImage;
     }
 
-    public void setFoodImage(String foodImage) {
+    public void setFoodImage(int foodImage) {
         this.foodImage = foodImage;
     }
 
