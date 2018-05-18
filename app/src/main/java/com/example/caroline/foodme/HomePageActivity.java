@@ -25,6 +25,7 @@ import com.example.caroline.foodme.FavoritesFragment.FavoritesFragment;
 import com.example.caroline.foodme.GenerateFragment.AutoGenerateFragment;
 import com.example.caroline.foodme.SearchFragment.SearchFragment;
 import com.example.caroline.foodme.SetUp.AccountSetUpActivity;
+import com.example.caroline.foodme.SetUp.ItemSetUpActivity;
 import com.example.caroline.foodme.UserInfo.LoginScreen;
 import com.example.caroline.foodme.UserInfo.SettingsPageActivity;
 
