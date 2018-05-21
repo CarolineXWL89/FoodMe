@@ -260,7 +260,7 @@ public class CreateFragment extends Fragment {
             ingredients = savedInstanceState.getStringArrayList(getString(R.string.ingredients));
             directions.setText(savedInstanceState.getString(getString(R.string.directions)));
         }
-    }
+    }//
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {

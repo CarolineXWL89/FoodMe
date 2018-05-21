@@ -402,14 +402,20 @@ public class RecipeGeneratorMethods {
      */
     private void writeToFile(String data, Context context , String fileName) {
         mContext = HomePageActivity.getContext();
-        try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(mContext.openFileOutput(fileName, mContext.MODE_PRIVATE)); //TODO again why is mContext null @Jaemyung
-            outputStreamWriter.write(data);
-            outputStreamWriter.close();
+        if(mContext != null){
+            try {
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(mContext.openFileOutput(fileName, mContext.MODE_PRIVATE)); //TODO again why is mContext null @Jaemyung
+                outputStreamWriter.write(data);
+                outputStreamWriter.close();
+            }
+            catch (IOException e) {
+                Log.e("Exception", "File write failed: " + e.toString());
+            }
         }
-        catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
+        else{
+            Log.d("Context state", "null");
         }
+
     }
 
     /**
@@ -419,7 +425,6 @@ public class RecipeGeneratorMethods {
      * @return String with ingredients --> we don't need this now right?
      */
     private String readFromFile(Context context, String textFile) {
-
         String list = "";
 
         try {

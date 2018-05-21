@@ -54,8 +54,7 @@ public class SetupAdapter extends RecyclerView.Adapter<SetupAdapter.MyViewHolder
         //fills in view w/ info
         final SetupItem setupItem = setupItems.get(position);
         holder.foodNameView.setText(setupItem.getFoodName());
-        //TODO: put something here having to do with the SetupItem API to get the image for the setupItem
-        Picasso.with(context).load(setupItem.getFoodImage()).into(holder.foodImageView);
+        holder.foodImageView.setImageResource(setupItem.getFoodImage());
 
         holder.foodSelectBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

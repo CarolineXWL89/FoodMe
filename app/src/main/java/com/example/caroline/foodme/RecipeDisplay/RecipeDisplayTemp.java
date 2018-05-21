@@ -1,4 +1,4 @@
-package com.example.caroline.foodme;
+package com.example.caroline.foodme.RecipeDisplay;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.caroline.foodme.EdamamObjects.RecipeActual;
+import com.example.caroline.foodme.R;
+import com.example.caroline.foodme.RecipeNative;
 
 import java.io.IOException;
 import java.io.InputStream;
