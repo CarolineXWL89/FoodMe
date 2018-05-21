@@ -255,7 +255,7 @@ public class ItemSetUpActivity extends AppCompatActivity {
             setupItems.add(new SetupItem("Vegan", R.drawable.vegan_icon));
             setupItems.add(new SetupItem("ovo-Vegetarian", R.drawable.ovo_vegetarian_icon));
             setupItems.add(new SetupItem("lacto-Vegetarian", R.drawable.lacto_vegetarian_icon));
-         //   setupItems.add(new SetupItem("ovo-lacto-Vegetarian", R.drawable.ovo_lacto_vegetarian_icon));
+         //   setupItems.add(new SetupItem("ovo-lacto-Vegetarian", R.drawable.lacto_ovo_vegetarian_icon));
             setupItems.add(new SetupItem("Pescatarian", R.drawable.pescatarian_icon));
             setupItems.add(new SetupItem("Omnivore", R.drawable.protein_icon));
             //TODO: fill this list out more
