@@ -1,10 +1,15 @@
-package com.example.caroline.foodme;
+package com.example.caroline.foodme.RecipeDisplay;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageButton;
@@ -12,11 +17,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.caroline.foodme.EdamamObjects.RecipeActual;
+import com.example.caroline.foodme.R;
+import com.example.caroline.foodme.RecipeNative;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecipeDisplayActivity extends AppCompatActivity {
     private ImageView backgroundImage, mainImage;
@@ -25,11 +33,15 @@ public class RecipeDisplayActivity extends AppCompatActivity {
     private RecipeNative recipeNative;
     private RecipeActual recipeActual;
     private String type;
+    private ViewPager viewPager;
+    private TabLayout mTabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_display);
+
+
         wireWigets();
         gettingIntents();
         setParts();
@@ -44,6 +56,13 @@ public class RecipeDisplayActivity extends AppCompatActivity {
         servingView=findViewById(R.id.servings_textView);
         timeNeededView=findViewById(R.id.time_textView);
         audioButton=findViewById(R.id.speaker_button);
+        viewPager= (ViewPager) findViewById(R.id.pager);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFrag(new IngredientDisplayFragment(){}, "Ingredients");
+        adapter.addFrag(new ProcedureDisplayFragment(), "Procedure");
+        viewPager.setAdapter(adapter);
+        mTabLayout= (TabLayout) findViewById(R.id.navigation_recipe_display);
+        mTabLayout.setupWithViewPager(viewPager);
 
     }
 
@@ -126,6 +145,35 @@ public class RecipeDisplayActivity extends AppCompatActivity {
          */
         protected void onPostExecute(Bitmap result) {
             mainImage.setImageBitmap(result);
+        }
+    }
+
+    class ViewPagerAdapter extends FragmentStatePagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFrag(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
         }
     }
 }

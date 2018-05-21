@@ -21,7 +21,7 @@ import com.backendless.persistence.DataQueryBuilder;
 import com.example.caroline.foodme.EdamamObjects.Hit;
 import com.example.caroline.foodme.EdamamObjects.RecipeJSON;
 import com.example.caroline.foodme.R;
-import com.example.caroline.foodme.RecipeDisplayActivity;
+import com.example.caroline.foodme.RecipeDisplay.RecipeDisplayActivity;
 import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.RecyclerViewOnClick;
 
