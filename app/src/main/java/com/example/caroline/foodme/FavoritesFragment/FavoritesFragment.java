@@ -112,7 +112,7 @@ public class FavoritesFragment extends Fragment {
         carouselView.setViewListener(viewListener);
         carouselView.reSetSlideInterval(5000);
     }
-
+//
     public void setImages(KeyValueFavorite[] favorites){
         //todo add favorites and test
         imageURLS = new ArrayList<>();
