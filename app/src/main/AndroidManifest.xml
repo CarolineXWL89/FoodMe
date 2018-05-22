@@ -51,12 +51,11 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity
-            android:name=".UserInfo.AccountSettingsActivity">
+        <activity android:name=".UserInfo.AccountSettingsActivity">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
@@ -64,7 +63,14 @@
             android:name=".Search.MyRecentSuggestionProvider"
             android:authorities="com.example.caroline.foodme.Search.MyRecentSuggestionProvider" />
 
-        <activity android:name=".RecipeDisplayTemp"></activity>
+        <activity android:name=".RecipeDisplay.RecipeDisplayTemp" />
+        <activity android:name=".SetUp.AccountSetUpActivity" />
+        <activity android:name=".SetUp.ItemSetUpActivity" />
+        <activity android:name=".RecipeDisplay.RecipeDisplayActivity" />
+        <activity
+            android:name="com.example.caroline.h"
+            android:label="@string/title_activity_h"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

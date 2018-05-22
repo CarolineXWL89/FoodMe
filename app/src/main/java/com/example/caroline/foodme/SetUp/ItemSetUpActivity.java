@@ -3,13 +3,11 @@ package com.example.caroline.foodme.SetUp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -31,7 +29,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -258,7 +255,7 @@ public class ItemSetUpActivity extends AppCompatActivity {
             setupItems.add(new SetupItem("Vegan", R.drawable.vegan_icon));
             setupItems.add(new SetupItem("ovo-Vegetarian", R.drawable.ovo_vegetarian_icon));
             setupItems.add(new SetupItem("lacto-Vegetarian", R.drawable.lacto_vegetarian_icon));
-            setupItems.add(new SetupItem("ovo-lacto-Vegetarian", R.drawable.lacto_ovo_vegetarian_icon));
+         //   setupItems.add(new SetupItem("ovo-lacto-Vegetarian", R.drawable.lacto_ovo_vegetarian_icon));
             setupItems.add(new SetupItem("Pescatarian", R.drawable.pescatarian_icon));
             setupItems.add(new SetupItem("Omnivore", R.drawable.protein_icon));
             //TODO: fill this list out more

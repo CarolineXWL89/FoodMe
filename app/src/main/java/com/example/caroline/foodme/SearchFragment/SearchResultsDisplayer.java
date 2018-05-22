@@ -13,15 +13,13 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.caroline.foodme.EdamamObjects.RecipeActual;
-import com.example.caroline.foodme.RecipeDisplayTemp;
+import com.example.caroline.foodme.RecipeDisplay.RecipeDisplayTemp;
 import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.R;
 import com.example.caroline.foodme.RecyclerViewOnClick;
 import com.example.caroline.foodme.Search.SearchResultsAdapter;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by nicPorcu on 4/13/18.

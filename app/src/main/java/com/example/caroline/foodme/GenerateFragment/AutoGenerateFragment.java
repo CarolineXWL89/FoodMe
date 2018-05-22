@@ -26,7 +26,7 @@ import com.example.caroline.foodme.EdamamObjects.fooddotjson;
 import com.example.caroline.foodme.InputFoodsAdapter;
 import com.example.caroline.foodme.NewRecipeOptionsFragment;
 import com.example.caroline.foodme.R;
-import com.example.caroline.foodme.RecipeDisplayTemp;
+import com.example.caroline.foodme.RecipeDisplay.RecipeDisplayTemp;
 import com.example.caroline.foodme.RecyclerViewOnClick;
 
 import java.io.IOException;

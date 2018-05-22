@@ -20,10 +20,10 @@ import java.util.ArrayList;
 public class FavoritesDisplayAdapter extends RecyclerView.Adapter<FavoritesDisplayAdapter.MyViewHolder> {
 
     private final String TAG = "TAG, you're it";
-    private ArrayList<RecipeNative> favoritesList;
+    private ArrayList<DisplayerRecipe> favoritesList;
     private Context context;
 
-    public FavoritesDisplayAdapter(ArrayList<RecipeNative> favoritesList, Context context) {
+    public FavoritesDisplayAdapter(ArrayList<DisplayerRecipe> favoritesList, Context context) {
         this.favoritesList = favoritesList;
         this.context = context;
     }
@@ -37,7 +37,7 @@ public class FavoritesDisplayAdapter extends RecyclerView.Adapter<FavoritesDispl
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        holder.recipeTitle.setText(favoritesList.get(position).getRecipeName());
+        holder.recipeTitle.setText(favoritesList.get(position).getName());
         Picasso.with(context).load(favoritesList.get(position).getImageURL()).fit().centerCrop().into(holder.recipeImage);
     }
 
@@ -51,12 +51,12 @@ public class FavoritesDisplayAdapter extends RecyclerView.Adapter<FavoritesDispl
         notifyItemRemoved(position);
     }
 
-    public void restoreItem(RecipeNative item, int position) {
+    public void restoreItem(DisplayerRecipe item, int position) {
         favoritesList.add(position, item);
         notifyItemInserted(position);
     }
 
-    public ArrayList<RecipeNative> getListOfIngredients() {
+    public ArrayList<DisplayerRecipe> getListOfIngredients() {
         return favoritesList;
     }
 
@@ -73,6 +73,7 @@ public class FavoritesDisplayAdapter extends RecyclerView.Adapter<FavoritesDispl
             super(itemView);
             recipeTitle = itemView.findViewById(R.id.favorites_recipe_title);
             recipeImage = itemView.findViewById(R.id.favorite_image_view);
+            //todo on click load recipe
         }
     }
 }

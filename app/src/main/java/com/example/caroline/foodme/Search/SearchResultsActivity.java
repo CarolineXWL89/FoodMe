@@ -18,23 +18,15 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
-import com.example.caroline.foodme.API_Interfaces.DataMuseNutritionIngrParser;
-import com.example.caroline.foodme.API_Interfaces.DataMuseRecipe;
 import com.example.caroline.foodme.EdamamObjects.Hit;
 import com.example.caroline.foodme.EdamamObjects.RecipeJSON;
-import com.example.caroline.foodme.EdamamRecipeKeys;
-import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.R;
+import com.example.caroline.foodme.RecipeDisplay.RecipeDisplayActivity;
+import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.RecyclerViewOnClick;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchResultsActivity extends AppCompatActivity {
 
@@ -57,47 +49,46 @@ public class SearchResultsActivity extends AppCompatActivity {
         wireWidgets();
         //deals with search intent
         handleIntent(getIntent());
-    }
-
-    /**
-     * Searches through Edamam API for recipes with the keyword(s) searched for //TODO if input has spaces replace w/ %20
-     * @param dataMuseRecipe API accessed
-     * @param foodKeyword user food input
-     * @param firstShown first result index (depending on # chosen per page) --> not required?
-     * @param lastShown last result index --> not required
-     * @return AL of 1 RecipeJSON object to parse through for recipes
-     */
-    private void firstRecipeCall(DataMuseRecipe dataMuseRecipe, String foodKeyword, int firstShown, int lastShown){
-        //TODO decide how to choose # shown on a page --> next page fxn
-        //gotten from search bar?
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(DataMuseRecipe.baseURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        DataMuseRecipe recipeAPI = retrofit.create(DataMuseRecipe.class);
-        //do we want users choosing how many displayed or have a pre-set limit?
-        Call<ArrayList<RecipeJSON>> callFirst = recipeAPI.getListedRecipes(foodKeyword, firstShown, lastShown, EdamamRecipeKeys.APP_ID_RECIPE, EdamamRecipeKeys.APP_KEY_RECIPE);
-
-        callFirst.enqueue(new Callback<ArrayList<RecipeJSON>>() {
-            @Override
-            public void onResponse(Call<ArrayList<RecipeJSON>> call, Response<ArrayList<RecipeJSON>> response) { //stuff
-                recipeJSON.clear();
-                recipeJSON.addAll(response.body());
-                searchResultsAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<RecipeJSON>> call, Throwable t){
-            }
-        });
+//
+//    /**
+//     * Searches through Edamam API for recipes with the keyword(s) searched for //TODO if input has spaces replace w/ %20
+//     * @param dataMuseRecipe API accessed
+//     * @param foodKeyword user food input
+//     * @param firstShown first result index (depending on # chosen per page) --> not required?
+//     * @param lastShown last result index --> not required
+//     * @return AL of 1 RecipeJSON object to parse through for recipes
+//     */
+//    private void firstRecipeCall(DataMuseRecipe dataMuseRecipe, String foodKeyword, int firstShown, int lastShown){
+//        //TODO decide how to choose # shown on a page --> next page fxn
+//        //gotten from search bar?
+//
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(DataMuseRecipe.baseURL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//        DataMuseRecipe recipeAPI = retrofit.create(DataMuseRecipe.class);
+//        //do we want users choosing how many displayed or have a pre-set limit?
+//        Call<ArrayList<RecipeJSON>> callFirst = recipeAPI.getListedRecipes(foodKeyword, firstShown, lastShown, EdamamRecipeKeys.APP_ID_RECIPE, EdamamRecipeKeys.APP_KEY_RECIPE);
+//
+//        callFirst.enqueue(new Callback<ArrayList<RecipeJSON>>() {
+//            @Override
+//            public void onResponse(Call<ArrayList<RecipeJSON>> call, Response<ArrayList<RecipeJSON>> response) { //stuff
+//                recipeJSON.clear();
+//                recipeJSON.addAll(response.body());
+//                searchResultsAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ArrayList<RecipeJSON>> call, Throwable t){
+//            }
+//        });
         //return recipeJSON;
     }
 
-    private ArrayList<Hit> getFavourites(ArrayList<RecipeJSON> recipeJSONS){
-        //TODO What do we want this to do?
-        return hits;
-    }
+//    private ArrayList<Hit> getFavourites(ArrayList<RecipeJSON> recipeJSONS){
+//        //TODO What do we want this to do?
+//        return hits;
+//    }
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -125,16 +116,17 @@ public class SearchResultsActivity extends AppCompatActivity {
         queryBuilder.setWhereClause(whereClause.toString());
 
         //does API search for recipe + returns results
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(DataMuseNutritionIngrParser.baseURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        DataMuseRecipe recipeAPI = retrofit.create(DataMuseRecipe.class);
-        int start = 0;
-        int end = 40; //TODO get user choice
-        this.firstRecipeCall(recipeAPI, query, start, end);
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(DataMuseNutritionIngrParser.baseURL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//        DataMuseRecipe recipeAPI = retrofit.create(DataMuseRecipe.class);
+//        int start = 0;
+//        int end = 40; //TODO get user choice
+//        this.firstRecipeCall(recipeAPI, query, start, end);
 
         //does the search on backendless
+        //todo implement api search too
         Backendless.Data.of(RecipeNative.class).find(queryBuilder, new AsyncCallback<List<RecipeNative>>() {
             @Override
             public void handleResponse(List<RecipeNative> response) {
@@ -170,6 +162,10 @@ public class SearchResultsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v, int pos) {
                 //todo load recipe
+                Intent i=new Intent(SearchResultsActivity.this, RecipeDisplayActivity.class);
+                i.setType("RecipeNative");
+                i.putExtra("recipe_native_show", recipes.get(pos));
+                startActivity(i);
                 Toast.makeText(SearchResultsActivity.this, "We are making "+ recipes.get(pos).getRecipeName(), Toast.LENGTH_LONG).show();
             }
         };
