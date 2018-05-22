@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
+import com.backendless.BackendlessUser;
 import com.example.caroline.foodme.FavoritesFragment.FavoritesFragment;
 import com.example.caroline.foodme.GenerateFragment.AutoGenerateFragment;
 import com.example.caroline.foodme.SearchFragment.SearchFragment;
@@ -43,11 +44,12 @@ public class HomePageActivity extends AppCompatActivity {
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         String userID = sharedPref.getString(getString(R.string.user_ID), "");*/
     public static final String TAG = "HomePageActivity";
-    private TextView mTextMessage;
     private View decorView;
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
     private SearchView searchView;
+    private Fragment currentFragment;
+    private FragmentManager fragmentManager;
 
     public static Context getContext() {
         return context;
@@ -62,7 +64,7 @@ public class HomePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         Backendless.initApp(this, BackendlessSettings.APP_ID, BackendlessSettings.API_KEY);
-        //logIn(); //checks if user ahs already logged in, if not switches to log in screen
+        logIn(); //checks if user ahs already logged in, if not switches to log in screen
         wireWidgets();
         hideNavBar();
     }
@@ -82,12 +84,17 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     private void logIn() {
+        if(Backendless.UserService.CurrentUser() == null) {
+            Intent i = new Intent(this, LoginScreen.class);
+            startActivity(i);
+        }
+        /* //todo fix this
         sharedPref = getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
         int userExists = sharedPref.getInt(getString(R.string.user), 0);
-//        userExists = 0; //todo delete me later
+        //userExists = 0; //todo delete me later
         //checks if previous user exists
         if (userExists == 0) {
             Intent i = new Intent(this, LoginScreen.class);
@@ -98,7 +105,7 @@ public class HomePageActivity extends AppCompatActivity {
             editor.putInt(getString(R.string.user), 0);
             editor.commit();
             Toast.makeText(this, "Next time you'll need to login again", Toast.LENGTH_SHORT).show();
-        }
+        }*/
     }
 
     @Override
@@ -119,14 +126,18 @@ public class HomePageActivity extends AppCompatActivity {
         //creates bottom navigation bar to hold the fragment navigation
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        fragmentManager = getSupportFragmentManager();
+        currentFragment = new FavoritesFragment();
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, currentFragment).commit();
     }
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             //Prepare a null fragment
-            Fragment currentFragment = null;
+            currentFragment = null;
             switch (item.getItemId()) {
                 case R.id.navigation_search:
                     currentFragment = new SearchFragment();
@@ -140,9 +151,9 @@ public class HomePageActivity extends AppCompatActivity {
                     break;
             }
             //transmits proper fragment
-            FragmentManager fm = getSupportFragmentManager();
+            fragmentManager = getSupportFragmentManager();
             if (currentFragment != null) {
-                fm.beginTransaction()
+                fragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, currentFragment)
                         .commit();
                 return true;

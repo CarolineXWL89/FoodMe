@@ -14,8 +14,8 @@ public class RecipeNative implements Parcelable {
     private String servings;
     private String timeNeeded;
     //private String ingredients; mRd
-    private String ImageURL;
     private String objectId;
+    private String ImageURL;
     private String ownerId;
     /*private String uri, label, source, url;
     private int yield;

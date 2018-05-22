@@ -1,5 +1,7 @@
 package com.example.caroline.foodme.FavoritesFragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
+import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.example.caroline.foodme.R;
@@ -40,7 +43,8 @@ public class FavoritesFragment extends Fragment {
     private ArrayList<String> imageURLS, titles;
     private View rootview;
     private RecyclerView favoritesRecyclerview;
-    private ArrayList<RecipeNative> favoritesList;
+    private ArrayList<Favorites> userFavorites;
+    private ArrayList<DisplayerRecipe> userFavoritesDisplayer;
     private RecyclerView.LayoutManager layoutManager;
     private FavoritesDisplayAdapter favoritesDisplayAdapter;
 
@@ -64,34 +68,93 @@ public class FavoritesFragment extends Fragment {
     }
 
     private void setFavorites() {
-        favoritesList = new ArrayList<>();
-        //todo fix user retrieval
-        //todo work on bckeneless to save users favorites, get thema nd load into favoriteslist
-        RecipeNative r = new RecipeNative();
-        r.setRecipeName("I love pie");
-        r.setImageURL("https://static-cdn.jtvnw.net/jtv_user_pictures/e91a3dcf-c15a-441a-b369-996922364cdc-profile_image-300x300.png");
-        favoritesList.add(r);
+        userFavorites = new ArrayList<>();
+        BackendlessUser backendlessUser = Backendless.UserService.CurrentUser();
+        if (backendlessUser != null) {
+            String favoritesString = (String) backendlessUser.getProperty("favorites");
+            if (favoritesString != null) {
+                final String[] favoritesArray = favoritesString.split(" ");
+                //final String last = favoritesArray[favoritesArray.length - 1];
+                for (final String s : favoritesArray) {
+                    Backendless.Persistence.of(Favorites.class).findById(s, new AsyncCallback<Favorites>() {
+                        @Override
+                        public void handleResponse(Favorites response) {
+                            userFavorites.add(response);
+                            Log.d(TAG, "handleResponse: "+response.getBackendlessID());
+                            if (response.getBackendless()) { //backendless
+                                if (userFavorites.size() == favoritesArray.length) {
+                                    Log.d(TAG, "handleResponse: equals last");
+                                    fillUserDisplayer();
+                                }
+                            } else { //not backendless
+                                if (userFavorites.size() == favoritesArray.length) {
+                                    fillUserDisplayer();
+                                }
+                            }
+                        }
 
-        RecipeNative r2 = new RecipeNative();
-        r2.setRecipeName("I love apples");
-        r2.setImageURL("https://vignette.wikia.nocookie.net/phobia/images/1/1b/Purple.jpg/revision/latest?cb=20161109231115");
-        favoritesList.add(r2);
+                        @Override
+                        public void handleFault(BackendlessFault fault) {
+                            Log.d(TAG, "handleFault: "+fault.toString());
+                            Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "handleFault: "+ fault.getMessage());
+                        }
+                    });
+                }
+            } else {
+                //todo make empty it that says go favorite stuff
+            }
+        } else {
+            Toast.makeText(getActivity(), "Need to log in", Toast.LENGTH_SHORT).show();
+        }
+    }
 
-        RecipeNative r3 = new RecipeNative();
-        r3.setRecipeName("I love water");
-        r3.setImageURL("http://www.solidbackgrounds.com/images/1920x1080/1920x1080-yellow-solid-color-background.jpg");
-        favoritesList.add(r3);
+    private void fillUserDisplayer() {
+        Log.d(TAG, "fillUserDisplayer: started");
+        userFavoritesDisplayer = new ArrayList<>();
+        final String last = userFavorites.get(userFavorites.size() - 1).getBackendlessID(); //fix for edama
+        Log.d(TAG, "fillUserDisplayer: "+userFavorites.size());
+        for(Favorites f: userFavorites){
+            if(f.getBackendless()){ //if from backendless gets recipe
+                final String key = f.getBackendlessID();
+                Backendless.Persistence.of(RecipeNative.class).findById(f.getBackendlessID(), new AsyncCallback<RecipeNative>() {
+                    @Override
+                    public void handleResponse(RecipeNative response) {
+                        DisplayerRecipe displayerRecipe = new DisplayerRecipe(response.getObjectId(), response.getImageURL(), true, response.getRecipeName());
+                        userFavoritesDisplayer.add(displayerRecipe);
+                        if(key.equals(last)){ //makes sure we wait til last async call occurs
+                            getFavorites();
+                            Log.d(TAG, "handleResponse: moving from fill user display");
+                        }
+                    }
 
-        getFavorites();
-    }//
+                    @Override
+                    public void handleFault(BackendlessFault fault) {
+                        Toast.makeText(getContext(), fault.getMessage(), Toast.LENGTH_SHORT).show();
+                        //todo check what happens if fault
+                    }
+                });
+            } else {
+                //todo edamam serach by id thing make sure async doesnt call until end
+                RecipeNative r = new RecipeNative();
+                imageURLS.add(r.getImageURL());
+                titles.add(r.getRecipeName());
+            }
+        }
+    }
+
 
     private void wireWidgets() {
         //wires recycler view and adds adapters
+        Log.d(TAG, "wireWidgets: "+userFavoritesDisplayer.size());
+        for(DisplayerRecipe dr: userFavoritesDisplayer){
+            Log.d(TAG, "wireWidgets: "+dr.getName());
+        }
         favoritesRecyclerview = rootview.findViewById(R.id.favoritesRecyclerView);
         layoutManager = new GridLayoutManager(getActivity(), 2);
         favoritesRecyclerview.setLayoutManager(layoutManager);
         favoritesRecyclerview.setItemAnimator(new DefaultItemAnimator());
-        favoritesDisplayAdapter = new FavoritesDisplayAdapter(favoritesList, getContext());
+        favoritesDisplayAdapter = new FavoritesDisplayAdapter(userFavoritesDisplayer, getContext());
         favoritesRecyclerview.setAdapter(favoritesDisplayAdapter);
         registerForContextMenu(favoritesRecyclerview);
 
@@ -103,58 +166,52 @@ public class FavoritesFragment extends Fragment {
                 TextView textView = customView.findViewById(R.id.carousel_text_view);
                 Picasso.with(getContext()).load(imageURLS.get(position)).fit().centerCrop().into(imageView);
                 textView.setText(titles.get(position));
+                //todo on click load recipe
                 return customView;
             }
         };
 
         carouselView = (CarouselView) rootview.findViewById(R.id.carouselView);
-        //carouselView.setPageCount(3);
         carouselView.setViewListener(viewListener);
+        carouselView.setPageCount(imageURLS.size());
         carouselView.reSetSlideInterval(5000);
     }
-//
+
     public void setImages(KeyValueFavorite[] favorites){
-        //todo add favorites and test
         imageURLS = new ArrayList<>();
         titles = new ArrayList<>();
-        if(favorites[0] != null){
-            for(KeyValueFavorite f: favorites){
-                if(f.isBackendless()){ //if from backendless gets recipe
-                    Backendless.Persistence.of(RecipeNative.class).findById(f.getKey(), new AsyncCallback<RecipeNative>() {
-                        @Override
-                        public void handleResponse(RecipeNative response) {
-                            imageURLS.add(response.getImageURL());
-                            titles.add(response.getRecipeName());
+        for(final KeyValueFavorite f: favorites){
+            final String last = favorites[favorites.length - 1].getKey(); //gets last string so we knoe when to call wire widgets
+            if(f.isBackendless()){ //if from backendless gets recipe
+                final String key = f.getKey(); //todo use same emthod in edamam
+                Backendless.Persistence.of(RecipeNative.class).findById(f.getKey(), new AsyncCallback<RecipeNative>() {
+                    @Override
+                    public void handleResponse(RecipeNative response) {
+                        imageURLS.add(response.getImageURL());
+                        titles.add(response.getRecipeName());
+                        if(key.equals(last)){ //makes sure we wait til last async call occurs
+                            wireWidgets();
                         }
+                    }
 
-                        @Override
-                        public void handleFault(BackendlessFault fault) {
-                            Toast.makeText(getContext(), fault.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else {
-                    //todoedamam serach by id thing
-                    RecipeNative r = new RecipeNative();
-                    imageURLS.add(r.getImageURL());
-                    titles.add(r.getRecipeName());
-                }
+                    @Override
+                    public void handleFault(BackendlessFault fault) {
+                        Toast.makeText(getContext(), fault.getMessage(), Toast.LENGTH_SHORT).show();
+                        //todo check what happens if fault
+                    }
+                });
+            } else {
+                //todo edamam serach by id thing make sure async doesnt call until end
+                RecipeNative r = new RecipeNative();
+                imageURLS.add(r.getImageURL());
+                titles.add(r.getRecipeName());
             }
-        } else {
-            imageURLS.add("https://www.nutstop.com/wp-content/uploads/2015/07/Cashews-Raw-240-Nutstop.jpg");
-            imageURLS.add("https://images.eatthismuch.com/site_media/img/2632_ldementhon_b3a80d6c-1144-4a6a-9b5f-db86bda38fc6.png");
-            imageURLS.add("https://cimg2.ibsrv.net/cimg/www.fitday.com/693x350_85-1/970/dark-20chocolate-105970.jpg");
-            titles.add("Cashews");
-            titles.add("Almonds");
-            titles.add("Chocolate");
         }
-
-        wireWidgets();
     }
 
     private void getFavorites() {
         final KeyValueFavorite[] favorites = new KeyValueFavorite[3];
         final ArrayList<KeyValueFavorite> favoritesList = new ArrayList<>();
-
 
         Backendless.Persistence.of(Favorites.class).find(new AsyncCallback<List<Favorites>>() {
             @Override
@@ -167,10 +224,11 @@ public class FavoritesFragment extends Fragment {
                     }
                 }
                 Collections.sort(favoritesList);
-                int len = 3;
+                int len = 5; //makes sure enough favorites
                 if(favoritesList.size() < len){
                     len = favoritesList.size();
                 }
+                //adds top five to array
                 for(int i = 0; i < len; i++){
                     favorites[i] = favoritesList.get(i);
                 }
@@ -179,10 +237,8 @@ public class FavoritesFragment extends Fragment {
 
             @Override
             public void handleFault(BackendlessFault fault) {
-                Toast.makeText(getContext(), fault.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
-
-
 }
