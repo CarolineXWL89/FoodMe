@@ -52,7 +52,7 @@ public class NewRecipeOptionsFragment extends Fragment {
         createNewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO send to create fragment
+                //TODO send this to create fragment
                 /*Intent i = new Intent(getActivity(), CreateFragment.class);
                 startActivity(i);*/
                 /*
