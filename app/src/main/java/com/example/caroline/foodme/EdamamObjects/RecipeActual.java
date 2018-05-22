@@ -17,9 +17,9 @@ public class RecipeActual implements Serializable {
     private ArrayList<Ingredient> ingredients = new ArrayList<>(); //convert Ingredient[] --> AL
     private ArrayList<NutritionInfo> totalNutrients = new ArrayList<>();
     private ArrayList<NutritionInfo> totalDaily = new ArrayList<>();
-    private ArrayList<String> dietLabels = new ArrayList<>();
-    private ArrayList<String> healthLabels = new ArrayList<>();
-    private ArrayList<String> cautions = new ArrayList<>(); //from Array
+    private enum dietLabels{}; //TODO figure out what enums do
+    private enum healthLabels{};
+    //private ArrayList<String> cautions = new ArrayList<>(); //from Array
 
     private ArrayList<String> ingredientLines = new ArrayList<>();
 //    private ArrayList<Ingredient> do we need this?
@@ -115,7 +115,7 @@ public class RecipeActual implements Serializable {
         return totalDaily;
     }
 
-    public ArrayList<String> getDietLabels() {
+    public enum  getDietLabel{
         return dietLabels;
     }
 
@@ -183,9 +183,9 @@ public class RecipeActual implements Serializable {
         this.healthLabels = healthLabels;
     }
 
-    public void setCautions(ArrayList<String> cautions) {
-        this.cautions = cautions;
-    }
+//    public void setCautions(ArrayList<String> cautions) {
+//        this.cautions = cautions;
+//    }
 
     public void setIngredientLines(ArrayList<String> ingredientLines) {
         this.ingredientLines = ingredientLines;
