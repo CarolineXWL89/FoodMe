@@ -17,6 +17,7 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
+import com.example.caroline.foodme.Search.SearchResultsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class
 SearchResultsActivity extends AppCompatActivity {
 
     private static final String TAG = "SearchResultsActivity";
-    private List<Recipe> recipes;
+    private List<RecipeNative> recipes;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private SearchResultsAdapter searchResultsAdapter;
@@ -71,9 +72,9 @@ SearchResultsActivity extends AppCompatActivity {
 
 
 
-        Backendless.Data.of(Recipe.class).find(queryBuilder, new AsyncCallback<List<Recipe>>() {
+        Backendless.Data.of(RecipeNative.class).find(queryBuilder, new AsyncCallback<List<RecipeNative>>() {
             @Override
-            public void handleResponse(List<Recipe> response) {
+            public void handleResponse(List<RecipeNative> response) {
                 Log.d(TAG, "handleResponse: " + response.size());
                 recipes.addAll(response);
                 searchResultsAdapter.notifyDataSetChanged();

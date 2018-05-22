@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +73,7 @@ public class AutoGenerateFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        context = newRecipeOptionsFragment.getContext();//TODO WHAT IS THE CONTEXT
+        context = getActivity();//TODO WHAT IS THE CONTEXT
         //inflates layout for autogen fragment
         rootView = inflater.inflate(R.layout.auto_generate_fragment, container, false); //TODO Why do we need it here?
         wireWidgets();
@@ -83,7 +84,6 @@ public class AutoGenerateFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
         ArrayList<EntitySearch> entitySearches;
 
 //        try {
@@ -209,7 +209,7 @@ public class AutoGenerateFragment extends Fragment {
         DataMuseNutritionSearch apiNutritionSearch = retrofit.create(DataMuseNutritionSearch.class);
 
         ArrayList<String> userIngrs = new ArrayList<>(); //to store strings we're matching
-        RecipeGeneratorMethods recipeGeneratorMethods = new RecipeGeneratorMethods(context);
+        RecipeGeneratorMethods recipeGeneratorMethods = new RecipeGeneratorMethods(getActivity());
         recipeGeneratorMethods.makeLists();
         try {
             recipeGeneratorMethods.getLists(); //sets raw xml to Strings
