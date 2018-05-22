@@ -56,7 +56,35 @@ public class NutritionResponse {
         return ingredient;
     }
 
-//    public int getYield() {
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public void setCalories(float calories) {
+        this.calories = calories;
+    }
+
+    public void setTotalNutrients(ArrayList<NutritionInfo> totalNutrients) {
+        this.totalNutrients = totalNutrients;
+    }
+
+    public void setTotalDaily(ArrayList<NutritionInfo> totalDaily) {
+        this.totalDaily = totalDaily;
+    }
+
+    public void setDietLabels(String[] dietLabels) {
+        this.dietLabels = dietLabels;
+    }
+
+    public void setHealthLabels(String[] healthLabels) {
+        this.healthLabels = healthLabels;
+    }
+
+    public void setIngredient(SingleIngredientToParsed ingredient) {
+        this.ingredient = ingredient;
+    }
+
+    //    public int getYield() {
 //        return yield;
 //    }
 //

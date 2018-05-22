@@ -9,12 +9,11 @@ import java.util.ArrayList;
  */
 
 public class EntitySearch{
-    private String text = "";
-    private ParsedRequest parsed = new ParsedRequest();
-
-    private ArrayList<Hint> hints = new ArrayList<>();
-    private int page = 0;
-    private int numPages = 0;
+    private String text;
+    private ParsedRequest parsed;
+    private ArrayList<Hint> hints;
+    private int page;
+    private int numPages;
 
     public EntitySearch(){
         //required empty constructor
@@ -35,5 +34,29 @@ public class EntitySearch{
 
     public ArrayList<Hint> getHints() {
         return hints;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setParsed(ParsedRequest parsed) {
+        this.parsed = parsed;
+    }
+
+    public void setHints(ArrayList<Hint> hints) {
+        this.hints = hints;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public void setNumPages(int numPages) {
+        this.numPages = numPages;
     }
 }

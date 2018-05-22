@@ -6,7 +6,7 @@ package com.example.caroline.foodme.EdamamObjects;
 
 public class fooddotjson {
     private int yield;
-    private Ingredient ingredient = new Ingredient();
+    private Ingredient ingredient;
     private String[] uris = {"", ""};
 
     public fooddotjson(int yield){
@@ -34,5 +34,29 @@ public class fooddotjson {
         ingredient.setFoodURI(twoURI[0]);
         ingredient.setMeasureURI(twoURI[1]);
         ingredient.setQuantity(1);
+    }
+
+    public int getYield() {
+        return yield;
+    }
+
+    public Ingredient getIngredient() {
+        return ingredient;
+    }
+
+    public String[] getUris() {
+        return uris;
+    }
+
+    public void setYield(int yield) {
+        this.yield = yield;
+    }
+
+    public void setIngredient(Ingredient ingredient) {
+        this.ingredient = ingredient;
+    }
+
+    public void setUris(String[] uris) {
+        this.uris = uris;
     }
 }

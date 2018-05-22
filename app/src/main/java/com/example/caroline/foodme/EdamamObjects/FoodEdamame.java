@@ -30,4 +30,24 @@ public class FoodEdamame {
     public NutritionInfo getNutrients() {
         return nutrients;
     }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public void setNutrients(NutritionInfo nutrients) {
+        this.nutrients = nutrients;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
 }

@@ -1,8 +1,5 @@
 package com.example.caroline.foodme.EdamamObjects;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.example.caroline.foodme.EdamamObjects.Ingredient;
 
 import java.util.ArrayList;
@@ -53,5 +50,29 @@ import java.util.ArrayList;
 
     public ArrayList<Hit> getHits() {
         return hits;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
+    }
+
+    public void setFrom(int from) {
+        this.from = from;
+    }
+
+    public void setTo(int to) {
+        this.to = to;
+    }
+
+    public void setNumFound(int numFound) {
+        this.numFound = numFound;
+    }
+
+    public void setMore(boolean more) {
+        this.more = more;
+    }
+
+    public void setHits(ArrayList<Hit> hits) {
+        this.hits = hits;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.caroline.foodme.API_Interfaces;
 
+import com.example.caroline.foodme.EdamamObjects.RecipeActual;
 import com.example.caroline.foodme.EdamamObjects.RecipeJSON;
 
 import java.util.ArrayList;
@@ -23,4 +24,6 @@ public interface DataMuseRecipe {
     @GET("recipes")
     Call<ArrayList<RecipeJSON>> getListedRecipes(@Query("q") String keyword, @Query("from") int start, @Query("to") int end, @Query("app_id") String appID, @Query("app_key") String appKey);
 
+    @GET("recipes")
+    Call<RecipeActual> getRecipeFromURI(@Query("r") String uriTransformed, @Query("app_id") String appID, @Query("app_key") String appKey);
 }
