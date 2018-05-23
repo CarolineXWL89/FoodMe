@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +52,7 @@ public class NewRecipeOptionsFragment extends Fragment {
         createNewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO send to create fragment
+                //TODO send this to create fragment
                 /*Intent i = new Intent(getActivity(), CreateFragment.class);
                 startActivity(i);*/
                 /*
@@ -78,6 +79,7 @@ public class NewRecipeOptionsFragment extends Fragment {
                 //TODO send to generate fragment
                 /*Intent i = new Intent(getActivity(), AutoGenerateFragment.class);
                 startActivity(i);*/
+                Log.d("getActivity context", getActivity().getLocalClassName());
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 AutoGenerateFragment autoGenerateFragment = new AutoGenerateFragment();

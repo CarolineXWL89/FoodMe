@@ -31,4 +31,6 @@
 - Different ways of entering
 - Social media sharing
 - FIX NULLS
+    - 1 - context null in autogen (Jaemyung)
+    - 2 - response.body() null in SearchFrag (Caroline)
 - Search/autofill in recipe search + nutrient search bar

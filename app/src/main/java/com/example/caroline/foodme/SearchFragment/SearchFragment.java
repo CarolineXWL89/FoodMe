@@ -53,7 +53,7 @@ public class SearchFragment extends Fragment {
     public static final String TAG = "fragments";
     private ArrayList<RecipeNative> recipes;
 
-    private ArrayList<RecipeActual> recipes2;
+    private ArrayList<RecipeActual> recipes2 = new ArrayList<>();
 
     private FloatingActionButton clearButton, submit;
     private ArrayList<String> ingredients;

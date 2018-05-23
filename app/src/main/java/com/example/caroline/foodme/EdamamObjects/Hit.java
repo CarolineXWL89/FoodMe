@@ -7,7 +7,7 @@ package com.example.caroline.foodme.EdamamObjects;
 
 public class Hit {
 
-    private RecipeActual recipe = new RecipeActual();
+    private RecipeActual recipe;
     private boolean bookmarked;
     private boolean bought;
 
@@ -28,5 +28,17 @@ public class Hit {
 
     public boolean isBought() {
         return bought;
+    }
+
+    public void setRecipe(RecipeActual recipe) {
+        this.recipe = recipe;
+    }
+
+    public void setBookmarked(boolean bookmarked) {
+        this.bookmarked = bookmarked;
+    }
+
+    public void setBought(boolean bought) {
+        this.bought = bought;
     }
 }

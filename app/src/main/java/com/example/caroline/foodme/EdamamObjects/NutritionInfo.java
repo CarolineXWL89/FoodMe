@@ -36,4 +36,20 @@ public class NutritionInfo {
     public float getQuantity() {
         return quantity;
     }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public void setQuantity(float quantity) {
+        this.quantity = quantity;
+    }
 }

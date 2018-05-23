@@ -34,5 +34,46 @@ public class Ingredient {
     public void setFoodURI(String foodURI) {
         this.foodURI = foodURI;
     }
-//tszgaergrweWBR53wv5bvqC WTe yhuey rsth
+
+    public void setQuantity(float quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setMeasure(Measure measure) {
+        this.measure = measure;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
+
+    public void setFood(FoodEdamame food) {
+        this.food = food;
+    }
+
+    public float getQuantity() {
+        return quantity;
+    }
+
+    public String getFoodURI() {
+        return foodURI;
+    }
+
+    public Measure getMeasure() {
+        return measure;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public FoodEdamame getFood() {
+        return food;
+    }
+
+    public String getMeasureURI() {
+        return measureURI;
+    }
+
+    //tszgaergrweWBR53wv5bvqC WTe yhuey rsth
 }

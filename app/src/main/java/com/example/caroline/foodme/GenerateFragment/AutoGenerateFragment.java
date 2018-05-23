@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +73,7 @@ public class AutoGenerateFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        context = newRecipeOptionsFragment.getContext();//TODO WHAT IS THE CONTEXT
+        context = getActivity();//TODO WHAT IS THE CONTEXT
         //inflates layout for autogen fragment
         rootView = inflater.inflate(R.layout.auto_generate_fragment, container, false); //TODO Why do we need it here?
         wireWidgets();
@@ -83,7 +84,6 @@ public class AutoGenerateFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
         ArrayList<EntitySearch> entitySearches;
 
 //        try {
@@ -209,7 +209,7 @@ public class AutoGenerateFragment extends Fragment {
         DataMuseNutritionSearch apiNutritionSearch = retrofit.create(DataMuseNutritionSearch.class);
 
         ArrayList<String> userIngrs = new ArrayList<>(); //to store strings we're matching
-        RecipeGeneratorMethods recipeGeneratorMethods = new RecipeGeneratorMethods(context);
+        RecipeGeneratorMethods recipeGeneratorMethods = new RecipeGeneratorMethods(getActivity());
         recipeGeneratorMethods.makeLists();
         try {
             recipeGeneratorMethods.getLists(); //sets raw xml to Strings
@@ -219,7 +219,7 @@ public class AutoGenerateFragment extends Fragment {
         recipeGeneratorMethods.sortIngredients(); //sees if it's in hard-coded lists
         for (int i = 0; i < 7; i++) {
             switch (i) {
-                case 1: i = RecipeGeneratorMethods.CARB_INDEX;
+                case RecipeGeneratorMethods.CARB_INDEX:
                     String original = recipeGeneratorMethods.getStapleList();
                     int l = recipeGeneratorMethods.getCarbohydrates().size();
                     for(int j = 0; j < l/2; j++){
@@ -236,7 +236,7 @@ public class AutoGenerateFragment extends Fragment {
                         }
                     }
                     break;
-                case 2: i = RecipeGeneratorMethods.FRUIT_INDEX;
+                case RecipeGeneratorMethods.FRUIT_INDEX:
                     original = recipeGeneratorMethods.getFruitList();
                     l = recipeGeneratorMethods.getFruits().size();
                     for(int j = 0; j < l/2; j++){
@@ -253,7 +253,7 @@ public class AutoGenerateFragment extends Fragment {
                         }
                     }
                     break;
-                case 3: i = RecipeGeneratorMethods.OIL_INDEX;
+                case RecipeGeneratorMethods.OIL_INDEX:
                     original = recipeGeneratorMethods.getOilList();
                     l = recipeGeneratorMethods.getOils().size();
                     for(int j = 0; j < l/2; j++){
@@ -270,7 +270,7 @@ public class AutoGenerateFragment extends Fragment {
                         }
                     }
                     break;
-                case 4: i = RecipeGeneratorMethods.PROTEIN_INDEX;
+                case RecipeGeneratorMethods.PROTEIN_INDEX:
                     original = recipeGeneratorMethods.getProteinList();
                     l = recipeGeneratorMethods.getProteins().size();
                     for(int j = 0; j < l/2; j++){
@@ -287,7 +287,7 @@ public class AutoGenerateFragment extends Fragment {
                         }
                     }
                     break;
-                case 5: i = RecipeGeneratorMethods.SAUCE_INDEX;
+                case RecipeGeneratorMethods.SAUCE_INDEX:
                     original = recipeGeneratorMethods.getSauceList();
                     l = recipeGeneratorMethods.getSauces().size();
                     for(int j = 0; j < l/2; j++){
@@ -304,7 +304,7 @@ public class AutoGenerateFragment extends Fragment {
                         }
                     }
                     break;
-                case 6: i = RecipeGeneratorMethods.SPICE_INDEX;
+                case RecipeGeneratorMethods.SPICE_INDEX:
                     original = recipeGeneratorMethods.getSpiceList();
                     l = recipeGeneratorMethods.getSpices().size();
                     for(int j = 0; j < l/2; j++){
@@ -321,7 +321,7 @@ public class AutoGenerateFragment extends Fragment {
                         }
                     }
                     break;
-                case 7: i = RecipeGeneratorMethods.VEG_INDEX;
+                case RecipeGeneratorMethods.VEG_INDEX:
                     original = recipeGeneratorMethods.getVegetableList();
                     l = recipeGeneratorMethods.getVegetables().size();
                     for(int j = 0; j < l/2; j++){

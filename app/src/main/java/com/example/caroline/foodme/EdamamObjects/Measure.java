@@ -22,4 +22,12 @@ public class Measure {
     public String getLabel() {
         return label;
     }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
 }
