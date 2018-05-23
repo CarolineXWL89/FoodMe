@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageButton;
@@ -24,7 +22,6 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 public class RecipeDisplayActivity extends AppCompatActivity {
     private ImageView backgroundImage, mainImage;
@@ -33,7 +30,7 @@ public class RecipeDisplayActivity extends AppCompatActivity {
     private RecipeNative recipeNative;
     private RecipeActual recipeActual;
     private String type;
-    private ViewPager viewPager;
+   // private ViewPager viewPager;
     private TabLayout mTabLayout;
 
     @Override
@@ -56,13 +53,56 @@ public class RecipeDisplayActivity extends AppCompatActivity {
         servingView=findViewById(R.id.servings_textView);
         timeNeededView=findViewById(R.id.time_textView);
         audioButton=findViewById(R.id.speaker_button);
-        viewPager= (ViewPager) findViewById(R.id.pager);
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new IngredientDisplayFragment(){}, "Ingredients");
-        adapter.addFrag(new ProcedureDisplayFragment(), "Procedure");
-        viewPager.setAdapter(adapter);
+
+     //   ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+  //      viewPager.setAdapter(adapter);
         mTabLayout= (TabLayout) findViewById(R.id.navigation_recipe_display);
-        mTabLayout.setupWithViewPager(viewPager);
+
+        TabLayout.Tab ingredientsTab= mTabLayout.newTab().setText("Ingredients");
+        ingredientsTab.setText("Ingredients");
+        TabLayout.Tab procedureTab=mTabLayout.newTab().setText("Procedure");
+        mTabLayout.addTab(ingredientsTab);
+        mTabLayout.addTab(procedureTab);
+
+
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
+            String ingr="Ingredients";
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Fragment currentFragment = null;
+                switch (tab.getPosition()){
+                    case 0:
+                        currentFragment = new IngredientDisplayFragment();
+                        break;
+
+                    case 1:
+                        currentFragment= new ProcedureDisplayFragment();
+                        Bundle b= new Bundle();
+                        b.putString("procedure",recipeNative.getDirections());
+                        currentFragment.setArguments(new Bundle());
+
+                        break;
+
+                }
+                FragmentManager fm = getSupportFragmentManager();
+                if (currentFragment != null) {
+                    fm.beginTransaction()
+                            .replace(R.id.fragment_loader, currentFragment)
+                            .commit();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+
+        });
 
     }
 
@@ -148,32 +188,32 @@ public class RecipeDisplayActivity extends AppCompatActivity {
         }
     }
 
-    class ViewPagerAdapter extends FragmentStatePagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFrag(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-    }
+//    class ViewPagerAdapter extends FragmentStatePagerAdapter {
+//        private final List<Fragment> mFragmentList = new ArrayList<>();
+//        private final List<String> mFragmentTitleList = new ArrayList<>();
+//
+//        public ViewPagerAdapter(FragmentManager manager) {
+//            super(manager);
+//        }
+//
+//        @Override
+//        public Fragment getItem(int position) {
+//            return mFragmentList.get(position);
+//        }
+//
+//        @Override
+//        public int getCount() {
+//            return mFragmentList.size();
+//        }
+//
+//        public void addFrag(Fragment fragment, String title) {
+//            mFragmentList.add(fragment);
+//            mFragmentTitleList.add(title);
+//        }
+//
+//        @Override
+//        public CharSequence getPageTitle(int position) {
+//            return mFragmentTitleList.get(position);
+//        }
+//    }
 }
