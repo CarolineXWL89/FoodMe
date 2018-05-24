@@ -67,7 +67,6 @@ public class ItemSetUpActivity extends AppCompatActivity {
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: save data in Backendless
                 final String setUpItem = setUpTask.substring(0, setUpTask.indexOf('P') -1);
                 String userUserName = sharedPref.getString("userUserName", "null");
                 String userPassword = sharedPref.getString("userPassword", "null");
@@ -255,7 +254,7 @@ public class ItemSetUpActivity extends AppCompatActivity {
             setupItems.add(new SetupItem("Vegan", R.drawable.vegan_icon));
             setupItems.add(new SetupItem("ovo-Vegetarian", R.drawable.ovo_vegetarian_icon));
             setupItems.add(new SetupItem("lacto-Vegetarian", R.drawable.lacto_vegetarian_icon));
-         //   setupItems.add(new SetupItem("ovo-lacto-Vegetarian", R.drawable.lacto_ovo_vegetarian_icon));
+            setupItems.add(new SetupItem("ovo-lacto-Vegetarian", R.drawable.lacto_ovo_vegetarian_icon));
             setupItems.add(new SetupItem("Pescatarian", R.drawable.pescatarian_icon));
             setupItems.add(new SetupItem("Omnivore", R.drawable.protein_icon));
             //TODO: fill this list out more

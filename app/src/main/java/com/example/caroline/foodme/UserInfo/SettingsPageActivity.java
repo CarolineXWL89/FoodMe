@@ -56,6 +56,7 @@ Can: launch into basically a text page for each part EXCEPTING --> account setti
  */
 public class SettingsPageActivity extends AppCompatPreferenceActivity {
     //todo add toolbar with back button
+    //todo fix UI
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.

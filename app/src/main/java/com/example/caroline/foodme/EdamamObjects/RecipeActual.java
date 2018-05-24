@@ -115,13 +115,13 @@ public class RecipeActual implements Serializable {
         return totalDaily;
     }
 
-    public enum  getDietLabel{
-        return dietLabels;
-    }
-
-    public ArrayList<String> getHealthLabels() {
-        return healthLabels;
-    }
+//    public enum getDietLabel(){
+//        return dietLabels;
+//    }
+//
+//    public ArrayList<String> getHealthLabels() {
+//        return healthLabels;
+//    }
 
     public ArrayList<String> getIngredientLines() {
         return ingredientLines;
@@ -175,13 +175,13 @@ public class RecipeActual implements Serializable {
         this.totalDaily = totalDaily;
     }
 
-    public void setDietLabels(ArrayList<String> dietLabels) {
-        this.dietLabels = dietLabels;
-    }
-
-    public void setHealthLabels(ArrayList<String> healthLabels) {
-        this.healthLabels = healthLabels;
-    }
+//    public void setDietLabels(ArrayList<String> dietLabels) {
+//        this.dietLabels = dietLabels;
+//    }
+//
+//    public void setHealthLabels(ArrayList<String> healthLabels) {
+//        this.healthLabels = healthLabels;
+//    }
 
 //    public void setCautions(ArrayList<String> cautions) {
 //        this.cautions = cautions;

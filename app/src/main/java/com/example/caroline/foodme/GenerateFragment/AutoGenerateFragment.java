@@ -75,7 +75,7 @@ public class AutoGenerateFragment extends Fragment {
 
         context = getActivity();//TODO WHAT IS THE CONTEXT
         //inflates layout for autogen fragment
-        rootView = inflater.inflate(R.layout.auto_generate_fragment, container, false); //TODO Why do we need it here?
+        rootView = inflater.inflate(R.layout.auto_generate_fragment, container, false);
         wireWidgets();
         return rootView;
     }

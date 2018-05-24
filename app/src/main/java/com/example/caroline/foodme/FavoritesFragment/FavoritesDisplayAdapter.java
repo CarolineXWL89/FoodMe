@@ -39,6 +39,12 @@ public class FavoritesDisplayAdapter extends RecyclerView.Adapter<FavoritesDispl
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.recipeTitle.setText(favoritesList.get(position).getName());
         Picasso.with(context).load(favoritesList.get(position).getImageURL()).fit().centerCrop().into(holder.recipeImage);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //todo load recipe use recipe native?
+            }
+        });
     }
 
     @Override
@@ -73,7 +79,6 @@ public class FavoritesDisplayAdapter extends RecyclerView.Adapter<FavoritesDispl
             super(itemView);
             recipeTitle = itemView.findViewById(R.id.favorites_recipe_title);
             recipeImage = itemView.findViewById(R.id.favorite_image_view);
-            //todo on click load recipe
         }
     }
 }

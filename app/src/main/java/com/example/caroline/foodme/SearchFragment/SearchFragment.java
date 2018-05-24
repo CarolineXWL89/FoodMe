@@ -20,9 +20,8 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
-import com.example.caroline.foodme.API_Interfaces.DataMuseNutritionIngrParser;
 import com.example.caroline.foodme.API_Interfaces.DataMuseRecipe;
-import com.example.caroline.foodme.EdamamObjects.Hit;
+import com.example.caroline.foodme.Unused.Hit;
 import com.example.caroline.foodme.EdamamObjects.RecipeActual;
 import com.example.caroline.foodme.EdamamObjects.RecipeJSON;
 import com.example.caroline.foodme.EdamamRecipeKeys;
@@ -66,9 +65,7 @@ public class SearchFragment extends Fragment {
     private IngredientSearchAdapter ingredientSearchAdapter;
     private ImageButton plusButton;
 
-    //todo make edit text with UI of text view
     //todo search with api
-    //todo have plusButton buttn
     public SearchFragment() {
         // Required empty public constructor
     }

@@ -67,6 +67,7 @@ public class CreateAccount extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        //todo make sure all of these have been filled out
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

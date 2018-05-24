@@ -1,6 +1,6 @@
 package com.example.caroline.foodme.EdamamObjects;
 
-import com.example.caroline.foodme.EdamamObjects.Ingredient;
+import com.example.caroline.foodme.Unused.Hit;
 
 import java.util.ArrayList;
 

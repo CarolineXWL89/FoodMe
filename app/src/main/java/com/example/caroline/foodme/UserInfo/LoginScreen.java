@@ -61,32 +61,13 @@ public class LoginScreen extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_help:
-                //todo create an activity for a help page for help
+                Intent i = new Intent(this, LoginHelpActivity.class);
+                startActivity(i);
                 return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-/* why is this here
-                    @Override
-                    public void handleFault(BackendlessFault fault) {
-                        Toast.makeText(LoginScreen.this, fault.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-        newAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(LoginScreen.this, CreateAccount.class);
-                startActivity(i);
-            }
-        });
-        help.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });*/
         }
     }
 
@@ -114,7 +95,6 @@ public class LoginScreen extends AppCompatActivity {
                         boolean b = (boolean) response.getProperty("updatedsetup");
                         Log.d("updatedsetup", b+"");
                         if(!b){
-                            //TODO: once merged, make this go to the AccountSetUpActivity instead of HomePageActivity. Then, find a way to change the value of "updatedsetup" to "true" after the set up is completed.
                             Toast.makeText(LoginScreen.this, "This is your first time logging in! Set up your account now", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(LoginScreen.this, AccountSetUpActivity.class);
                             startActivity(i);

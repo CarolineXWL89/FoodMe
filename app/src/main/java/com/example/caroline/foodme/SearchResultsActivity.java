@@ -117,9 +117,7 @@ SearchResultsActivity extends AppCompatActivity {
         RecyclerViewOnClick listener = new RecyclerViewOnClick() {
             @Override
             public void onClick(View v, int pos) {
-                //todo make onclick
                 //todo load recipe
-                Toast.makeText(context, "We are making "+ recipes.get(pos).getRecipeName(), Toast.LENGTH_LONG).show();
             }
         };
         recyclerView.setAdapter(searchResultsAdapter);

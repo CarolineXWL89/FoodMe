@@ -26,10 +26,6 @@
             android:id="@+id/carouselView"
             android:layout_width="match_parent"
             android:layout_height="225dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             app:fillColor="#00ffffff"
             app:layout_constraintBottom_toTopOf="@+id/favoritesRecyclerView"
             app:layout_constraintEnd_toEndOf="parent"
@@ -40,6 +36,20 @@
             app:slideInterval="3000"
             app:strokeColor="#00ffffff"
             app:strokeWidth="0.5dp" />
+
+        <ProgressBar
+            android:id="@+id/pinwheelOfDeath"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>

@@ -18,7 +18,7 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
-import com.example.caroline.foodme.EdamamObjects.Hit;
+import com.example.caroline.foodme.Unused.Hit;
 import com.example.caroline.foodme.EdamamObjects.RecipeJSON;
 import com.example.caroline.foodme.R;
 import com.example.caroline.foodme.RecipeDisplay.RecipeDisplayActivity;
@@ -49,6 +49,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         wireWidgets();
         //deals with search intent
         handleIntent(getIntent());
+        //todo have caroline implement api search
 //
 //    /**
 //     * Searches through Edamam API for recipes with the keyword(s) searched for //TODO if input has spaces replace w/ %20
@@ -148,12 +149,11 @@ public class SearchResultsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //todo add sorting method for search results
-        // mine vesurs nirmal
+        // mine vesurs normal
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
-                //todo on back pressed take back
             }
         });
         //wires recycler view etc..
@@ -162,10 +162,11 @@ public class SearchResultsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v, int pos) {
                 //todo load recipe
-                Intent i=new Intent(SearchResultsActivity.this, RecipeDisplayActivity.class);
+                Intent i = new Intent(SearchResultsActivity.this, RecipeDisplayActivity.class);
                 i.setType("RecipeNative");
                 i.putExtra("recipe_native_show", recipes.get(pos));
                 startActivity(i);
+                hideNavBar();
                 Toast.makeText(SearchResultsActivity.this, "We are making "+ recipes.get(pos).getRecipeName(), Toast.LENGTH_LONG).show();
             }
         };
@@ -177,5 +178,11 @@ public class SearchResultsActivity extends AppCompatActivity {
         registerForContextMenu(recyclerView);
 
     }
+
+    public void hideNavBar() {
+        //hides navigation bar so app can be fullscreen
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        decorView.setSystemUiVisibility(uiOptions);
+    }
 }
-//

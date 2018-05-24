@@ -95,21 +95,12 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="action_settings">Settings</string>
 
-    <string name="hello_blank_fragment_favorite">Hello blank fragment, favorite</string>
-
-    <string name="hello_blank_fragment_create">Hello blank fragment, create</string>
-
-    <string name="hello_blank_fragment_search">Hello blank fragment, search</string>
-
-    <!--other strings-->
     <string name="user_ID">userID</string>
     <string name="preference_file_key">preferences</string>
     <string name="user">user</string>
     <string name="action_help"> help </string>
 
-    <!--TODO: What are all these tags someone help me are we actually using these???-->
-    <!-- TODO: Change search hint -->
-    <string name="search_hint">Search</string>
+    <string name="search_hint">Search (eg. cake)</string>
     <string name="app_label">Food Me</string>
     <string name="action_search">Search</string>
     <string name="pictureUrl">PicUrl</string>
@@ -121,9 +112,9 @@
     <string name="trueString">true</string>
     <string name="accept">Yes</string>
     <string name="decline">no</string>
+    <string name="help_paragraph">Welcome to FoodMe!\nFoodMe is a recipe finder and creater app that makes planning your next meal easy.\nUse FoodMe to search for recipes, either by name, or by the ingredients you have on hand.\nIn a pinch, you can also use our very advanced recipe generator to create a custom recipe using your ingredients.\nTo get started with the app, log in! If you don\'t have an account yet, click \"New Account\" at the bottom of the login screen.\n If you\'re having trouble logging in, or creating a new account, make sure that your password matches and that you have a valid email.\nIn case you have forgotten your password, click \"Forgot Password?\" and you will receive an email to reset your password.\nHave fun!</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--TODO: what is this?-->
     <string name="title_activity_h">h</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
