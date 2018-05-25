@@ -1,15 +1,23 @@
 package com.example.caroline.foodme.FavoritesFragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.backendless.Backendless;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
 import com.example.caroline.foodme.R;
+import com.example.caroline.foodme.RecipeDisplay.RecipeDisplayActivity;
 import com.example.caroline.foodme.RecipeNative;
+import com.example.caroline.foodme.Search.SearchResultsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -42,7 +50,24 @@ public class FavoritesDisplayAdapter extends RecyclerView.Adapter<FavoritesDispl
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo load recipe use recipe native?
+                DisplayerRecipe r = favoritesList.get(position);
+                if(r.isBackendless()){
+                    Backendless.Persistence.of(RecipeNative.class).findById(r.getId(), new AsyncCallback<RecipeNative>() {
+                        @Override
+                        public void handleResponse(RecipeNative response) {
+                            Intent i = new Intent(context, RecipeDisplayActivity.class);
+                            i.setType("RecipeNative");
+                            i.putExtra("recipe_native_show", response);
+                            context.startActivity(i);
+                        }
+
+                        @Override
+                        public void handleFault(BackendlessFault fault) {
+                            Toast.makeText(context, fault.getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "handleFault: "+ fault.getMessage());
+                        }
+                    });
+                }
             }
         });
     }

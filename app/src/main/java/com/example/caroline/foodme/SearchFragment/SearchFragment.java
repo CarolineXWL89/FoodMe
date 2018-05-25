@@ -25,7 +25,7 @@ import com.example.caroline.foodme.API_Interfaces.DataMuseRecipe;
 import com.example.caroline.foodme.EdamamObjects.Hit;
 import com.example.caroline.foodme.EdamamObjects.RecipeActual;
 import com.example.caroline.foodme.EdamamObjects.RecipeJSON;
-import com.example.caroline.foodme.SearchFragment.EdamamRecipeKeys;
+import com.example.caroline.foodme.EdamamRecipeKeys;
 import com.example.caroline.foodme.R;
 import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.RecyclerViewOnClick;

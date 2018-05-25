@@ -20,7 +20,9 @@ import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.backendless.persistence.DataQueryBuilder;
 import com.example.caroline.foodme.R;
+import com.example.caroline.foodme.RecipeDisplay.RecipeDisplayActivity;
 import com.example.caroline.foodme.RecipeNative;
 import com.example.caroline.foodme.UserInfo.LoginScreen;
 import com.squareup.picasso.Picasso;
@@ -28,17 +30,16 @@ import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ViewListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class FavoritesFragment extends Fragment {
 
     CarouselView carouselView;
-    private ArrayList<String> imageURLS, titles;
     private View rootview;
     private RecyclerView favoritesRecyclerview;
     private ArrayList<Favorites> userFavorites;
     private ArrayList<DisplayerRecipe> userFavoritesDisplayer;
+    private ArrayList<DisplayerRecipe> generalFavorites;
     private RecyclerView.LayoutManager layoutManager;
     private FavoritesDisplayAdapter favoritesDisplayAdapter;
     private ProgressBar spinningPinWheelOfDeath;
@@ -46,6 +47,8 @@ public class FavoritesFragment extends Fragment {
     public static final String TAG = "fragments";
     public FavoritesFragment() {
         // Required empty public constructorr
+        //todo save general favorites and refresh every time Home paga activity is restarted not when favorites is restarted should fix slow problem
+        //need ot search user favorites everytime
     }
 
     @Override
@@ -60,11 +63,11 @@ public class FavoritesFragment extends Fragment {
         rootview = inflater.inflate(R.layout.fragment_favorites, container, false);
         spinningPinWheelOfDeath = rootview.findViewById(R.id.pinwheelOfDeath);
         spinningPinWheelOfDeath.setIndeterminate(true);
-        setFavorites();
+        getUserFavorites();
         return rootview;
     }
 
-    private void setFavorites() {
+    private void getUserFavorites() {
         userFavorites = new ArrayList<>();
         BackendlessUser backendlessUser = Backendless.UserService.CurrentUser();
         if (backendlessUser != null) {
@@ -123,7 +126,7 @@ public class FavoritesFragment extends Fragment {
                         DisplayerRecipe displayerRecipe = new DisplayerRecipe(response.getObjectId(), response.getImageURL(), true, response.getRecipeName());
                         userFavoritesDisplayer.add(displayerRecipe);
                         if(key.equals(last)){ //makes sure we wait til last async call occurs
-                            getFavorites();
+                            getOverallFavorites();
                         }
                     }
 
@@ -133,14 +136,14 @@ public class FavoritesFragment extends Fragment {
                         userFavoritesDisplayer.add(new DisplayerRecipe("",
                                 "http://www.isic.es/wp-content/plugins/orchitech-dm/resources/alive-dm/img/empty-image.png",
                                 false, "No favorites found.\nPlease check internet connection"));
-                        getFavorites();
+                        getOverallFavorites();
                     }
                 });
             } else {
                 //todo edamam serach by id thing make sure async doesnt call until end
                 RecipeNative r = new RecipeNative();
-                imageURLS.add(r.getImageURL());
-                titles.add(r.getRecipeName());
+                //imageURLS.add(r.getImageURL());
+                //titles.add(r.getRecipeName());
             }
         }
     }
@@ -166,16 +169,33 @@ public class FavoritesFragment extends Fragment {
 
         ViewListener viewListener = new ViewListener() {
             @Override
-            public View setViewForPosition(int position) {
+            public View setViewForPosition(final int position) {
                 View customView = getLayoutInflater().inflate(R.layout.carousel_item, null);
                 ImageView imageView = customView.findViewById(R.id.carousel_image_view);
                 TextView textView = customView.findViewById(R.id.carousel_text_view);
-                Picasso.with(getContext()).load(imageURLS.get(position)).fit().centerCrop().into(imageView);
-                textView.setText(titles.get(position));
+                Picasso.with(getContext()).load(generalFavorites.get(position).getImageURL()).fit().centerCrop().into(imageView);
+                textView.setText(generalFavorites.get(position).getName());
                 customView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //todo load recipe (pass a recipe native i think)
+                        DisplayerRecipe r = generalFavorites.get(position);
+                        if(r.isBackendless()){
+                            Backendless.Persistence.of(RecipeNative.class).findById(r.getId(), new AsyncCallback<RecipeNative>() {
+                                @Override
+                                public void handleResponse(RecipeNative response) {
+                                    Intent i = new Intent(getActivity(), RecipeDisplayActivity.class);
+                                    i.setType("RecipeNative");
+                                    i.putExtra("recipe_native_show", response);
+                                    startActivity(i);
+                                }
+
+                                @Override
+                                public void handleFault(BackendlessFault fault) {
+                                    Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Log.d(TAG, "handleFault: "+ fault.getMessage());
+                                }
+                            });
+                        }
                     }
                 });
                 return customView;
@@ -184,27 +204,26 @@ public class FavoritesFragment extends Fragment {
 
         carouselView = (CarouselView) rootview.findViewById(R.id.carouselView);
         carouselView.setViewListener(viewListener);
-        carouselView.setPageCount(imageURLS.size());
+        carouselView.setPageCount(generalFavorites.size());
         carouselView.reSetSlideInterval(5000);
     }
 
-    public void setImages(KeyValueFavorite[] favorites){
-        imageURLS = new ArrayList<>();
-        titles = new ArrayList<>();
-        if(favorites[0] == null) {
-            imageURLS.add("http://www.isic.es/wp-content/plugins/orchitech-dm/resources/alive-dm/img/empty-image.png");
-            titles.add("No favorites found.\nPlease check internet connection");
+    public void setImages(ArrayList<KeyValueFavorite> favorites){
+        generalFavorites = new ArrayList<>();
+        if(favorites.get(0) == null) {
+            generalFavorites.get(0).setImageURL("http://www.isic.es/wp-content/plugins/orchitech-dm/resources/alive-dm/img/empty-image.png");
+            generalFavorites.get(0).setName("No favorites found.\nPlease check internet connection");
             wireWidgets();
         } else{
             for(final KeyValueFavorite f: favorites){
-                final String last = favorites[favorites.length - 1].getKey(); //gets last string so we knoe when to call wire widgets
+                final String last = favorites.get(favorites.size() - 1).getKey(); //gets last string so we knoe when to call wire widgets
                 if(f.isBackendless()){ //if from backendless gets recipe
                     final String key = f.getKey();
                     Backendless.Persistence.of(RecipeNative.class).findById(f.getKey(), new AsyncCallback<RecipeNative>() {
                         @Override
                         public void handleResponse(RecipeNative response) {
-                            imageURLS.add(response.getImageURL());
-                            titles.add(response.getRecipeName());
+                            DisplayerRecipe r = new DisplayerRecipe(response.getObjectId(), response.getImageURL(), true, response.getRecipeName());
+                            generalFavorites.add(r);
                             if(key.equals(last)){ //makes sure we wait til last async call occurs
                                 wireWidgets();
                             }
@@ -214,51 +233,43 @@ public class FavoritesFragment extends Fragment {
                         public void handleFault(BackendlessFault fault) {
                             Toast.makeText(getContext(), fault.getMessage(), Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "handleFault: "+fault.getMessage());
-                            imageURLS.add("http://www.isic.es/wp-content/plugins/orchitech-dm/resources/alive-dm/img/empty-image.png");
-                            titles.add("No favorites found.\nPlease check internet connection");
+                            generalFavorites.get(0).setImageURL("http://www.isic.es/wp-content/plugins/orchitech-dm/resources/alive-dm/img/empty-image.png");
+                            generalFavorites.get(0).setName("No favorites found.\nPlease check internet connection");
                             wireWidgets();
                         }
                     });
                 } else {
                     //todo edamam serach by id thing make sure async doesnt call until end
                     RecipeNative r = new RecipeNative();
-                    imageURLS.add(r.getImageURL());
-                    titles.add(r.getRecipeName());
+
                 }
             }
         }
     }
 
-    private void getFavorites() {
-        final KeyValueFavorite[] favorites = new KeyValueFavorite[5];
+    private void getOverallFavorites() {
         final ArrayList<KeyValueFavorite> favoritesList = new ArrayList<>();
 
-        Backendless.Persistence.of(Favorites.class).find(new AsyncCallback<List<Favorites>>() {
+        DataQueryBuilder queryBuilder = DataQueryBuilder.create();
+        queryBuilder.setSortBy("frequency DESC");
+        queryBuilder.setPageSize(5);
+        Backendless.Data.of(Favorites.class).find(queryBuilder, new AsyncCallback<List<Favorites>>(){
             @Override
-            public void handleResponse(List<Favorites> response) {
-                for(Favorites f : response){
+            public void handleResponse( List<Favorites> response ) {
+                for(Favorites f: response){
                     if(f.getBackendless()){ //backenless object
                         favoritesList.add(new KeyValueFavorite(f.getBackendlessID(), f.getFrequency(), true));
                     } else { //edmama object
                         favoritesList.add(new KeyValueFavorite(f.getEdamamID(), f.getFrequency(), false));
                     }
                 }
-                Collections.sort(favoritesList);
-                int len = 5; //makes sure enough favorites
-                if(favoritesList.size() < len){
-                    len = favoritesList.size();
-                }
                 Log.d(TAG, "handleResponse: "+favoritesList.size());
-                //adds top five to array
-                for(int i = 0; i < len; i++){
-                    favorites[i] = favoritesList.get(i);
-                }
-                setImages(favorites);
+                setImages(favoritesList);
             }
 
             @Override
-            public void handleFault(BackendlessFault fault) {
-                Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_LONG).show();
+            public void handleFault( BackendlessFault fault ) {
+                Toast.makeText(getActivity(), fault.getCode(), Toast.LENGTH_LONG).show();
             }
         });
     }
