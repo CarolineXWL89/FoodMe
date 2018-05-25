@@ -5,8 +5,9 @@
     tools:context="com.example.caroline.foodme.RecipeDisplay.ProcedureDisplayFragment">
 
     <TextView
+        android:id="@+id/procedure_textview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text='"Procedure"' />
+        android:text="Procedure" />
 
 </FrameLayout>

@@ -8,9 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.example.caroline.foodme.R;
 
 import com.example.caroline.foodme.RecipeNative;
-import com.example.caroline.foodme.R;
+
 import com.example.caroline.foodme.RecyclerViewOnClick;
 import com.squareup.picasso.Picasso;
 

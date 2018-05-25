@@ -32,6 +32,8 @@ public class RecipeDisplayActivity extends AppCompatActivity {
     private String type;
    // private ViewPager viewPager;
     private TabLayout mTabLayout;
+    private String procedure;
+    private ArrayList<String> ingr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +41,14 @@ public class RecipeDisplayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_display);
 
 
-        wireWigets();
+        wireWidgets();
         gettingIntents();
         setParts();
     }
 
 
 
-    private void wireWigets() {
+    private void wireWidgets() {
         backgroundImage=findViewById(R.id.background_image);
         mainImage=findViewById(R.id.image_image);
         recipeNameView = findViewById(R.id.name_textview);
@@ -66,20 +68,23 @@ public class RecipeDisplayActivity extends AppCompatActivity {
 
 
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
-            String ingr="Ingredients";
+
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 Fragment currentFragment = null;
                 switch (tab.getPosition()){
                     case 0:
                         currentFragment = new IngredientDisplayFragment();
+                        Bundle a= new Bundle();
+                        a.putStringArrayList("ingr", ingr);
+                        currentFragment.setArguments(a);
                         break;
 
                     case 1:
                         currentFragment= new ProcedureDisplayFragment();
                         Bundle b= new Bundle();
-                        b.putString("procedure",recipeNative.getDirections());
-                        currentFragment.setArguments(new Bundle());
+                        b.putString("procedure", procedure);
+                        currentFragment.setArguments(b);
 
                         break;
 
@@ -133,8 +138,15 @@ public class RecipeDisplayActivity extends AppCompatActivity {
 //            RecipeDisplayActivity.DownloadImageFromURL downloadImageFromURL = new RecipeDisplayActivity.DownloadImageFromURL(mainImage);
 //            Bitmap bitmap = downloadImageFromURL.doInBackground(recipeNative.getImageURL());
 //            downloadImageFromURL.onPostExecute(bitmap);
-            String ingredients = recipeNative.getIngredients();
-            recipeNative.setIngredients(ingredients);
+            procedure=recipeNative.getDirections();
+            String ingredients=recipeNative.getIngredients();
+             ingr=new ArrayList<>();
+            while(ingredients.indexOf(",")>0){
+                ingr.add(ingredients.substring(0,ingredients.indexOf(",")));
+                ingredients=ingredients.substring(ingredients.indexOf(",")+1);
+            }
+            ingr.add(ingredients);
+
             //instructions.setText("Ingredients: \n" + recipeNative.getIngredients() + "\n Directions: " + "\n" + recipeNative.getDirections()); //sets ingredients + directions
 //
 
@@ -148,6 +160,7 @@ public class RecipeDisplayActivity extends AppCompatActivity {
             Bitmap bitmap = downloadImageFromURL.doInBackground(recipeActual.getImage());
             downloadImageFromURL.onPostExecute(bitmap);
             ArrayList<String> ingrs = recipeActual.getIngredientLines();
+
             //instructions.setText("Ingredients: \n" + recipeActual.setFormattedIngrs(ingrs) + "\nDirections: \n TBD Webview?");
             //TODO display rest in webview?
         }

@@ -5,8 +5,15 @@
     tools:context="com.example.caroline.foodme.RecipeDisplay.IngredientDisplayFragment">
 
     <TextView
+        android:id="@+id/ingrdisplay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text='"Ingredients"' />
+        android:text='"Ingredients"'
+        android:visibility="invisible" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/ingredient_display_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </FrameLayout>

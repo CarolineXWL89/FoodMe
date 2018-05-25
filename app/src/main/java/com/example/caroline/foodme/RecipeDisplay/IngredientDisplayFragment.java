@@ -1,13 +1,18 @@
 package com.example.caroline.foodme.RecipeDisplay;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.caroline.foodme.R;
 
+import java.util.ArrayList;
 
 
 public class IngredientDisplayFragment extends Fragment {
@@ -17,27 +22,33 @@ public class IngredientDisplayFragment extends Fragment {
 
     private String mParam1;
     private String mParam2;
+    private ArrayList<String> ingredients;
+    private View rootView;
+    private TextView ingredientDisp;
+    private Context context;
+    private RecyclerView recyclerView;
+    private IngredientDisplayAdapter adapter;
+    private LinearLayoutManager layoutManager;
 
-    //private OnFragmentInteractionListener mListener;
 
     public IngredientDisplayFragment() {
-        // Required empty public constructor
     }
 
-    // TODO: Delete? or rewrite
-//    public static IngredientDisplayFragment newInstance(String param1, String param2) {
-//        IngredientDisplayFragment fragment = new IngredientDisplayFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     //* @param param1 Parameter 1.
+     //* @param param2 Parameter 2.
+     * @return A new instance of fragment IngredientDisplayFragment.
+     */
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            ingredients=getArguments().getStringArrayList("ingr");
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
@@ -47,39 +58,24 @@ public class IngredientDisplayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ingredient_display, container, false);
+        rootView= inflater.inflate(R.layout.fragment_ingredient_display, container, false);
+        context = rootView.getContext();
+        wireWidgets();
+        return rootView;
+
+    }
+
+    private void wireWidgets() {
+
+        ingredientDisp=rootView.findViewById(R.id.ingrdisplay);
+        ingredientDisp.setText(ingredients.toString()+ingredients.size());
+        recyclerView=rootView.findViewById(R.id.ingredient_display_recycler_view);
+        adapter=new IngredientDisplayAdapter(ingredients, context);
+        recyclerView.setAdapter(adapter);
+        layoutManager = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(layoutManager);
+        registerForContextMenu(recyclerView);
     }
 
 
-
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
-//
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        mListener = null;
-//    }
-////
-//    /**
-//     * This interface must be implemented by activities that contain this
-//     * fragment to allow an interaction in this fragment to be communicated
-//     * to the activity and potentially other fragments contained in that
-//     * activity.
-//     * <p>
-//     * See the Android Training lesson <a href=
-//     * "http://developer.android.com/training/basics/fragments/communicating.html"
-//     * >Communicating with Other Fragments</a> for more information.
-//     */
-//    public interface OnFragmentInteractionListener {
-//        void onFragmentInteraction(Uri uri);
-//    }
 }

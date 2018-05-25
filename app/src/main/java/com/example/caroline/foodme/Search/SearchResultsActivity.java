@@ -18,7 +18,6 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
-import com.example.caroline.foodme.Unused.Hit;
 import com.example.caroline.foodme.EdamamObjects.RecipeJSON;
 import com.example.caroline.foodme.R;
 import com.example.caroline.foodme.RecipeDisplay.RecipeDisplayActivity;
@@ -40,7 +39,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     private final ArrayList<RecipeJSON> recipeJSON = new ArrayList<>();
-    private ArrayList<Hit> hits = new ArrayList<>();
+//    private ArrayList<Hit> hits = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
