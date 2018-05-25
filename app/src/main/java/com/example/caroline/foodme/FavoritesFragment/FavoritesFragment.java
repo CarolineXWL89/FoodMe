@@ -21,6 +21,13 @@ import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
+import com.example.caroline.foodme.API_Interfaces.DataMuseNutritionIngrParser;
+import com.example.caroline.foodme.API_Interfaces.DataMuseNutritionSearch;
+import com.example.caroline.foodme.API_Interfaces.DataMuseRecipe;
+import com.example.caroline.foodme.EdamamNutritionKeys;
+import com.example.caroline.foodme.EdamamObjects.Hint;
+import com.example.caroline.foodme.EdamamObjects.RecipeActual;
+import com.example.caroline.foodme.EdamamRecipeKeys;
 import com.example.caroline.foodme.R;
 import com.example.caroline.foodme.RecipeDisplay.RecipeDisplayActivity;
 import com.example.caroline.foodme.RecipeNative;
@@ -31,6 +38,12 @@ import com.synnapps.carouselview.ViewListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FavoritesFragment extends Fragment {
 
@@ -240,7 +253,25 @@ public class FavoritesFragment extends Fragment {
                     });
                 } else {
                     //todo edamam serach by id thing make sure async doesnt call until end
-                    RecipeNative r = new RecipeNative();
+                    //heres the call now logic program it
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(DataMuseRecipe.baseURL)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+                    DataMuseRecipe api = retrofit.create(DataMuseRecipe.class);
+                    String uri = "";
+                    Call<RecipeActual> call = api.getRecipeFromURI(uri, EdamamRecipeKeys.APP_ID_RECIPE , EdamamRecipeKeys.APP_KEY_RECIPE);
+                    call.enqueue(new Callback<RecipeActual>() {
+                        @Override
+                        public void onResponse(Call<RecipeActual> call, Response<RecipeActual> response) {
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<RecipeActual> call, Throwable t) {
+
+                        }
+                    });
 
                 }
             }
