@@ -92,10 +92,16 @@ public class LoginScreen extends AppCompatActivity {
                             Toast.makeText(LoginScreen.this, "Not remembering you", Toast.LENGTH_SHORT).show();
                         }
                         editor.commit();
+
                         boolean b = (boolean) response.getProperty("updatedsetup");
                         Log.d("updatedsetup", b+"");
                         if(!b){
                             Toast.makeText(LoginScreen.this, "This is your first time logging in! Set up your account now", Toast.LENGTH_SHORT).show();
+                            editor.putInt("CuisineSetup", 0);
+                            editor.putInt("IngredientSetup", 0);
+                            editor.putInt("DietSetup", 0);
+                            editor.putInt("AllergySetup", 0);
+                            editor.commit();
                             Intent i = new Intent(LoginScreen.this, AccountSetUpActivity.class);
                             startActivity(i);
                         }
@@ -104,6 +110,7 @@ public class LoginScreen extends AppCompatActivity {
                             startActivity(i);
 
                         }
+
                     }
 
                     @Override

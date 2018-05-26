@@ -29,6 +29,11 @@ public class SetUpChecklistAdapter extends RecyclerView.Adapter<SetUpChecklistAd
     private Context context;
     private SetUpChecklistItem item;
 
+    /**
+     * @param setUpChecklistItems the list of preference activities that the user must fill out. Each setUpChecklistItem contains a name
+     *                            and a variable describing if it has been completed.
+     * @param context the context needed to make this adapter work.
+     */
     public SetUpChecklistAdapter(List<SetUpChecklistItem> setUpChecklistItems, Context context) {
         this.setUpChecklistItems = setUpChecklistItems;
         this.context = context;
@@ -46,6 +51,8 @@ public class SetUpChecklistAdapter extends RecyclerView.Adapter<SetUpChecklistAd
         item = setUpChecklistItems.get(position);
         Log.d("onBindViewHolder",item.getItem());
         holder.textView.setText(item.getItem());
+
+        //if the activity has been completed, there is a green checkmark next to its name. Otherwise there is an empty box.
         if(item.isCompleted()){
             holder.imageView.setImageResource(R.drawable.ic_check_black_24dp);
         }
@@ -72,6 +79,7 @@ public class SetUpChecklistAdapter extends RecyclerView.Adapter<SetUpChecklistAd
             imageView = itemView.findViewById(R.id.setup_check_view);
             constraintLayout = itemView.findViewById(R.id.setup_checklist_constraintlayout);
 
+            //Once the item is clicked, the user is sent to an Activity in which they choose their preferences.
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

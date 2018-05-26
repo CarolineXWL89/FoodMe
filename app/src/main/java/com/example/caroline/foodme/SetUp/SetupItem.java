@@ -10,10 +10,12 @@ public class SetupItem {
 
     private String foodName;
     private int foodImage;
+    private boolean selected;
 
     public SetupItem(String foodName, int foodImage){
         this.foodName = foodName;
         this.foodImage = foodImage;
+        selected = false;
     }
 
     public String getFoodName() {
@@ -30,6 +32,14 @@ public class SetupItem {
 
     public void setFoodImage(int foodImage) {
         this.foodImage = foodImage;
+    }
+
+    public boolean isSelected(){
+        return selected;
+    }
+
+    public void setSelected(boolean selected){
+        this.selected = selected;
     }
 
     @Override

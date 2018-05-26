@@ -55,6 +55,12 @@ public class SetupAdapter extends RecyclerView.Adapter<SetupAdapter.MyViewHolder
         final SetupItem setupItem = setupItems.get(position);
         holder.foodNameView.setText(setupItem.getFoodName());
         holder.foodImageView.setImageResource(setupItem.getFoodImage());
+        holder.foodSelectBox.setChecked(false);
+        for(int i = 0; i < selectedItems.size(); i++){
+            if(selectedItems.get(i).getFoodName().equals(setupItem.getFoodName())){
+                holder.foodSelectBox.setChecked(true);
+            }
+        }
 
         holder.foodSelectBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -69,19 +75,6 @@ public class SetupAdapter extends RecyclerView.Adapter<SetupAdapter.MyViewHolder
                 }
             }
         });
-//        holder.foodSelectBox.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(holder.foodSelectBox.isChecked()){
-//                    Log.d("onCheckedChanged", "checked");
-//                    itemSetUpActivity.addSelectedItem(setupItem);
-//                }
-//                if(!holder.foodSelectBox.isChecked()){
-//                    Log.d("onCheckedChanged", "unchecked");
-//                    itemSetUpActivity.removeSelectedItem(setupItem);
-//                }
-//            }
-//        });
     }
 
     @Override

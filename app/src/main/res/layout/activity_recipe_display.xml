@@ -1,153 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RecipeDisplay.RecipeDisplayActivity">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <android.support.constraint.Guideline
-                android:id="@+id/guideline2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.020833334" />
-
-            <ImageView
-                android:id="@+id/background_image"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintDimensionRatio="w,9:16"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@mipmap/ic_launcher" />
-
-            <ImageView
-                android:id="@+id/image_image"
-                android:layout_width="0dp"
-                android:layout_height="115dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toBottomOf="@+id/background_image"
-                app:layout_constraintDimensionRatio="w,1:1"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/background_image"
-                app:layout_constraintVertical_bias="0.526"
-                app:srcCompat="@mipmap/ic_launcher_round" />
+    tools:context=".RecipeDisplayActivity">
 
 
-            <TextView
-                android:id="@+id/name_textview"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Name"
-                android:textSize="30sp"
-                app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                app:layout_constraintStart_toEndOf="@+id/image_image"
-                app:layout_constraintTop_toBottomOf="@+id/background_image" />
 
-            <TextView
-                android:id="@+id/time_textView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Time"
-                app:layout_constraintEnd_toStartOf="@+id/servings_textView"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toEndOf="@+id/image_image"
-                app:layout_constraintTop_toBottomOf="@+id/name_textview" />
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="83dp"
+            app:layout_constraintLeft_toRightOf="@id/image_image" />
 
-            <TextView
-                android:id="@+id/servings_textView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Servings"
-                app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/time_textView"
-                app:layout_constraintTop_toBottomOf="@+id/name_textview" />
+        <ImageView
+            android:id="@+id/background_image"
+            android:layout_width="0dp"
+            android:layout_height="168dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/ic_launcher" />
 
-            <ImageButton
-                android:id="@+id/speaker_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                app:layout_constraintEnd_toStartOf="@+id/time_textView"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/image_image"
-                app:srcCompat="@android:drawable/ic_lock_silent_mode_off" />
-
-            <!--
-    <TabHost
-    android:layout_width="match_parent"
-    android:layout_height="100dp"></TabHost>
-    -->
-
-            <android.support.design.widget.TabLayout
-                android:id="@+id/navigation_recipe_display"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toTopOf="@+id/barrier_center"
-                app:tabIndicatorColor="@color/colorAccent">
-
-            </android.support.design.widget.TabLayout>
-
-            <FrameLayout
-
-                android:id="@+id/fragment_loader"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/navigation_recipe_display">
-
-            </FrameLayout>
-
-            <android.support.constraint.Barrier
-                android:id="@+id/barrier_center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:barrierDirection="bottom"
-                app:constraint_referenced_ids="servings_textView,speaker_button,time_textView"
-                tools:layout_editor_absoluteY="567dp" />
-
-            <android.support.constraint.Guideline
-                android:id="@+id/guideline3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.98" />
+        <ImageView
+            android:id="@+id/image_image"
+            android:layout_width="75dp"
+            android:layout_height="79dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/background_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/background_image"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@mipmap/ic_launcher_round" />
 
 
-            <!--
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="2dp"
+            android:background="#f0f0f0" />
+
+        <TextView
+            android:id="@+id/name_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="Name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/background_image" />
+
+        <TextView
+            android:id="@+id/time_textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Time"
+            app:layout_constraintEnd_toStartOf="@+id/servings_textView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toEndOf="@+id/speaker_button"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/name_textview" />
+
+        <TextView
+            android:id="@+id/servings_textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Servings"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/time_textView"
+            app:layout_constraintTop_toBottomOf="@+id/name_textview" />
+
+        <ImageButton
+            android:id="@+id/speaker_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintHorizontal_bias="0.727"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_image"
+            app:srcCompat="@android:drawable/ic_lock_silent_mode_off" />
+
+        <ImageButton
+            android:id="@+id/favorite_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/cardview_shadow_end_color"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/speaker_button"
+            app:srcCompat="@drawable/ic_star_border_black_24dp" />
+        <!--
             <ScrollView
                 android:id="@+id/scrollView2"
                 android:layout_width="match_parent"
@@ -170,8 +133,6 @@
                 </LinearLayout>
             </ScrollView>
             -->
-        </android.support.constraint.ConstraintLayout>
-    </ScrollView>
 
 
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>

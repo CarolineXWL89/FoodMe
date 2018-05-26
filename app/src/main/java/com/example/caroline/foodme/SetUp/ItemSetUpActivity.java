@@ -32,6 +32,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Activity which allows the user to pick their preferences in a certain area. The user is sent here 3 times from AccountSetupActivity,
+ * filling out a different preference each time.
+ * The class contains a title and brief instructions, then a searchbar from which the user can find items, with a recyclerview underneath.
+ */
 public class ItemSetUpActivity extends AppCompatActivity {
 
     private TextView titleText;
@@ -64,6 +69,8 @@ public class ItemSetUpActivity extends AppCompatActivity {
         searchBar = findViewById(R.id.item_setup_multiautocompletetextview);
         recyclerView = findViewById(R.id.item_setup_recyclerview);
         doneButton = findViewById(R.id.item_setup_done_button);
+
+        //Once the doneButton is clicked, the app logs into Backendless and saves the items selected into a text file in Backendless.
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,15 +101,24 @@ public class ItemSetUpActivity extends AppCompatActivity {
                 });
                 Log.d("SelectedItems", adapter.getSelectedItems().toString());
                 SharedPreferences.Editor edit = sharedPref.edit();
+
+                //changes the variable describing if this activity has been completed. This ensures that, upon returning to the
+                //AccountSetUpActivity, this preference page will be marked as completed.
                 edit.remove(setUpItem+"Setup");
                 edit.putInt(setUpItem+"Setup", 1);
                 edit.commit();
+
+                //in case i don't want it to save that i have completed it, i can use this function to undo the completion.
 //                reset();
                 Intent i = new Intent(ItemSetUpActivity.this, AccountSetUpActivity.class);
                 startActivity(i);
             }
         });
         searchButton = findViewById(R.id.item_setup_search_button);
+
+        //once the searchButton is clicked, the input is parsed to produce a list of searchitems. Next, the arraylist of setupItems is
+        //run through a double for loop, comparing the name of each to each of the searchitems, and adding matches to a new arraylist of
+        //searchedItems. If there is 1 or more item found, the recyclerview is changed to display only the search results
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,7 +136,7 @@ public class ItemSetUpActivity extends AppCompatActivity {
                 ArrayList<SetupItem> searchedItems = new ArrayList<>();
                 for(int i = 0; i < setupItems.size(); i++){
                     for(int j = 0; j<searchedStrings.size(); j++){
-                        if(setupItems.get(i).getFoodName().toLowerCase().equals(searchedStrings.get(j).toLowerCase())){
+                        if(setupItems.get(i).getFoodName().toLowerCase().contains(searchedStrings.get(j).toLowerCase())){
                             Log.d("searchedItem added", setupItems.get(i).getFoodName());
                             searchedItems.add(setupItems.get(i));
                         }
@@ -138,6 +154,8 @@ public class ItemSetUpActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //same thing as above, but activates when enter is pressed rather than when the searchbutton is pressed.
         searchBar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -157,7 +175,7 @@ public class ItemSetUpActivity extends AppCompatActivity {
                     ArrayList<SetupItem> searchedItems = new ArrayList<>();
                     for(int i = 0; i < setupItems.size(); i++){
                         for(int j = 0; j<searchedStrings.size(); j++){
-                            if(setupItems.get(i).getFoodName().toLowerCase().equals(searchedStrings.get(j).toLowerCase())){
+                            if(setupItems.get(i).getFoodName().toLowerCase().contains(searchedStrings.get(j).toLowerCase())){
                                 Log.d("searchedItem added", setupItems.get(i).getFoodName());
                                 searchedItems.add(setupItems.get(i));
                             }
@@ -181,6 +199,8 @@ public class ItemSetUpActivity extends AppCompatActivity {
             }
         });
 
+        // this button is invisible until after a search. During a search, clicking this button will undo the search and make the
+        //recyclerview display the full list of items.
         endSearchButton = findViewById(R.id.item_setup_end_search_button);
         endSearchButton.setVisibility(View.GONE);
         endSearchButton.setClickable(false);
@@ -196,9 +216,13 @@ public class ItemSetUpActivity extends AppCompatActivity {
 
     }
 
+    //this method creates different Arraylists of setupItems depending on the setting being changed
     public void setUpRecyclerView(){
         setupItems = new ArrayList<SetupItem>();
         setupItemNames = new ArrayList<String>();
+
+        //if the user is picking their favorite cuisines, the method adds the following objects, each representing a cuisine,
+        //to the arraylist.
         if(setUpTask.equals("Cuisine Preferences")){
             setupItems.add(new SetupItem("American", R.drawable.american_flag));
             setupItems.add(new SetupItem("British", R.drawable.british_flag));
@@ -212,6 +236,9 @@ public class ItemSetUpActivity extends AppCompatActivity {
             setupItems.add(new SetupItem("Spanish", R.drawable.spainish_flag));
             setupItems.add(new SetupItem("Thai", R.drawable.thai_flag));
         }
+
+        //if the user is picking their favorite ingredients, the method gets all the ingredients from the textfiles.
+        //each ingredient is assigned an icon depending on which file it was from (what category of ingredient it is)
         if(setUpTask.equals("Ingredient Preferences")){
             ArrayList<String> carbItems = readFromFile(this, R.raw.carbohydrates);
             for(int i = 0; i < carbItems.size(); i++){
@@ -248,8 +275,9 @@ public class ItemSetUpActivity extends AppCompatActivity {
                 String newItemName = vegeItems.get(i).substring(0,1).toUpperCase() + vegeItems.get(i).substring(1);
                 setupItems.add(new SetupItem(newItemName, R.drawable.vege_icon));
             }
-            setImages();
         }
+
+        //if the user is picking their diet, the method adds their diet options here.
         if(setUpTask.equals("Diet Preferences")){
             setupItems.add(new SetupItem("Vegan", R.drawable.vegan_icon));
             setupItems.add(new SetupItem("ovo-Vegetarian", R.drawable.ovo_vegetarian_icon));
@@ -257,7 +285,45 @@ public class ItemSetUpActivity extends AppCompatActivity {
             setupItems.add(new SetupItem("ovo-lacto-Vegetarian", R.drawable.lacto_ovo_vegetarian_icon));
             setupItems.add(new SetupItem("Pescatarian", R.drawable.pescatarian_icon));
             setupItems.add(new SetupItem("Omnivore", R.drawable.protein_icon));
-            //TODO: fill this list out more
+        }
+
+        //if the user is picking their allergies, the method adds all the ingredients from the text files here.
+        if(setUpTask.equals("Allergy Preferences")){
+            ArrayList<String> carbItems = readFromFile(this, R.raw.carbohydrates);
+            for(int i = 0; i < carbItems.size(); i++){
+                String newItemName = carbItems.get(i).substring(0,1).toUpperCase() + carbItems.get(i).substring(1);
+                setupItems.add(new SetupItem(newItemName, R.drawable.carb_icon));
+            }
+            ArrayList<String> fruitItems = readFromFile(this, R.raw.fruits);
+            for(int i = 0; i < fruitItems.size(); i++){
+                String newItemName = fruitItems.get(i).substring(0,1).toUpperCase() + fruitItems.get(i).substring(1);
+                setupItems.add(new SetupItem(newItemName, R.drawable.fruit_icon));
+            }
+            ArrayList<String> oilItems = readFromFile(this, R.raw.oils);
+            for(int i = 0; i < oilItems.size(); i++){
+                String newItemName = oilItems.get(i).substring(0,1).toUpperCase() + oilItems.get(i).substring(1);
+                setupItems.add(new SetupItem(newItemName, R.drawable.oil_icon));
+            }
+            ArrayList<String> proteinItems = readFromFile(this, R.raw.proteins);
+            for(int i = 0; i < proteinItems.size(); i++){
+                String newItemName = proteinItems.get(i).substring(0,1).toUpperCase() + proteinItems.get(i).substring(1);
+                setupItems.add(new SetupItem(newItemName, R.drawable.protein_icon));
+            }
+            ArrayList<String> sauceItems = readFromFile(this, R.raw.sauces);
+            for(int i = 0; i < sauceItems.size(); i++){
+                String newItemName = sauceItems.get(i).substring(0,1).toUpperCase() + sauceItems.get(i).substring(1);
+                setupItems.add(new SetupItem(newItemName, R.drawable.sauce_icon));
+            }
+            ArrayList<String> spiceItems = readFromFile(this, R.raw.spices);
+            for(int i = 0; i < spiceItems.size(); i++){
+                String newItemName = spiceItems.get(i).substring(0,1).toUpperCase() + spiceItems.get(i).substring(1);
+                setupItems.add(new SetupItem(newItemName, R.drawable.spice_icon));
+            }
+            ArrayList<String> vegeItems = readFromFile(this, R.raw.vegetables);
+            for(int i = 0; i < vegeItems.size(); i++){
+                String newItemName = vegeItems.get(i).substring(0,1).toUpperCase() + vegeItems.get(i).substring(1);
+                setupItems.add(new SetupItem(newItemName, R.drawable.vege_icon));
+            }
         }
         for(int i = 0; i < setupItems.size(); i++){
             setupItemNames.add(setupItems.get(i).getFoodName());
@@ -270,12 +336,14 @@ public class ItemSetUpActivity extends AppCompatActivity {
 
     }
 
+    //this method gives the searchbar its characteristics, namely, the arraylist from which it finds suggestions.
     public void setUpSearchBar(){
         ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(this, R.layout.dropdown_item, setupItemNames);
         searchBar.setAdapter(mAdapter);
         searchBar.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
     }
 
+    //method to concisely read the textfiles containing ingredient lists
     private ArrayList<String> readFromFile(Context context, int id) {
 
         ArrayList<String> list = new ArrayList<String>();
@@ -303,11 +371,8 @@ public class ItemSetUpActivity extends AppCompatActivity {
         return list;
     }
 
-    public void setImages(){
 
-    }
-
-
+    //method i made so i could reverse completion to enable testing
     public void reset(){
         SharedPreferences.Editor edit = sharedPref.edit();
         String setUpItem = setUpTask.substring(0, setUpTask.indexOf('P') -1);

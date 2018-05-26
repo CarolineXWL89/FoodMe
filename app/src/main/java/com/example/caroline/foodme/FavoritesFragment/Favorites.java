@@ -1,7 +1,7 @@
 package com.example.caroline.foodme.FavoritesFragment;
 
 public class Favorites {
-    private String backendlessID, edamamID;
+    private String backendlessID, edamamID, objectId;
     private Boolean Backendless;
     private int frequency;
     private String objectId;
@@ -15,6 +15,14 @@ public class Favorites {
         this.edamamID = edamamID;
         Backendless = backendless;
         this.frequency = frequency;
+    }
+
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
     }
 
     public String getBackendlessID() {

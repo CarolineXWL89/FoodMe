@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,9 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
-import com.backendless.BackendlessUser;
-import com.backendless.async.callback.AsyncCallback;
-import com.backendless.exceptions.BackendlessFault;
 import com.example.caroline.foodme.FavoritesFragment.FavoritesFragment;
 import com.example.caroline.foodme.GenerateFragment.AutoGenerateFragment;
 import com.example.caroline.foodme.SearchFragment.SearchFragment;
@@ -47,12 +43,11 @@ public class HomePageActivity extends AppCompatActivity {
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         String userID = sharedPref.getString(getString(R.string.user_ID), "");*/
     public static final String TAG = "HomePageActivity";
+    private TextView mTextMessage;
     private View decorView;
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
     private SearchView searchView;
-    private Fragment currentFragment;
-    private FragmentManager fragmentManager;
 
     public static Context getContext() {
         return context;
@@ -67,7 +62,9 @@ public class HomePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         Backendless.initApp(this, BackendlessSettings.APP_ID, BackendlessSettings.API_KEY);
-        logIn(); //checks if user ahs already logged in, if not switches to log in screen
+        //logIn(); //checks if user ahs already logged in, if not switches to log in screen
+        wireWidgets();
+        hideNavBar();
     }
 
     @Override
@@ -81,34 +78,16 @@ public class HomePageActivity extends AppCompatActivity {
         decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         decorView.setSystemUiVisibility(uiOptions);
-        //todo call again after keyboard is pulled up?
+        //todo call again after keyboard is pulled up
     }
 
     private void logIn() {
-        if(Backendless.UserService.CurrentUser() == null) {
-            //todo fix so it doesn't just log in to tester account
-            Backendless.UserService.login("h", "h", new AsyncCallback<BackendlessUser>() {
-                        @Override
-                        public void handleResponse(BackendlessUser response) {
-                            Toast.makeText(HomePageActivity.this, "Welcome "+ response.getProperty("name")+ "!", Toast.LENGTH_SHORT).show();
-                            wireWidgets();
-                        }
-
-                        @Override
-                        public void handleFault(BackendlessFault fault) {
-                            Log.d(TAG, "handleFault: "+fault.getMessage());
-                        }
-                    });
-            /*Intent i = new Intent(this, LoginScreen.class);
-            startActivity(i);*/
-        }
-        /* //todo fix login and user stuff (basically if remembe rme login for them rather than )
         sharedPref = getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
         int userExists = sharedPref.getInt(getString(R.string.user), 0);
-        //userExists = 0;
+//        userExists = 0; //todo delete me later
         //checks if previous user exists
         if (userExists == 0) {
             Intent i = new Intent(this, LoginScreen.class);
@@ -119,7 +98,7 @@ public class HomePageActivity extends AppCompatActivity {
             editor.putInt(getString(R.string.user), 0);
             editor.commit();
             Toast.makeText(this, "Next time you'll need to login again", Toast.LENGTH_SHORT).show();
-        }*/
+        }
     }
 
     @Override
@@ -140,19 +119,14 @@ public class HomePageActivity extends AppCompatActivity {
         //creates bottom navigation bar to hold the fragment navigation
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        fragmentManager = getSupportFragmentManager();
-        currentFragment = new FavoritesFragment();
-        fragmentManager.beginTransaction().replace(R.id.fragment_container, currentFragment).commit();
-        hideNavBar();
     }
-
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             //Prepare a null fragment
-            currentFragment = null;
+            Fragment currentFragment = null;
             switch (item.getItemId()) {
                 case R.id.navigation_search:
                     currentFragment = new SearchFragment();
@@ -162,14 +136,13 @@ public class HomePageActivity extends AppCompatActivity {
                     currentFragment = new FavoritesFragment();
                     break;
                 case R.id.navigation_create:
-                    //todo alert dialog upload recipe or auto-generate?
                     currentFragment = new NewRecipeOptionsFragment();//new CreateFragment();
                     break;
             }
             //transmits proper fragment
-            fragmentManager = getSupportFragmentManager();
+            FragmentManager fm = getSupportFragmentManager();
             if (currentFragment != null) {
-                fragmentManager.beginTransaction()
+                fm.beginTransaction()
                         .replace(R.id.fragment_container, currentFragment)
                         .commit();
                 return true;
@@ -189,7 +162,7 @@ public class HomePageActivity extends AppCompatActivity {
                 return true;
             case R.id.search_recipe_general:
                 //begins searching
-                //todo shift focus
+                //todo pull up keyboard now
             default:
                 return super.onOptionsItemSelected(item);
         }

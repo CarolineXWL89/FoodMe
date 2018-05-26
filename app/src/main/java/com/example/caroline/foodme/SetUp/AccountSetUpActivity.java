@@ -24,7 +24,10 @@ import com.example.caroline.foodme.R;
 import com.example.caroline.foodme.UserInfo.AccountSettingsActivity;
 
 import java.util.ArrayList;
-
+/**
+ * This class is the Activity that controls the progression of the setup. A user selects which of 4 preference activities to complete first
+ * and returns to this Activity upon completing each of the others. After all 4 are finished, they may finish setup and begin using the app.
+ */
 public class AccountSetUpActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -43,18 +46,32 @@ public class AccountSetUpActivity extends AppCompatActivity {
         Backendless.initApp(this, BackendlessSettings.APP_ID, BackendlessSettings.API_KEY);
         sharedPref = getSharedPreferences("preferences", Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = sharedPref.edit();
+
+        //This if statement is in case the app had never loaded this screen before. Each variable within the SharedPreferences
+        //is an int whose value describes if this is the first time opening the setup (-1), the setup in incomplete (0) or complete (1).
         if(sharedPref.getInt("CuisineSetup", -1) == -1){
             edit.putInt("CuisineSetup", 0);
             edit.putInt("IngredientSetup", 0);
             edit.putInt("DietSetup", 0);
+            edit.putInt("AllergySetup", 0);
             edit.commit();
         }
+
+        //variable describing how many of the 4 sections are completed
         partsCompleted = 0;
+
+        //arraylist used to house the name of each of the 4 icons, as well as an icon indicating if it has been completed.
         setupItems = new ArrayList<>();
         setupItemsCreate();
         wireWidgets();
     }
 
+    /**
+     * Assigns each widget to its proper view, and also sets the progression of the progressbar based off of the partsCompleted variable.
+     * The onClickListener for finishButton is completed, and it only allows the user to finish if partsCompleted == 4.
+     * Once it is truly finished, the variable determining if setup has been updated is set to true on backendless (so the user won't have
+     * to complete setup again) and the app opens HomePageActivity.
+     */
     public void wireWidgets(){
         recyclerView = findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(this);
@@ -64,13 +81,12 @@ public class AccountSetUpActivity extends AppCompatActivity {
         finishButton = findViewById(R.id.setup_finish_button);
         recyclerView.setAdapter(adapter);
         progressBar = findViewById(R.id.setup_progressbar);
-        progressBar.setProgress((partsCompleted*100)/3);
+        progressBar.setProgress((partsCompleted*100)/4);
 
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(partsCompleted == 3){
-                    //TODO: open HomePageActivity, but first, change the thingy in Backendless
+                if(partsCompleted == 4){
                     String userUserName = sharedPref.getString("userUserName", "null");
                     String userPassword = sharedPref.getString("userPassword", "null");
                     Backendless.UserService.login(userUserName, userPassword, new AsyncCallback<BackendlessUser>() {
@@ -105,6 +121,12 @@ public class AccountSetUpActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method determines if a setup has been completed already (using the value given by the SharedPreferences file) before adding
+     * the object of each setup to the arraylist. This arraylist is later presented in the RecyclerView. Only uncompleted items may be
+     * selected. In addition, the variable partsCompleted is incremented if a setup has been completed, which is how progression of
+     * the progressbar is determined.
+     */
     public void setupItemsCreate(){
         if (sharedPref.getInt("CuisineSetup", -1) == 0){
             setupItems.add(new SetUpChecklistItem("Cuisine Preferences", false));
@@ -126,6 +148,13 @@ public class AccountSetUpActivity extends AppCompatActivity {
         else if(sharedPref.getInt("DietSetup", -1)==1){
             partsCompleted += 1;
             setupItems.add(new SetUpChecklistItem("Diet Preferences", true));
+        }
+        if (sharedPref.getInt("AllergySetup", -1) == 0){
+            setupItems.add(new SetUpChecklistItem("Allergy Preferences", false));
+        }
+        else if(sharedPref.getInt("AllergySetup", -1)==1){
+            partsCompleted += 1;
+            setupItems.add(new SetUpChecklistItem("Allergy Preferences", true));
         }
     }
 
