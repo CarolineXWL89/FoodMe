@@ -61,7 +61,7 @@ public class FavoritesFragment extends Fragment {
     public FavoritesFragment() {
         // Required empty public constructorr
         //todo save general favorites and refresh every time Home paga activity is restarted not when favorites is restarted should fix slow problem
-        //need ot search user favorites everytime
+        //need ot search user favorites everytim
         //todo need to test edamam code
     }
 
