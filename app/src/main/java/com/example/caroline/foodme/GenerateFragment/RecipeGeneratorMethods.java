@@ -401,7 +401,7 @@ public class RecipeGeneratorMethods {
      * @param fileName what you want the file to be called
      */
     private void writeToFile(String data, Context context , String fileName) {
-        mContext = HomePageActivity.getContext();
+        mContext = HomePageActivity.getAppContext();
         if(mContext != null){
             try {
                 OutputStreamWriter outputStreamWriter = new OutputStreamWriter(mContext.openFileOutput(fileName, mContext.MODE_PRIVATE)); //TODO again why is mContext null @Jaemyung

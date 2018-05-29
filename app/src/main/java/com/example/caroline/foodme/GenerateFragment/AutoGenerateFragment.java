@@ -1,5 +1,6 @@
 package com.example.caroline.foodme.GenerateFragment;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import com.example.caroline.foodme.EdamamObjects.EntitySearch;
 import com.example.caroline.foodme.EdamamObjects.Hint;
 import com.example.caroline.foodme.EdamamObjects.NutritionResponse;
 import com.example.caroline.foodme.EdamamObjects.fooddotjson;
+import com.example.caroline.foodme.HomePageActivity;
 import com.example.caroline.foodme.InputFoodsAdapter;
 import com.example.caroline.foodme.NewRecipeOptionsFragment;
 import com.example.caroline.foodme.R;
@@ -32,6 +34,12 @@ import com.example.caroline.foodme.RecyclerViewOnClick;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import dagger.Module;
+import dagger.Provides;
+import dagger.android.support.AndroidSupportInjection;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,6 +59,7 @@ public class AutoGenerateFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+//    @Inject
     private Context context;
     private NewRecipeOptionsFragment newRecipeOptionsFragment = new NewRecipeOptionsFragment();
 
@@ -73,17 +82,20 @@ public class AutoGenerateFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        context = getActivity();//TODO WHAT IS THE CONTEXT
+//        context = getActivity();//TODO WHAT IS THE CONTEXT
         //inflates layout for autogen fragment
         rootView = inflater.inflate(R.layout.auto_generate_fragment, container, false);
         wireWidgets();
+        setRecyclerView(nutritionResponses);
         return rootView;
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        context = HomePageActivity.getAppContext();
         ArrayList<EntitySearch> entitySearches;
 
 //        try {
@@ -98,8 +110,6 @@ public class AutoGenerateFragment extends Fragment {
 //        ArrayList<NutritionResponse> nutritionResponses = new ArrayList<>();
 //        String input = inputIngrTextView.getText().toString();
         //TODO Caroline: where to start on Wednesday
-        setRecyclerView(nutritionResponses);
-
     }
 
     /**
@@ -111,7 +121,7 @@ public class AutoGenerateFragment extends Fragment {
         randomGenButton = rootView.findViewById(R.id.button_auto_create); //TODO ""
         saveIngredientButton = rootView.findViewById(R.id.button_save_ingr); //TODO ""
         inputIngrTextView = rootView.findViewById(R.id.editText_ingr_input); //TODO needs to get text inputted
-        recyclerView = rootView.findViewById(R.id.recyclerView); //TODO Why isn't recyclerView_foods showing up?
+        recyclerView = rootView.findViewById(R.id.recyclerView_foods); //TODO Why isn't recyclerView_foods showing up?
 
         saveIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -351,7 +361,7 @@ public class AutoGenerateFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new InputFoodsAdapter(new ArrayList<NutritionResponse>(), new RecyclerViewOnClick() {
+        adapter = new InputFoodsAdapter(nutritionResponses, new RecyclerViewOnClick() {
             @Override
             public void onClick(View v, int pos) {
                 Intent i = new Intent(getActivity(), RecipeDisplayTemp.class);
@@ -434,6 +444,12 @@ public class AutoGenerateFragment extends Fragment {
         nutritionResponses.add(nutritionResponse);
         return nutritionResponses;
     }
+
+//    @Override
+//    public void onAttach(Context context) {
+//        AndroidSupportInjection.inject(this);
+//        super.onAttach(context);
+//    }
 
     //Stuff that would eventually be in the middle part (onCreate in old activity)
     //holds list of the return info from searching for a food

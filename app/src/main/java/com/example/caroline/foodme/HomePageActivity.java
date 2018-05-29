@@ -1,5 +1,6 @@
 package com.example.caroline.foodme;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -29,13 +30,25 @@ import com.example.caroline.foodme.SetUp.ItemSetUpActivity;
 import com.example.caroline.foodme.UserInfo.LoginScreen;
 import com.example.caroline.foodme.UserInfo.SettingsPageActivity;
 
+import javax.inject.Inject;
+
+import dagger.Component;
+import dagger.android.AndroidInjector;
+import dagger.android.DaggerApplication_MembersInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
+import dagger.android.support.DaggerAppCompatActivity;
+import dagger.android.support.DaggerApplication;
+import dagger.android.support.HasSupportFragmentInjector;
+
+
 /*
 Contains stuff like recently added seen after logging in (NOT 1st time)
 Implements: accessing ALL users' entries
 Contains: scrolling image gallery; access toolbar for fav, add, search; settings icon
 Can: be accessed by clicking on logo/home, NOT launching activity!!! (Need to change)
  */
-public class HomePageActivity extends AppCompatActivity {
+public class HomePageActivity extends AppCompatActivity implements HasActivityInjector, HasSupportFragmentInjector {
     //
     /*
     GET USERID //todo delete user exists when you log out
@@ -49,11 +62,13 @@ public class HomePageActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private SearchView searchView;
 
-    public static Context getContext() {
-        return context;
-    }
+    private static Object context;
 
-    private static Context context;
+    @Inject
+    DispatchingAndroidInjector<Activity> mActivityInjector;
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> mFragmentInjector;
 
 
     //todo app icon use adobe
@@ -62,9 +77,15 @@ public class HomePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         Backendless.initApp(this, BackendlessSettings.APP_ID, BackendlessSettings.API_KEY);
+        context = getApplicationContext();
         //logIn(); //checks if user ahs already logged in, if not switches to log in screen
         wireWidgets();
         hideNavBar();
+
+    }
+
+    public static Context getAppContext(){
+        return (Context) context;
     }
 
     @Override
@@ -171,5 +192,15 @@ public class HomePageActivity extends AppCompatActivity {
 @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public AndroidInjector<Activity> activityInjector() {
+        return mActivityInjector;
+    }
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return mFragmentInjector;
     }
 }
