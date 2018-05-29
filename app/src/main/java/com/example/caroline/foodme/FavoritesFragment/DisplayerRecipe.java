@@ -11,6 +11,9 @@ public class DisplayerRecipe {
         this.name = name;
     }
 
+    public DisplayerRecipe() {
+    }
+
     public String getId() {
         return id;
     }
