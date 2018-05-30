@@ -19,7 +19,7 @@ public interface DataMuseNutritionSearch {
 
     String baseURL = "https://api.edamam.com/api/food-database/";
 
-    @POST("/nutrients")
+    @POST("nutrients")
     NutritionResponse sendFood(@Body fooddotjson body, @Query("app_id=") String apiID, @Query("app_key") String apiKey);
     //TODO Work on new Retrofit stuff
     //curl -d @food.json -H "Content-Type: application/json" "https://api.edamam.com/api/food-database/nutrients?app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}"

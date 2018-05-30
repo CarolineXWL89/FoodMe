@@ -59,6 +59,7 @@ public class AutoGenerateFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    private ArrayList<String> tempIngrSaved = new ArrayList<>();
 //    @Inject
     private Context context;
     private NewRecipeOptionsFragment newRecipeOptionsFragment = new NewRecipeOptionsFragment();
@@ -128,6 +129,7 @@ public class AutoGenerateFragment extends Fragment {
             public void onClick(View view) {
                 //TODO saves EditText to recyclerView + clears
                 String currentIngr = inputIngrTextView.getText().toString();
+                tempIngrSaved.add(currentIngr);
                 inputIngrTextView.getText().clear();
 
             }
@@ -218,7 +220,7 @@ public class AutoGenerateFragment extends Fragment {
 
         DataMuseNutritionSearch apiNutritionSearch = retrofit.create(DataMuseNutritionSearch.class);
 
-        ArrayList<String> userIngrs = new ArrayList<>(); //to store strings we're matching
+        //ArrayList<String> userIngrs = new ArrayList<>(); //to store strings we're matching
         RecipeGeneratorMethods recipeGeneratorMethods = new RecipeGeneratorMethods(getActivity());
         recipeGeneratorMethods.makeLists();
         try {

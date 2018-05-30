@@ -20,7 +20,6 @@
 - Jaemyung: debug for me (@recipeGenMethods + @searchFrag), advise foodIcons
 - Ben: help with debug/food icon
 - Nicolo: get recipe layout/display functioning (2 temp files)
-- Michael: set food icons and make them, check my recyclerView + adapter for create from list input
 
 ###Things to Implement
 - Tutorial how to work app on first launching/log-in (STRETCH)

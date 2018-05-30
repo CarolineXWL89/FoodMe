@@ -18,21 +18,30 @@ import retrofit2.http.Query;
 
 public interface DataMuseNutritionIngrParser {
 
-    String baseURL = "https://api.edamam.com/api/food-database/parser/"; //nutrition
+    String baseURL = "https://api.edamam.com/api/food-database/"; //nutrition
     //String APP_ID_NUTRITION = "06b894fb";
     //String APP_KEY_NUTRITION = "b6cdc3e30b89f8409d65e44eb788752f";
 
     /**
-     * Gets list of
+     * Gets list of foods default 10
      * @param foodIngr
      * @param appId
      * @param appKey
      * @return
      */
-    @GET("ingrs")
+    @GET("parser")
     Call<ArrayList<EntitySearch>> getIngrNutrient(@Query("ingr=") String foodIngr, @Query("app_id=") String appId, @Query("app_key") String appKey);
 
-    @GET("hints")
+
+    /**
+     * Gets a certain # of pages worth of "hints"
+     * @param foodIngr
+     * @param pageNum
+     * @param appId
+     * @param appKey
+     * @return
+     */
+    @GET("parser")
     Call<ArrayList<Hint>> getAllHints(@Query("ingr=") String foodIngr, @Query("page=") int pageNum, @Query("app_id=") String appId, @Query("app_key=") String appKey);
 
 

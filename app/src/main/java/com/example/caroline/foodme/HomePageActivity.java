@@ -119,6 +119,10 @@ public class HomePageActivity extends AppCompatActivity implements HasActivityIn
             editor.putInt(getString(R.string.user), 0);
             editor.commit();
             Toast.makeText(this, "Next time you'll need to login again", Toast.LENGTH_SHORT).show();
+            Backendless.UserService.login(sharedPref.getString("userUserName", "null"), sharedPref.getString("userPassword", "null"));
+        }
+        else{
+            Backendless.UserService.login(sharedPref.getString("userUserName", "null"), sharedPref.getString("userPassword", "null"));
         }
     }
 
