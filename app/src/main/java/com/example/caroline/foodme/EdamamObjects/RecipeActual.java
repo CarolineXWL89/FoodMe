@@ -200,5 +200,4 @@ public class RecipeActual implements Serializable {
         return formatted.toString();
     }
 
-
 }

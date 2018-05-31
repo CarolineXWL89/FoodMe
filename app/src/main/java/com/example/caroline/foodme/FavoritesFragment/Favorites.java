@@ -4,7 +4,6 @@ public class Favorites {
     private String backendlessID, edamamID;
     private Boolean Backendless;
     private int frequency;
-    private String objectId;
 
     public Favorites(){
 
@@ -49,13 +48,5 @@ public class Favorites {
 
     public void setFrequency(int frequency) {
         this.frequency = frequency;
-    }
-
-    public String getObjectId() {
-        return objectId;
-    }
-
-    public void setObjectId(String objectId) {
-        this.objectId = objectId;
     }
 }

@@ -106,7 +106,7 @@ public class FavoritesFragment extends Fragment {
 
                         @Override
                         public void handleFault(BackendlessFault fault) {
-                            Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), fault.getMessage()+"get user fav", Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "handleFault: "+ fault.getMessage());
                         }
                     });
@@ -153,7 +153,7 @@ public class FavoritesFragment extends Fragment {
 
                     @Override
                     public void handleFault(BackendlessFault fault) {
-                        Toast.makeText(getContext(), fault.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), fault.getMessage()+ "fill user displayer", Toast.LENGTH_SHORT).show();
                         userFavoritesDisplayer.add(new DisplayerRecipe("",
                                 "http://www.isic.es/wp-content/plugins/orchitech-dm/resources/alive-dm/img/empty-image.png",
                                 false, "No favorites found.\nPlease check internet connection"));
@@ -161,7 +161,6 @@ public class FavoritesFragment extends Fragment {
                     }
                 });
             } else {
-                //todo edamam serach by id thing make sure async doesnt call until end
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(DataMuseRecipe.baseURL)
                         .addConverterFactory(GsonConverterFactory.create())
@@ -169,20 +168,27 @@ public class FavoritesFragment extends Fragment {
                 DataMuseRecipe api = retrofit.create(DataMuseRecipe.class);
 
                 final String key = f.getEdamamID();
-                Call<RecipeActual> call = api.getRecipeFromURI(f.getEdamamID(), EdamamRecipeKeys.APP_ID_RECIPE , EdamamRecipeKeys.APP_KEY_RECIPE);
-                call.enqueue(new Callback<RecipeActual>() {
+                Call<ArrayList<RecipeActual>> call = api.getRecipeFromURI(f.getEdamamID(), EdamamRecipeKeys.APP_ID_RECIPE , EdamamRecipeKeys.APP_KEY_RECIPE);
+                call.enqueue(new Callback<ArrayList<RecipeActual>>() {
                     @Override
-                    public void onResponse(Call<RecipeActual> call, Response<RecipeActual> response) {
-                        RecipeActual recipe = response.body();
-                        DisplayerRecipe r = new DisplayerRecipe(recipe.getWorkingURI(recipe.getUri()), recipe.getImage(), false, recipe.getLabel());
-                        generalFavorites.add(r);
-                        if(key.equals(finalLast)){ //makes sure we wait til last async call occurs
-                            wireWidgets();
+                    public void onResponse(Call<ArrayList<RecipeActual>> call, Response<ArrayList<RecipeActual>> response) {
+                        RecipeActual recipe = response.body().get(0);
+                        Toast.makeText(getActivity(), ""+response.isSuccessful(), Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onResponse: "+response.errorBody().toString());
+                        Log.d(TAG, "onResponse: "+response.toString());
+                        if(recipe != null){
+                            DisplayerRecipe r = new DisplayerRecipe(recipe.getWorkingURI(recipe.getUri()), recipe.getImage(), false, recipe.getLabel());
+                            userFavoritesDisplayer.add(r);
+                            if(key.equals(finalLast)){ //makes sure we wait til last async call occurs
+                                getOverallFavorites();
+                            }
+                        } else {
+                            Toast.makeText(getActivity(), "no: "+response.toString(), Toast.LENGTH_LONG).show();
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<RecipeActual> call, Throwable t) {
+                    public void onFailure(Call<ArrayList<RecipeActual>> call, Throwable t) {
                         Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "handleFault: "+t.getMessage());
                         DisplayerRecipe r = new DisplayerRecipe();
@@ -190,7 +196,8 @@ public class FavoritesFragment extends Fragment {
                         r.setName("No favorites found.\nPlease check internet connection");
                         userFavoritesDisplayer.add(r);
                         if(key.equals(finalLast)){ //makes sure we wait til last async call occurs
-                            wireWidgets();
+                            Log.d(TAG, "onFailure: "+userFavoritesDisplayer.size());
+                            getOverallFavorites();
                         }
                     }
                 });
@@ -215,9 +222,11 @@ public class FavoritesFragment extends Fragment {
         registerForContextMenu(favoritesRecyclerview);
 
         //checks if no favorites removes placeholder item
-        if(userFavoritesDisplayer.get(0).getId().equals("empty")){
-            userFavoritesDisplayer.remove(0);
-            Toast.makeText(getActivity(), "No favorites currently.\nTo add favorites heart recipes you like", Toast.LENGTH_LONG).show();
+        if(userFavoritesDisplayer.isEmpty()){
+            if(userFavoritesDisplayer.get(0).getId().equals("empty")){
+                userFavoritesDisplayer.remove(0);
+                Toast.makeText(getActivity(), "No favorites currently.\nTo add favorites heart recipes you like", Toast.LENGTH_LONG).show();
+            }
         }
 
         ViewListener viewListener = new ViewListener() {
@@ -244,7 +253,7 @@ public class FavoritesFragment extends Fragment {
 
                                 @Override
                                 public void handleFault(BackendlessFault fault) {
-                                    Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), fault.getMessage()+"wire widgets", Toast.LENGTH_SHORT).show();
                                     Log.d(TAG, "handleFault: "+ fault.getMessage());
                                 }
                             });
@@ -263,6 +272,7 @@ public class FavoritesFragment extends Fragment {
 
     public void setImages(ArrayList<KeyValueFavorite> favorites){
         generalFavorites = new ArrayList<>();
+        Log.d(TAG, "setImages: "+generalFavorites.size());
         if(favorites.get(0) == null) {
             generalFavorites.get(0).setImageURL("http://www.isic.es/wp-content/plugins/orchitech-dm/resources/alive-dm/img/empty-image.png");
             generalFavorites.get(0).setName("No favorites found.\nPlease check internet connection");
@@ -279,13 +289,14 @@ public class FavoritesFragment extends Fragment {
                             generalFavorites.add(r);
                             if(key.equals(last)){ //makes sure we wait til last async call occurs
                                 wireWidgets();
+                                Log.d(TAG, "setImages: "+generalFavorites.size());
                             }
                         }
 
                         @Override
                         public void handleFault(BackendlessFault fault) {
                             Toast.makeText(getContext(), fault.getMessage(), Toast.LENGTH_SHORT).show();
-                            Log.d(TAG, "handleFault: "+fault.getMessage());
+                            Log.d(TAG, "handleFault: "+fault.getMessage()+"set images");
                             generalFavorites.get(0).setImageURL("http://www.isic.es/wp-content/plugins/orchitech-dm/resources/alive-dm/img/empty-image.png");
                             generalFavorites.get(0).setName("No favorites found.\nPlease check internet connection");
                             wireWidgets();
@@ -299,22 +310,34 @@ public class FavoritesFragment extends Fragment {
                     DataMuseRecipe api = retrofit.create(DataMuseRecipe.class);
 
                     final String key = f.getKey();
-                    Call<RecipeActual> call = api.getRecipeFromURI(f.getKey(), EdamamRecipeKeys.APP_ID_RECIPE , EdamamRecipeKeys.APP_KEY_RECIPE);
-                    call.enqueue(new Callback<RecipeActual>() {
+                    Call<ArrayList<RecipeActual>> call = api.getRecipeFromURI(f.getKey(), EdamamRecipeKeys.APP_ID_RECIPE , EdamamRecipeKeys.APP_KEY_RECIPE);
+                    call.enqueue(new Callback<ArrayList<RecipeActual>>() {
                         @Override
-                        public void onResponse(Call<RecipeActual> call, Response<RecipeActual> response) {
-                            RecipeActual recipe = response.body();
-                            DisplayerRecipe r = new DisplayerRecipe(recipe.getWorkingURI(recipe.getUri()), recipe.getImage(), false, recipe.getLabel());
-                            generalFavorites.add(r);
-                            if(key.equals(last)){ //makes sure we wait til last async call occurs
-                                wireWidgets();
+                        public void onResponse(Call<ArrayList<RecipeActual>> call, Response<ArrayList<RecipeActual>> response) {
+                            if (response.body().size() > 0){
+                                RecipeActual recipe = response.body().get(0);
+                                DisplayerRecipe r = new DisplayerRecipe(recipe.getWorkingURI(recipe.getUri()), recipe.getImage(), false, recipe.getLabel());
+                                generalFavorites.add(r);
+                                if(key.equals(last)){ //makes sure we wait til last async call occurs
+                                    wireWidgets();
+                                }
+                            } else {
+                                DisplayerRecipe r = new DisplayerRecipe();
+                                r.setImageURL("http://www.isic.es/wp-content/plugins/orchitech-dm/resources/alive-dm/img/empty-image.png");
+                                r.setName("No favorites found.\nPlease check internet connection");
+                                generalFavorites.add(r);
+                                if(key.equals(last)){ //makes sure we wait til last async call occurs
+                                    wireWidgets();
+                                }
                             }
+
                         }
 
                         @Override
-                        public void onFailure(Call<RecipeActual> call, Throwable t) {
+                        public void onFailure(Call<ArrayList<RecipeActual>> call, Throwable t) {
+                            Log.d(TAG, "onFailure: "+call.request().body());
                             Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                            Log.d(TAG, "handleFault: "+t.getMessage());
+                            Log.d(TAG, "handleFault: "+t.getMessage()+"retrofit wire widget");
                             DisplayerRecipe r = new DisplayerRecipe();
                             r.setImageURL("http://www.isic.es/wp-content/plugins/orchitech-dm/resources/alive-dm/img/empty-image.png");
                             r.setName("No favorites found.\nPlease check internet connection");
@@ -351,7 +374,7 @@ public class FavoritesFragment extends Fragment {
 
             @Override
             public void handleFault( BackendlessFault fault ) {
-                Toast.makeText(getActivity(), fault.getCode(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), fault.getCode()+"overall fav", Toast.LENGTH_LONG).show();
             }
         });
     }
