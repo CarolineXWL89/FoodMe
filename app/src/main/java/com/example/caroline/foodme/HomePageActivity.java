@@ -118,8 +118,8 @@ public class HomePageActivity extends AppCompatActivity /*implements HasActivity
 
             }
         });
-        /*
-        * sharedPref = getSharedPreferences(
+
+        sharedPref = getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
@@ -135,12 +135,32 @@ public class HomePageActivity extends AppCompatActivity /*implements HasActivity
             editor.putInt(getString(R.string.user), 0);
             editor.commit();
             Toast.makeText(this, "Next time you'll need to login again", Toast.LENGTH_SHORT).show();
-            Backendless.UserService.login(sharedPref.getString("userUserName", "null"), sharedPref.getString("userPassword", "null"));
+            Backendless.UserService.login(sharedPref.getString("userUserName", "null"), sharedPref.getString("userPassword", "null"), new AsyncCallback<BackendlessUser>() {
+                @Override
+                public void handleResponse(BackendlessUser response) {
+
+                }
+
+                @Override
+                public void handleFault(BackendlessFault fault) {
+
+                }
+            });
         }
-        else{
-            Backendless.UserService.login(sharedPref.getString("userUserName", "null"), sharedPref.getString("userPassword", "null"));
+        else if(userExists == 2){
+            Backendless.UserService.login(sharedPref.getString("userUserName", "null"), sharedPref.getString("userPassword", "null"), new AsyncCallback<BackendlessUser>() {
+                @Override
+                public void handleResponse(BackendlessUser response) {
+
+                }
+
+                @Override
+                public void handleFault(BackendlessFault fault) {
+
+                }
+            });
         }
-        * */
+
 //        sharedPref = getSharedPreferences(
 //                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 //        SharedPreferences.Editor editor = sharedPref.edit();
