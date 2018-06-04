@@ -29,10 +29,8 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class RecipeDisplayActivity extends AppCompatActivity {
     private ImageView backgroundImage, mainImage;
@@ -103,7 +101,7 @@ public class RecipeDisplayActivity extends AppCompatActivity {
     private void wireWigets() {
         backgroundImage=findViewById(R.id.background_image);
         mainImage=findViewById(R.id.image_image);
-        recipeNameView = findViewById(R.id.name_textview);
+        recipeNameView=findViewById(R.id.name_textview);
         servingView=findViewById(R.id.servings_textView);
         timeNeededView=findViewById(R.id.time_textView);
         audioButton=findViewById(R.id.speaker_button);
