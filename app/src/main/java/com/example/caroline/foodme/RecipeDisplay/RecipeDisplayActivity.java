@@ -7,6 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -35,9 +38,12 @@ import java.util.List;
 public class RecipeDisplayActivity extends AppCompatActivity {
     private ImageView backgroundImage, mainImage;
     private TextView recipeNameView, servingView, timeNeededView;
-    private ImageButton audioButton, favoriteButton;
+    private ImageButton  favoriteButton;
     private RecipeNative recipeNative;
     private RecipeActual recipeActual;
+    private TabLayout mTabLayout;
+    private String procedure;
+    private ArrayList<String> ingr;
     private String type;
     private SharedPreferences sharedPref;
     private boolean favorited; //TODO: set the favoriteButton so that it removes the object
@@ -99,13 +105,57 @@ public class RecipeDisplayActivity extends AppCompatActivity {
     }
 
     private void wireWigets() {
-        backgroundImage=findViewById(R.id.background_image);
-        mainImage=findViewById(R.id.image_image);
-        recipeNameView=findViewById(R.id.name_textview);
-        servingView=findViewById(R.id.servings_textView);
-        timeNeededView=findViewById(R.id.time_textView);
-        audioButton=findViewById(R.id.speaker_button);
+        backgroundImage = findViewById(R.id.background_image);
+        mainImage = findViewById(R.id.image_image);
+        recipeNameView = findViewById(R.id.name_textview);
+        servingView = findViewById(R.id.servings_textView);
+        timeNeededView = findViewById(R.id.time_textView);
+
         favoriteButton = findViewById(R.id.favorite_button);
+        mTabLayout = (TabLayout) findViewById(R.id.navigation_recipe_display);
+        TabLayout.Tab ingredientsTab = mTabLayout.newTab().setText("Ingredients");
+        ingredientsTab.setText("Ingredients");
+        TabLayout.Tab procedureTab = mTabLayout.newTab().setText("Procedure");
+        mTabLayout.addTab(ingredientsTab);
+        mTabLayout.addTab(procedureTab);
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            public void onTabSelected(TabLayout.Tab tab) {
+                Fragment currentFragment = null;
+                switch (tab.getPosition()) {
+                    case 0:
+                        currentFragment = new IngredientDisplayFragment();
+                        Bundle a = new Bundle();
+                        a.putStringArrayList("ingr", ingr);
+                        currentFragment.setArguments(a);
+                        break;
+
+                    case 1:
+                        currentFragment = new ProcedureDisplayFragment();
+                        Bundle b = new Bundle();
+                        b.putString("procedure", procedure);
+                        currentFragment.setArguments(b);
+                        break;
+                }
+                FragmentManager fm = getSupportFragmentManager();
+                if (currentFragment != null) {
+                    fm.beginTransaction()
+                            .replace(R.id.fragment_loader, currentFragment)
+                            .commit();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+
+        });
+
     }
 
     public void setOnClickListeners(){
@@ -438,6 +488,15 @@ public class RecipeDisplayActivity extends AppCompatActivity {
 
     private void setParts() {
         if (type.equals("RecipeNative")) {
+
+            procedure=recipeNative.getDirections();
+            String ingredients=recipeNative.getIngredients();
+            ingr=new ArrayList<>();
+            while(ingredients.indexOf(",")>0){
+                ingr.add(ingredients.substring(0,ingredients.indexOf(",")));
+                ingredients=ingredients.substring(ingredients.indexOf(",")+1);
+            }
+            ingr.add(ingredients);
             //set views
             recipeNameView.setText(recipeNative.getRecipeName());
             //creator.setText(recipeNative.getOwnerId());
@@ -449,8 +508,8 @@ public class RecipeDisplayActivity extends AppCompatActivity {
 //            RecipeDisplayActivity.DownloadImageFromURL downloadImageFromURL = new RecipeDisplayActivity.DownloadImageFromURL(mainImage);
 //            Bitmap bitmap = downloadImageFromURL.doInBackground(recipeNative.getImageURL());
 //            downloadImageFromURL.onPostExecute(bitmap);
-            String ingredients = recipeNative.getIngredients();
-            recipeNative.setIngredients(ingredients);
+//            String ingredients = recipeNative.getIngredients();
+//            recipeNative.setIngredients(ingredients);
             //instructions.setText("Ingredients: \n" + recipeNative.getIngredients() + "\n Directions: " + "\n" + recipeNative.getDirections()); //sets ingredients + directions
 //
 
