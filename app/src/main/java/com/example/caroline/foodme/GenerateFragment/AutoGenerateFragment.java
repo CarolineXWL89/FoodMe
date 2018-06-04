@@ -34,12 +34,12 @@ import com.example.caroline.foodme.RecyclerViewOnClick;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+//import javax.inject.Inject;
+//import javax.inject.Singleton;
 
-import dagger.Module;
-import dagger.Provides;
-import dagger.android.support.AndroidSupportInjection;
+//import dagger.Module;
+//import dagger.Provides;
+//import dagger.android.support.AndroidSupportInjection;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
