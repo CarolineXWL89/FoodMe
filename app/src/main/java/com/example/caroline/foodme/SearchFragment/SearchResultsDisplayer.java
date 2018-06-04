@@ -12,10 +12,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.caroline.foodme.EdamamObjects.RecipeActual;
+import com.example.caroline.foodme.R;
 import com.example.caroline.foodme.RecipeDisplay.RecipeDisplayTemp;
 import com.example.caroline.foodme.RecipeNative;
-import com.example.caroline.foodme.R;
 import com.example.caroline.foodme.RecyclerViewOnClick;
 import com.example.caroline.foodme.Search.SearchResultsAdapter;
 
@@ -29,7 +28,7 @@ public class SearchResultsDisplayer extends AppCompatActivity {
 
 
     private static final String TAG ="SearchResultsDisplayer";
-    private ArrayList recipes;
+    private ArrayList<RecipeNative> recipes;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private SearchResultsAdapter searchResultsAdapter;
@@ -46,17 +45,15 @@ public class SearchResultsDisplayer extends AppCompatActivity {
         recipes = new ArrayList();
         Intent i = getIntent();
         ArrayList<RecipeNative> r = i.getParcelableArrayListExtra("the_stuff");
-        ArrayList<RecipeActual> r2 = (ArrayList<RecipeActual>) i.getSerializableExtra("other_stuff");
 
         recipes.addAll(r);
-        recipes.addAll(r2);
         for (int j = 0; j<recipes.size(); j++) {
             if (recipes.get(j) != null){
                 if(recipes.get(j).getClass().getName().equals("RecipeNative")){
                     Log.d(TAG, "onCreate: " + ((RecipeNative) recipes.get(j)).getRecipeName());
                 }
                 else{
-                    Log.d(TAG, "onCreate: " + ((RecipeActual) recipes.get(j)).getLabel());
+
                 }
 
             }else{
@@ -100,10 +97,7 @@ public class SearchResultsDisplayer extends AppCompatActivity {
                     Toast.makeText(SearchResultsDisplayer.this, "We are making "+ ((RecipeNative) recipes.get(pos)).getRecipeName(), Toast.LENGTH_LONG).show();
                 }
                 else{
-                    RecipeActual recipeActual = (RecipeActual) recipes.get(pos);
-                    i.putExtra("recipe_actual_show", recipeActual);
-                    startActivity(i);
-                    Toast.makeText(SearchResultsDisplayer.this, "We are making " + ((RecipeActual) recipes.get(pos)).getLabel(), Toast.LENGTH_SHORT).show();
+
                 }
 
                 //todo load recipe
