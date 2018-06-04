@@ -17,8 +17,13 @@ public class RecipeActual implements Serializable {
     private ArrayList<Ingredient> ingredients = new ArrayList<>(); //convert Ingredient[] --> AL
     private ArrayList<NutritionInfo> totalNutrients = new ArrayList<>();
     private ArrayList<NutritionInfo> totalDaily = new ArrayList<>();
-    private enum dietLabels{}; //TODO figure out what enums do
-    private enum healthLabels{};
+//    private ArrayList<String> dietLabels = new ArrayList<>(); //TODO figure out what enums do
+//    private ArrayList<String> healthLabels = new ArrayList<>();
+
+    private ArrayList<String> dietLabels = new ArrayList<>();
+    private ArrayList<String> healthLabels = new ArrayList<>();
+
+
     //private ArrayList<String> cautions = new ArrayList<>(); //from Array
 
     private ArrayList<String> ingredientLines = new ArrayList<>();
@@ -115,13 +120,13 @@ public class RecipeActual implements Serializable {
         return totalDaily;
     }
 
-//    public enum getDietLabel(){
-//        return dietLabels;
-//    }
-//
-//    public ArrayList<String> getHealthLabels() {
-//        return healthLabels;
-//    }
+    public ArrayList<String> getDietLabels(){
+        return dietLabels;
+    }
+
+    public ArrayList<String> getHealthLabels() {
+        return healthLabels;
+    }
 
     public ArrayList<String> getIngredientLines() {
         return ingredientLines;
@@ -175,13 +180,13 @@ public class RecipeActual implements Serializable {
         this.totalDaily = totalDaily;
     }
 
-//    public void setDietLabels(ArrayList<String> dietLabels) {
-//        this.dietLabels = dietLabels;
-//    }
-//
-//    public void setHealthLabels(ArrayList<String> healthLabels) {
-//        this.healthLabels = healthLabels;
-//    }
+    public void setDietLabels(ArrayList<String> dietLabels) {
+        this.dietLabels = dietLabels;
+    }
+
+    public void setHealthLabels(ArrayList<String> healthLabels) {
+        this.healthLabels = healthLabels;
+    }
 
 //    public void setCautions(ArrayList<String> cautions) {
 //        this.cautions = cautions;
@@ -199,5 +204,28 @@ public class RecipeActual implements Serializable {
         }
         return formatted.toString();
     }
+
+    //inner enum setting classes?
+    enum Diet {
+        BALANCED(""),
+        HIGH_FIBER(""),
+        HIGH_PROTEIN(""),
+        LOW_CARB(""),
+        LOW_FAT(""),
+        LOW_SODIUM("");
+
+        private String dietLabel;
+
+        private Diet(String dietLabel){
+            this.dietLabel = dietLabel;
+        }
+
+        private Diet(/*String balanced, String highFiber, String highProtein, String lowCarb, String lowFat, String lowNA*/){
+            //empty constructor
+        }
+
+
+    }
+
 
 }
