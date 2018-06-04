@@ -138,7 +138,7 @@ public class HomePageActivity extends AppCompatActivity /*implements HasActivity
             Backendless.UserService.login(sharedPref.getString("userUserName", "null"), sharedPref.getString("userPassword", "null"), new AsyncCallback<BackendlessUser>() {
                 @Override
                 public void handleResponse(BackendlessUser response) {
-
+                    //works as Async
                 }
 
                 @Override
