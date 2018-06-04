@@ -107,19 +107,19 @@ public class HomePageActivity extends AppCompatActivity /*implements HasActivity
     }
 
     private void logIn() {
-        Backendless.UserService.login("h", "h", new AsyncCallback<BackendlessUser>() {
-            @Override
-            public void handleResponse(BackendlessUser response) {
-                Toast.makeText(HomePageActivity.this, ""+response.getProperty("name"), Toast.LENGTH_SHORT).show();
-            }
+//        Backendless.UserService.login("h", "h", new AsyncCallback<BackendlessUser>() {
+//            @Override
+//            public void handleResponse(BackendlessUser response) {
+//                Toast.makeText(HomePageActivity.this, ""+response.getProperty("name"), Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void handleFault(BackendlessFault fault) {
+//
+//            }
+//        });
 
-            @Override
-            public void handleFault(BackendlessFault fault) {
-
-            }
-        });
-        /*
-        * sharedPref = getSharedPreferences(
+        sharedPref = getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
@@ -140,11 +140,10 @@ public class HomePageActivity extends AppCompatActivity /*implements HasActivity
         else{
             Backendless.UserService.login(sharedPref.getString("userUserName", "null"), sharedPref.getString("userPassword", "null"));
         }
-        * */
 //        sharedPref = getSharedPreferences(
 //                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 //        SharedPreferences.Editor editor = sharedPref.edit();
-
+//
 //        int userExists = sharedPref.getInt(getString(R.string.user), 0);
 ////        userExists = 0; //todo delete me later
 //        //checks if previous user exists
